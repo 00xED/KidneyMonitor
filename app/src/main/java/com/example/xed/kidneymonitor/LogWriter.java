@@ -38,9 +38,10 @@ public class LogWriter extends Application {
 
         if (!logFile.exists()) {
             try {
-                logFile.createNewFile();
+                if(!logFile.createNewFile())
+                    Log.d("LogWriter", "can't create new file");
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+                Log.d("LogWriter", e.toString());
                 e.printStackTrace();
             }
         }
@@ -51,7 +52,7 @@ public class LogWriter extends Application {
             buf.newLine();
             buf.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            Log.d("LogWriter", e.toString());
             e.printStackTrace();
         }
 

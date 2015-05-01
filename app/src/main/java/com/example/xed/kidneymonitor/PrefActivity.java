@@ -18,9 +18,7 @@ import android.widget.Toast;
 
 public class PrefActivity extends ActionBarActivity {
 
-    /**
-     * Initialisation of LowWriter
-     */
+    //Initialisation of LogWriter
     private static final String logTag = "PreferenceActivity";
     LogWriter lw = new LogWriter();
 
@@ -95,7 +93,6 @@ public class PrefActivity extends ActionBarActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences

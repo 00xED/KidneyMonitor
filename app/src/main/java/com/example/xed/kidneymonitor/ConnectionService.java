@@ -66,10 +66,9 @@ public class ConnectionService extends Service {
     public final static int TASK_ARG_SHUTDOWN = 2;
     public final static int TASK_ARG_DISINFECTION = 3;
 
-    /**
-     * Initialisation of LowWriter
-     */
+    //Initialisation of LogWriter
     final String logTag = "ConnectionService";
+    LogWriter lw = new LogWriter();
 
     /**
      * Default values for values
@@ -82,9 +81,6 @@ public class ConnectionService extends Service {
     public int SORBTIME = -1;
     public int BATT = -1;
     public int LASTCONNECTED = -1;
-
-    //Initialising log writer
-    LogWriter lw = new LogWriter();
 
     //Random value for notifications IDs
     private static  int NOTIFY_ID = 238;

@@ -26,10 +26,14 @@ import java.util.Set;
  */
 public class DeviceListActivity extends Activity {
 
-    /**
-     * logTag for Log
-     */
+    //logTag for Log
     private static final String logTag = "DeviceListActivity";
+    LogWriter lw = new LogWriter();
+
+    //Member fields
+    private BluetoothAdapter mBtAdapter;
+    //Newly discovered devices
+    private ArrayAdapter < String > mNewDevicesArrayAdapter;
 
     // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
@@ -84,11 +88,7 @@ public class DeviceListActivity extends Activity {
         }
     }
     };
-    LogWriter lw = new LogWriter();
-    //Member fields
-    private BluetoothAdapter mBtAdapter;
-    //Newly discovered devices
-    private ArrayAdapter < String > mNewDevicesArrayAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +113,8 @@ public class DeviceListActivity extends Activity {
 
         // Initialize array adapters. One for already paired devices and
         // one for newly discovered devices
-        ArrayAdapter < String > pairedDevicesArrayAdapter = new ArrayAdapter < String > (this, R.layout.device_name);
-        mNewDevicesArrayAdapter = new ArrayAdapter < String > (this, R.layout.device_name);
+        ArrayAdapter < String > pairedDevicesArrayAdapter = new ArrayAdapter <> (this, R.layout.device_name);
+        mNewDevicesArrayAdapter = new ArrayAdapter <> (this, R.layout.device_name);
 
         // Find and set up the ListView for paired devices
         ListView pairedListView = (ListView) findViewById(R.id.paired_devices);

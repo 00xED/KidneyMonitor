@@ -74,5 +74,12 @@
         <item>Дизинфекция</item>
     </string-array>
     <string name="title_pause_procedure">Приостановить процедуру</string>
+    <string name="title_continue_procedure">Возобновить процедуру</string>
+    <string name="title_choose_device">Выберите устройство</string>
+    <string name="title_filling_confirmation">Подтверждение</string>
+    <string name="yes">Да</string>
+    <string name="filling_confirmation">Пациент подсоединен?</string>
+    <string name="no">Да</string>
+    <string name="starting_filling">Начинается заполнение...</string>
 
 </resources>

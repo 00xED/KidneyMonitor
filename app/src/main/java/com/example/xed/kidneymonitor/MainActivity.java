@@ -43,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
 
     //Is procedure paused? 0-no, 1-yes, other-unknown
     public int procedurePaused = 9;
+
     /**
      * Settings for BroadcastReceiver
      */
@@ -51,9 +52,7 @@ public class MainActivity extends ActionBarActivity {
     public final static String BROADCAST_ACTION = "SetValues";
     private BroadcastReceiver broadcastReceiver;
 
-    /**
-     * Initialisation of LowWriter
-     */
+    //Initialisation of LogWriter
     private static final String logTag = "MainActivity";
     LogWriter lw = new LogWriter();
 

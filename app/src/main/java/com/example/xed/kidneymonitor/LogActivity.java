@@ -16,11 +16,12 @@ import java.io.IOException;
 
 
 public class LogActivity extends ActionBarActivity {
-
+    //Initialising LogWriter
     private static final String logTag = "LogActivity";
+    LogWriter lw = new LogWriter();
+
     public TextView mTvLog;
     public CheckBox mCbAutoscroll;
-    LogWriter lw = new LogWriter();
 
     Handler handler = new Handler();//refreshing handler
 

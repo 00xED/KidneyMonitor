@@ -568,10 +568,9 @@ public class ConnectionService extends Service {
     }
 
     //Send message to connected device
-    //TODO: send with \r\n
     public void sendMessage(String input){
         String temp="!$"+input+"*";
-        temp+=crc7Check(temp.getBytes());
+        temp+=crc7Check(temp.getBytes())+"\r\n";
         lw.appendLog(logTag, "Sending: "+temp);
         mChatService.write(temp.getBytes());
     }

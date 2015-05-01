@@ -215,89 +215,6 @@ public class ConnectionService extends Service {
 
     };
 
-    //Start service in foreground with notification in bar
-    public void startInForeground(){
-
-        Bitmap icon = BitmapFactory.decodeResource(ConnectionService.this.getResources(),
-                R.drawable.ic_refresh_grey600_24dp);
-
-        //start MainActivity on notification click
-        Intent notificationIntent = new Intent(ConnectionService.this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(ConnectionService.this,
-                0, notificationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-
-        Notification notif = new Notification.Builder(ConnectionService.this)
-                .setContentIntent(contentIntent)
-                .setContentTitle(getResources().getText(R.string.app_name))
-                .setContentText(getResources().getText(R.string.title_click_to_open))
-                .setSmallIcon(R.drawable.ic_refresh_grey600_24dp)
-                .setLargeIcon(icon)
-                .build();
-
-        Intent i=new Intent(this, ConnectionService.class);
-
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
-                Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        PendingIntent pi=PendingIntent.getActivity(this, 0,
-                i, 0);
-
-        startForeground(237, notif);
-    }
-
-    //Send message to connected device
-    //TODO: send with \r\n
-    public void sendMessage(String input){
-        String temp="!$"+input+"*";
-        temp+=crc7Check(temp.getBytes());
-        lw.appendLog(logTag, "Sending: "+temp);
-        mChatService.write(temp.getBytes());
-    }
-
-
-    // CRC7 checksum
-    //TODO: generate correct checksum
-    public static byte crc7Check(byte[] by1) {
-        byte[] crc7byte = {
-                0x00, 0x12, 0x24, 0x36, 0x48, 0x5a, 0x6c, 0x7e,
-                0x19, 0x0b, 0x3d, 0x2f, 0x51, 0x43, 0x75, 0x67,
-                0x32, 0x20, 0x16, 0x04, 0x7a, 0x68, 0x5e, 0x4c,
-                0x2b, 0x39, 0x0f, 0x1d, 0x63, 0x71, 0x47, 0x55,
-                0x64, 0x76, 0x40, 0x52, 0x2c, 0x3e, 0x08, 0x1a,
-                0x7d, 0x6f, 0x59, 0x4b, 0x35, 0x27, 0x11, 0x03,
-                0x56, 0x44, 0x72, 0x60, 0x1e, 0x0c, 0x3a, 0x28,
-                0x4f, 0x5d, 0x6b, 0x79, 0x07, 0x15, 0x23, 0x31,
-                0x41, 0x53, 0x65, 0x77, 0x09, 0x1b, 0x2d, 0x3f,
-                0x58, 0x4a, 0x7c, 0x6e, 0x10, 0x02, 0x34, 0x26,
-                0x73, 0x61, 0x57, 0x45, 0x3b, 0x29, 0x1f, 0x0d,
-                0x6a, 0x78, 0x4e, 0x5c, 0x22, 0x30, 0x06, 0x14,
-                0x25, 0x37, 0x01, 0x13, 0x6d, 0x7f, 0x49, 0x5b,
-                0x3c, 0x2e, 0x18, 0x0a, 0x74, 0x66, 0x50, 0x42,
-                0x17, 0x05, 0x33, 0x21, 0x5f, 0x4d, 0x7b, 0x69,
-                0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62, 0x70
-        };
-
-        byte result = 0;
-
-        for (int i = 0; i < by1.length - 2; i++) {
-
-            if (by1[i] < 0) {
-                result = (byte) crc7byte[((256 + by1[i]) / 2) ^ result];
-            } else {
-                result = (byte) crc7byte[(by1[i] / 2) ^ result];
-            }
-            byte b = (byte) (by1[i] & (byte) 0x01);
-            if (b == 0) {
-                result ^= 0x00;
-            } else {
-                result ^= 0x09;
-
-            }
-        }
-        return (byte) (((result * 2) + 0x01)& 0xFF);
-    }
-
     /**
      *Send values to MainActivity every second
      */
@@ -435,24 +352,26 @@ public class ConnectionService extends Service {
      * TODO: make chechsum check
      */
     private void parseandexecute(String input) {
-        input = input.toUpperCase();
-        if (input.indexOf("*") != -1 && input.indexOf("$") != -1) {//If string is barely correct
+        if (input.contains("*") && input.contains("$")) {//If string is barely correct
             String hash = input.substring(input.indexOf("*") + 1, input.indexOf("\n") - 1);//Get hash
             String commandLine = input.substring(input.indexOf("$"), input.indexOf("*") + 1);//Get commands
 
 			/*if (commandLine.equals(checkSum(commandLine))) {//Perform check for checksum
 
             }
-            lw.appendLog(logTag,"got checksum="+(int)checkSum(commandLine));*/
-            lw.appendLog(logTag, "GOT CHECHSUM=" + crc7Check(input.getBytes()) + " and hash=" + hash);
+            lw.appendLog(logTag,"got checksum="+(int)checkSum(commandLine));
+            lw.appendLog(logTag, "GOT CHECHSUM=" + crc7Check(commandLine.getBytes()) + " and hash=" + hash);
+            */
 
+            input = input.toUpperCase();
             commandLine = commandLine.substring(input.indexOf("$"), input.indexOf("*") - 1);//Get commands
             String[] commands = commandLine.split(";");//Split line into different commands
-            for (int i = 0; i < commands.length; i++) {
-                String currentCommand = commands[i].substring(0, commands[i].indexOf("="));//Get command itself
-                String currentArg = commands[i].substring(commands[i].indexOf("=") + 1);//Get arguments
+
+            for (String command : commands) {
+                String currentCommand = command.substring(0, command.indexOf("="));//Get command itself
+                String currentArg = command.substring(command.indexOf("=") + 1);//Get arguments
                 RequestType request = RequestType.getType(currentCommand);
-                LASTCONNECTED=0;
+                LASTCONNECTED = 0;
                 switch (request) {
                     case STATE: {
                         lw.appendLog(logTag, "got command STATE and " + currentArg);
@@ -571,7 +490,7 @@ public class ConnectionService extends Service {
                     }
 
                     case NOTIF: {
-                        Context context=ConnectionService.this;
+                        Context context = ConnectionService.this;
 
                         Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
                                 R.drawable.ic_refresh_grey600_24dp);
@@ -595,13 +514,13 @@ public class ConnectionService extends Service {
                         notification.flags = notification.flags | Notification.FLAG_SHOW_LIGHTS;
 
                         SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                        if(sPref.getBoolean(PrefActivity.VIBRATION, false))
-                            notification.vibrate= new long[] {1000, 1000, 1000};
+                        if (sPref.getBoolean(PrefActivity.VIBRATION, false))
+                            notification.vibrate = new long[]{1000, 1000, 1000};
 
 
                         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                        if(sPref.getBoolean(PrefActivity.SOUND, false))
-                            notification.sound=soundUri;
+                        if (sPref.getBoolean(PrefActivity.SOUND, false))
+                            notification.sound = soundUri;
 
                         NotificationManager notificationManager = (NotificationManager) context
                                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -615,6 +534,89 @@ public class ConnectionService extends Service {
                 }
             }
         }
+    }
+
+    //Start service in foreground with notification in bar
+    public void startInForeground(){
+
+        Bitmap icon = BitmapFactory.decodeResource(ConnectionService.this.getResources(),
+                R.drawable.ic_refresh_grey600_24dp);
+
+        //start MainActivity on notification click
+        Intent notificationIntent = new Intent(ConnectionService.this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(ConnectionService.this,
+                0, notificationIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Notification notif = new Notification.Builder(ConnectionService.this)
+                .setContentIntent(contentIntent)
+                .setContentTitle(getResources().getText(R.string.app_name))
+                .setContentText(getResources().getText(R.string.title_click_to_open))
+                .setSmallIcon(R.drawable.ic_refresh_grey600_24dp)
+                .setLargeIcon(icon)
+                .build();
+
+        Intent i=new Intent(this, ConnectionService.class);
+
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent pi=PendingIntent.getActivity(this, 0,
+                i, 0);
+
+        startForeground(237, notif);
+    }
+
+    //Send message to connected device
+    //TODO: send with \r\n
+    public void sendMessage(String input){
+        String temp="!$"+input+"*";
+        temp+=crc7Check(temp.getBytes());
+        lw.appendLog(logTag, "Sending: "+temp);
+        mChatService.write(temp.getBytes());
+    }
+
+
+    // CRC7 checksum
+    //TODO: generate correct checksum
+    public static byte crc7Check(byte[] by1) {
+        byte[] crc7byte = {
+                0x00, 0x12, 0x24, 0x36, 0x48, 0x5a, 0x6c, 0x7e,
+                0x19, 0x0b, 0x3d, 0x2f, 0x51, 0x43, 0x75, 0x67,
+                0x32, 0x20, 0x16, 0x04, 0x7a, 0x68, 0x5e, 0x4c,
+                0x2b, 0x39, 0x0f, 0x1d, 0x63, 0x71, 0x47, 0x55,
+                0x64, 0x76, 0x40, 0x52, 0x2c, 0x3e, 0x08, 0x1a,
+                0x7d, 0x6f, 0x59, 0x4b, 0x35, 0x27, 0x11, 0x03,
+                0x56, 0x44, 0x72, 0x60, 0x1e, 0x0c, 0x3a, 0x28,
+                0x4f, 0x5d, 0x6b, 0x79, 0x07, 0x15, 0x23, 0x31,
+                0x41, 0x53, 0x65, 0x77, 0x09, 0x1b, 0x2d, 0x3f,
+                0x58, 0x4a, 0x7c, 0x6e, 0x10, 0x02, 0x34, 0x26,
+                0x73, 0x61, 0x57, 0x45, 0x3b, 0x29, 0x1f, 0x0d,
+                0x6a, 0x78, 0x4e, 0x5c, 0x22, 0x30, 0x06, 0x14,
+                0x25, 0x37, 0x01, 0x13, 0x6d, 0x7f, 0x49, 0x5b,
+                0x3c, 0x2e, 0x18, 0x0a, 0x74, 0x66, 0x50, 0x42,
+                0x17, 0x05, 0x33, 0x21, 0x5f, 0x4d, 0x7b, 0x69,
+                0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62, 0x70
+        };
+
+        byte result = 0;
+
+        for (byte aBy1 : by1) {
+
+            if (aBy1 < 0) {
+                result = crc7byte[((256 + aBy1) / 2) ^ result];
+            } else {
+                result = crc7byte[(aBy1 / 2) ^ result];
+            }
+            byte b = (byte) (aBy1 & (byte) 0x01);
+            if (b == 0) {
+                result ^= 0x00;
+            } else {
+                result ^= 0x09;
+
+            }
+        }
+        return (byte) (((result * 2) + 0x01)& 0xFF);
     }
 
 

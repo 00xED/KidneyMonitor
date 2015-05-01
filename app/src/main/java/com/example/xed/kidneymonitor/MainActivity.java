@@ -101,7 +101,7 @@ public class MainActivity extends ActionBarActivity {
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
         String address = sPref.getString(SAVED_ADDRESS,
                 getResources().getText(R.string.value_current_device_default_address).toString());
-        if (address.equals("00:00:00:00:00:00")) { //If address is default start PrefActivity
+        if (("00:00:00:00:00:00").equals(address)) { //If address is default start PrefActivity
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
             Toast.makeText(this,
@@ -328,8 +328,6 @@ public class MainActivity extends ActionBarActivity {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
             // Otherwise, setup the chat session
-        } else {
-
         }
     }
 

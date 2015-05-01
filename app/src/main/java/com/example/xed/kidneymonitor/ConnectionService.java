@@ -78,6 +78,7 @@ public class ConnectionService extends Service {
     public int STATUS = 9;
     public int PARAMS = 9;
     public int FUNCT = 9;
+    public int PAUSE = 9;
     public int SORBTIME = -1;
     public int BATT = -1;
     public int LASTCONNECTED = -1;
@@ -247,6 +248,10 @@ public class ConnectionService extends Service {
             intent.putExtra(MainActivity.PARAM_ARG, BATT);
             sendBroadcast(intent);
 
+            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_PAUSE);
+            intent.putExtra(MainActivity.PARAM_ARG, PAUSE);
+            sendBroadcast(intent);
+
             intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_LASTCONNECTED);
             intent.putExtra(MainActivity.PARAM_ARG, LASTCONNECTED);
             sendBroadcast(intent);
@@ -363,7 +368,7 @@ public class ConnectionService extends Service {
             lw.appendLog(logTag, "GOT CHECHSUM=" + crc7Check(commandLine.getBytes()) + " and hash=" + hash);
             */
 
-            input = input.toUpperCase();
+            commandLine = commandLine.toUpperCase();
             commandLine = commandLine.substring(input.indexOf("$"), input.indexOf("*") - 1);//Get commands
             String[] commands = commandLine.split(";");//Split line into different commands
 
@@ -529,6 +534,29 @@ public class ConnectionService extends Service {
                         break;
                     }
 
+                    case PAUSE: {
+                        lw.appendLog(logTag, "got command PAUSE and " + currentArg);
+                        RequestType requestArg = RequestType.getType(currentArg);
+                        switch (requestArg) {
+                            case A0: {
+                                lw.appendLog(logTag, "setting PAUSE to NOT");
+                                PAUSE = 0;
+                                break;
+                            }
+                            case A1: {
+                                lw.appendLog(logTag, "setting PAUSE to YES");
+                                PAUSE = 1;
+                                break;
+                            }
+                            default: {
+                                lw.appendLog(logTag, "setting PAUSE to UNKNOWN");
+                                PAUSE = 9;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
                     default:
                         break;
                 }
@@ -628,6 +656,7 @@ public class ConnectionService extends Service {
         SORBTIME("SORBTIME"),
         FUNCT("FUNCT"),
         NOTIF("NOTIF"),
+        PAUSE("PAUSE"),
         A0("0"), A1("1"), A2("2"), A3("3"), A4("4"), A5("5"), A6("6"), A7("7"), A8("8"), A9("9");
 
         private String typeValue;

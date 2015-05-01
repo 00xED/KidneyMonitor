@@ -257,7 +257,6 @@
                 android:layout_column="4" />
         </TableRow>
 
-
     </TableLayout>
 
 
@@ -268,7 +267,7 @@
         android:layout_below="@+id/tableLayout"
         android:drawableLeft="@drawable/ic_pause_grey600_24dp"
         android:drawableStart="@drawable/ic_pause_grey600_24dp"
-        android:id="@+id/bt_Start"
+        android:id="@+id/bt_Pause"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="OnClick"
@@ -279,7 +278,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/bt_Start"
+        android:layout_below="@+id/bt_Pause"
         android:id="@+id/tableLayout2">
 
         <TableRow

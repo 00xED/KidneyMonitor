@@ -73,5 +73,6 @@
         <item>Выключение</item>
         <item>Дизинфекция</item>
     </string-array>
+    <string name="title_pause_procedure">Приостановить процедуру</string>
 
 </resources>

@@ -88,6 +88,9 @@
 
     <string name="starting_filling">Starting to fill...</string>
 
+    <string name="title_pause_procedure">Pause procedure</string>
+    <string name="title_continue_procedure">Continue procedure</string>
+
     <string-array name="status_selection">
         <item>Dialysis</item>
         <item>Filling</item>

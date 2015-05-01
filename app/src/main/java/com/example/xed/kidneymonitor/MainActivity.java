@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +39,10 @@ public class MainActivity extends ActionBarActivity {
     public final static int TASK_SET_SORBTIME = 4;
     public final static int TASK_SET_BATT = 5;
     public final static int TASK_SET_LASTCONNECTED = 6;
+    public final static int TASK_SET_PAUSE = 7;
 
+    //Is procedure paused? 0-no, 1-yes, other-unknown
+    public int procedurePaused = 9;
     /**
      * Settings for BroadcastReceiver
      */
@@ -67,6 +71,7 @@ public class MainActivity extends ActionBarActivity {
      */
     private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected;
     private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt;
+    private Button btPause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +104,8 @@ public class MainActivity extends ActionBarActivity {
         ivState = (ImageView) findViewById(R.id.iv_State);
         ivStatus = (ImageView) findViewById(R.id.iv_Status);
         ivParams = (ImageView) findViewById(R.id.iv_Params);
+
+        btPause = (Button) findViewById(R.id.bt_Pause);
 
         /**
          * Load preferences; If saved device address is default - open preferences to find device
@@ -310,6 +317,37 @@ public class MainActivity extends ActionBarActivity {
                         }
                         break;
                     }
+
+                    case TASK_SET_PAUSE:
+                    {
+                        procedurePaused=arg;
+                        switch (arg) {
+                            case 0:
+                            {
+                                btPause.
+                                        setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
+
+                                break;
+                            }
+                            case 1:
+                            {
+                                btPause.
+                                        setText(getResources().getText(R.string.title_continue_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_grey600_24dp, 0, 0, 0);
+                                break;
+                            }
+                            default:
+                            {
+                                btPause.
+                                        setText(getResources().getText(R.string.button_start).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_help_grey600_24dp, 0, 0, 0);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
                     default:
                         break;
                 }
@@ -369,12 +407,19 @@ public class MainActivity extends ActionBarActivity {
                 alertSingleChooseStatus();
                 break;
             }
-            case R.id.bt_Start:// pause current procedure
+            case R.id.bt_Pause:// pause current procedure
             {
-                //TODO: implement starting function
-                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
-                sendBroadcast(intent);
+                if(procedurePaused==0) {
+                    //TODO: implement starting function
+                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                    sendBroadcast(intent);
+                }
+                else if(procedurePaused==1){
+                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_RESUME);
+                    sendBroadcast(intent);
+                }
                 break;
             }
             default:

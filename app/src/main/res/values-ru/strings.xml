@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kidney Monitor</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_change_state">Сменить\nсостояние</string>
+    <string name="button_notification">Уведомление</string>
+    <string name="button_start">Приостановить/возобновить процедуру</string>
+    <string name="caption_battery_charge">Заряд\nбатареи:</string>
+    <string name="caption_device_functioning">Устройство\nработает:</string>
+    <string name="caption_procedure_params">Параметры\nпроцедуры:</string>
+    <string name="caption_state">Статуc\nустройства:</string>
+    <string name="caption_status">Текущее\nсостояние:</string>
+    <string name="caption_time_sorbent">Замена\nсорбентов:</string>
+    <string name="value_battery_charge_unknown">Неизвестно</string>
+    <string name="value_device_functioning_unknown">Неизвестно</string>
+    <string name="value_procedure_params_unknown">Неизвестно</string>
+    <string name="value_status_dialysis">Диализ</string>
+    <string name="value_state_unknown">Неизвестно</string>
+    <string name="value_status_shutdown">Отключение</string>
+    <string name="value_status_unknown">Неизвестно</string>
+    <string name="value_time_sorbent_unknown">Неизвестно</string>
+    <string name="value_procedure_params_danger">Угроза</string>
+    <string name="value_procedure_params_normal">Норма</string>
+    <string name="value_device_functioning_correct">Исправно</string>
+    <string name="value_device_functioning_fault">Неисправно</string>
+    <string name="value_state_off">Выключено</string>
+    <string name="value_state_on">Включено</string>
+    <string name="value_status_disinfection">Дезинфекция</string>
+    <string name="value_status_filling">Заполнение</string>
+    <string name="value_status_testing">Тест</string>
+    <string name="button_settings">Настройки</string>
+    <string name="title_activity_pref">Настройки</string>
+    <string name="button_log">Лог</string>
+    <string name="button_scan">Найти устройства</string>
+    <string name="none_found">Устройства не найдены</string>
+    <string name="none_paired">Нет сопряженных устройств</string>
+    <string name="scanning">Поиск устройств...</string>
+    <string name="select_device">Выберите устройство для подключения</string>
+    <string name="title_other_devices">Другие доступные устройства</string>
+    <string name="title_paired_devices">Сопряженные устройства</string>
+    <string name="caption_current_device">Текущее устройство</string>
+    <string name="value_current_device_none">Нет</string>
+    <string name="error_connect_failed">Соединение не удалос</string>
+    <string name="error_connect_lost">Соединение потеряно</string>
+    <string name="last_connected">Последнее поключение:</string>
+    <string name="last_connected_unknown">Последнее подключение: неизвестно</string>
+    <string name="title_activity_log">Журнал</string>
+    <string name="title_cancel">Отмена</string>
+    <string name="title_clear_log">Очистить журнал</string>
+    <string name="title_log_autoscroll">Автолистание</string>
+    <string name="title_prefs_cleared">Настройки сброшены</string>
+    <string name="title_prefs_loaded">Настройки загружены</string>
+    <string name="title_prefs_new">Выберите устройство для подлючения</string>
+    <string name="title_prefs_saved">Настройки сохранены</string>
+    <string name="title_service_start">Запустить сервис</string>
+    <string name="title_service_stop">Остановить сервис</string>
+    <string name="title_set_defaults">Сбросить настройки</string>
+    <string name="title_status_select">Выбрать статус</string>
+    <string name="value_sorbtime_hours">ч.</string>
+    <string name="title_click_to_open">Нажмите, чтобы открыть</string>
+    <string name="title_foreground_service">Фоновый сервис</string>
+    <string name="title_notification_options">Опции уведомлений</string>
+    <string name="title_service_options">Опции сервиса</string>
+    <string name="title_sound">Звук</string>
+    <string name="title_vibration">Вибрация</string>
+    <string name="value_sorbtime_mins">м. </string>
+
+    <string-array name="status_selection">
+        <item>Заполнение</item>
+        <item>Диализ</item>
+        <item>Выключение</item>
+        <item>Дизинфекция</item>
+    </string-array>
+
+</resources>

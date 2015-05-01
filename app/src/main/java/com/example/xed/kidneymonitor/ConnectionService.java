@@ -618,7 +618,7 @@ public class ConnectionService extends Service {
     }
 
 
-    private enum RequestType {
+    enum RequestType {
 
         STATE("STATE"),
         BATT("BATT"),
@@ -629,10 +629,9 @@ public class ConnectionService extends Service {
         NOTIF("NOTIF"),
         A0("0"), A1("1"), A2("2"), A3("3"), A4("4"), A5("5"), A6("6"), A7("7"), A8("8"), A9("9");
 
-
         private String typeValue;
 
-        private RequestType(String type) {
+        RequestType(String type) {
             typeValue = type;
         }
 
@@ -648,8 +647,6 @@ public class ConnectionService extends Service {
         public String getTypeValue() {
             return typeValue;
         }
-
     }
-
 
 }

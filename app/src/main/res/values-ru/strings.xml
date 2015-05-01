@@ -79,7 +79,7 @@
     <string name="title_filling_confirmation">Подтверждение</string>
     <string name="yes">Да</string>
     <string name="filling_confirmation">Пациент подсоединен?</string>
-    <string name="no">Да</string>
+    <string name="no">Нет</string>
     <string name="starting_filling">Начинается заполнение...</string>
 
 </resources>

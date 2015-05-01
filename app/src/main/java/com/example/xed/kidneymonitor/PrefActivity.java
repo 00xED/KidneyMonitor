@@ -11,6 +11,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Writing and reading preferences, device choosing and pairing,
+ * starting and stopping ConnectionService
+ */
 
 public class PrefActivity extends ActionBarActivity {
 
@@ -21,6 +25,7 @@ public class PrefActivity extends ActionBarActivity {
     LogWriter lw = new LogWriter();
 
     private static final int CHOOSE_DEVICE = 1; //Tag for DeviceListActivity
+
     /**
      * Parameters for loading and writing preferences
      */
@@ -61,27 +66,33 @@ public class PrefActivity extends ActionBarActivity {
         tvCurrentDeviceAddress.setText(sPref.getString(SAVED_ADDRESS,
                 getResources().getText(R.string.value_current_device_default_address).toString()));
 
-        cbForegroundService = (CheckBox)findViewById(R.id.cb_ForegroundService);
-        if(sPref.getBoolean(IS_FOREGROUND, false))
-            cbForegroundService.setChecked(true);
-        else
-            cbForegroundService.setChecked(false);
+        /**
+         * Setting checkboxes states
+         */
+            cbForegroundService = (CheckBox)findViewById(R.id.cb_ForegroundService);
+            if(sPref.getBoolean(IS_FOREGROUND, false))
+                cbForegroundService.setChecked(true);
+            else
+                cbForegroundService.setChecked(false);
 
-        cbVibrate = (CheckBox)findViewById(R.id.cb_Vibtation);
-        if(sPref.getBoolean(VIBRATION, false))
-            cbVibrate.setChecked(true);
-        else
-            cbVibrate.setChecked(false);
+            cbVibrate = (CheckBox)findViewById(R.id.cb_Vibtation);
+            if(sPref.getBoolean(VIBRATION, false))
+                cbVibrate.setChecked(true);
+            else
+                cbVibrate.setChecked(false);
 
-        cbSound = (CheckBox)findViewById(R.id.cb_Sound);
-        if(sPref.getBoolean(SOUND, false))
-            cbSound.setChecked(true);
-        else
-            cbSound.setChecked(false);
+            cbSound = (CheckBox)findViewById(R.id.cb_Sound);
+            if(sPref.getBoolean(SOUND, false))
+                cbSound.setChecked(true);
+            else
+                cbSound.setChecked(false);
 
         btStopService = (Button) findViewById(R.id.bt_StopService);
     }
 
+    /**
+     * Handling result of DeviceListActivity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -90,8 +101,8 @@ public class PrefActivity extends ActionBarActivity {
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
         Editor ed = sPref.edit(); //Setting for preference editing
 
-        if (requestCode == CHOOSE_DEVICE) {
-            if (resultCode == RESULT_OK) {
+        if (requestCode == CHOOSE_DEVICE) {//If DeviceListActivity responsed
+            if (resultCode == RESULT_OK) {//And user has choosen device to connect with
                 //Getting chosen device data from DeviceListActivity
                 String name = data.getStringExtra(DeviceListActivity.EXTRA_DEVICE_NAME);
                 String address = data.getStringExtra(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
@@ -111,9 +122,10 @@ public class PrefActivity extends ActionBarActivity {
                 lw.appendLog(logTag, "Bluetooth device chosen:" + name + "@" + address);
                 CHOSEN_ADDRESS = address;
                 CHOSEN_NAME = name;
-                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_DO_PAIRING);
-                sendBroadcast(intent);
+                //Sending broadcast to connection service to perform pairing with chosen device
+                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_DO_PAIRING);
+                    sendBroadcast(intent);
             } else {
                 lw.appendLog(logTag, "Bluetooth device NOT CHOSEN");
             }
@@ -123,18 +135,16 @@ public class PrefActivity extends ActionBarActivity {
     public void OnClick(View v) {
 
         switch (v.getId()) {
-            case R.id.bt_Scan:
+            case R.id.bt_Scan://Start device choosing activity DeviceListActivity
             {
-                //Start device choosing activity DeviceListActivity
                 Intent intent = new Intent(this, DeviceListActivity.class);
                 startActivityForResult(intent, CHOOSE_DEVICE);
                 lw.appendLog(logTag, "Starting DeviceListActivity");
                 break;
             }
 
-            case R.id.bt_SetDefaults:
+            case R.id.bt_SetDefaults://Reset all preferences
             {
-                //Clear all preferences
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
                 Editor ed = sPref.edit();
                 ed.clear();
@@ -148,7 +158,7 @@ public class PrefActivity extends ActionBarActivity {
                 break;
             }
 
-            case R.id.cb_ForegroundService:
+            case R.id.cb_ForegroundService://Save setting for foreground service
             {
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 Editor ed = sPref.edit(); //Setting for preference editing
@@ -157,10 +167,11 @@ public class PrefActivity extends ActionBarActivity {
                 else
                     ed.putBoolean(IS_FOREGROUND, false);
                 ed.commit();
+
                 break;
             }
 
-            case R.id.cb_Vibtation:
+            case R.id.cb_Vibtation://Save setting for vibration on notification
             {
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 Editor ed = sPref.edit(); //Setting for preference editing
@@ -172,7 +183,7 @@ public class PrefActivity extends ActionBarActivity {
                 break;
             }
 
-            case R.id.cb_Sound:
+            case R.id.cb_Sound://Save setting for sound on notification
             {
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 Editor ed = sPref.edit(); //Setting for preference editing
@@ -184,7 +195,7 @@ public class PrefActivity extends ActionBarActivity {
                 break;
             }
 
-            case R.id.bt_StopService:
+            case R.id.bt_StopService://Start or stop service
             {
 					if(!ConnectionService.isServiceRunning){
                     isServiceRunning=true;

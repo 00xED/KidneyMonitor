@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * Writes logs to kidneymoonitor.log and to Log.d
+ */
+
 public class LogWriter extends Application {
 
     public void OnCreate() {

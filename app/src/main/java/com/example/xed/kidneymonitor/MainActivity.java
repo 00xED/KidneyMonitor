@@ -19,6 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Main activity handles main screen values, images, has buttons to open all other activities,
+ * button for pausing and starting procedure, buton to choose current procedure
+ */
+
 public class MainActivity extends ActionBarActivity {
 
     public static final int REQUEST_ENABLE_BT = 1;
@@ -125,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
 
         /**
          * Initialise broadcast receiver that listens for messages from ConnectionService
-         * and sets main screen textviews values
+         * and sets main screen textviews values and images
          */
         broadcastReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
@@ -261,11 +266,12 @@ public class MainActivity extends ActionBarActivity {
                     }
                     case TASK_SET_SORBTIME:
                     {
-                        if (arg == -1){
+                        if (arg == -1)//If received value is default then set to unknown
+                        {
                             tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
-
                         }
-                        else {
+                        else    //Convert received time in seconds to hours and minutes
+                        {
                             int hours = (int) TimeUnit.SECONDS.toHours(arg);
                             arg -= TimeUnit.HOURS.toSeconds(hours);
                             int mins = (int) TimeUnit.SECONDS.toMinutes(arg);
@@ -278,11 +284,12 @@ public class MainActivity extends ActionBarActivity {
                     }
                     case TASK_SET_BATT:
                     {
-                        if (arg == -1){
+                        if (arg == -1)//If received value is default then set battery to unknown
+                        {
                             tvBatt.setText(getResources().getText(R.string.value_battery_charge_unknown).toString());
                             ivBatt.setImageResource(R.drawable.ic_battery_unknown_grey600_24dp);
                         }
-                        else{
+                        else{//Otherwise set value and image
                             tvBatt.setText(arg + "%");
                             if(arg>=95)ivBatt.setImageResource(R.drawable.ic_battery_full_grey600_24dp);
                             else if(arg>=90)ivBatt.setImageResource(R.drawable.ic_battery_90_grey600_24dp);
@@ -309,9 +316,11 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
+        //Create intent filter and register new receiver with it
         IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(broadcastReceiver, intFilt);
 
+        //If service is not running - start it
         if(!ConnectionService.isServiceRunning)
             startService(new Intent(this, ConnectionService.class));
 
@@ -334,6 +343,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Deregister receiver
         unregisterReceiver(broadcastReceiver);
     }
 
@@ -359,8 +369,9 @@ public class MainActivity extends ActionBarActivity {
                 alertSingleChooseStatus();
                 break;
             }
-            case R.id.bt_Start://Start log activity
+            case R.id.bt_Start:// pause current procedure
             {
+                //TODO: implement starting function
                 Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                 intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
                 sendBroadcast(intent);
@@ -371,6 +382,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Creates dialog, where user chooses what procedure to run
+     */
     public void alertSingleChooseStatus(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         // Set the dialog title
@@ -391,12 +405,14 @@ public class MainActivity extends ActionBarActivity {
                         // or return them to the component that opened the dialog
                         int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
                         switch (selectedPosition){
-                            case 0:{
+                            case 0://If user chooses "Filling" show confirmation to check if patient is connected
+                            {
                                 AlertDialog.Builder confirm = new AlertDialog.Builder(MainActivity.this);
-                                confirm.setTitle(getResources().getText(R.string.title_filling_confirmation).toString());  // заголовок
-                                confirm.setMessage(getResources().getText(R.string.filling_confirmation).toString()); // сообщение
+                                confirm.setTitle(getResources().getText(R.string.title_filling_confirmation).toString());
+                                confirm.setMessage(getResources().getText(R.string.filling_confirmation).toString());
                                 confirm.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int arg1) {
+
+                                    public void onClick(DialogInterface dialog, int arg1) {//If user choose "OK" then send command to start filling
                                         Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                                         intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
@@ -405,11 +421,13 @@ public class MainActivity extends ActionBarActivity {
                                                 Toast.LENGTH_LONG).show();
                                     }
                                 });
+
                                 confirm.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int arg1) {
 
                                     }
                                 });
+
                                 confirm.setCancelable(true);
                                 confirm.setOnCancelListener(new DialogInterface.OnCancelListener() {
                                     public void onCancel(DialogInterface dialog) {
@@ -419,6 +437,7 @@ public class MainActivity extends ActionBarActivity {
                                 confirm.show();
                                 break;
                             }
+
                             case 1:{
                                 Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                                 intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
@@ -426,6 +445,7 @@ public class MainActivity extends ActionBarActivity {
                                 sendBroadcast(intent);
                                 break;
                             }
+
                             case 2:{
                                 Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                                 intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
@@ -433,6 +453,7 @@ public class MainActivity extends ActionBarActivity {
                                 sendBroadcast(intent);
                                 break;
                             }
+
                             case 3:{
                                 Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                                 intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
@@ -440,6 +461,7 @@ public class MainActivity extends ActionBarActivity {
                                 sendBroadcast(intent);
                                 break;
                             }
+
                             default:
                                 break;
                         }

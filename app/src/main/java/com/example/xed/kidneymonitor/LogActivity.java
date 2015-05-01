@@ -36,6 +36,9 @@ public class LogActivity extends ActionBarActivity {
         handler.post(timedTask);
     }
 
+    /**
+     * Handler that updates textview every second
+     */
     Runnable timedTask = new Runnable() {
 
         @Override
@@ -47,6 +50,9 @@ public class LogActivity extends ActionBarActivity {
         }
     };
 
+    /**
+     * Reads log file kidneymonitor.log and updates textview
+     */
     public void readLog() {
         //Get the text file
         File file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
@@ -73,7 +79,9 @@ public class LogActivity extends ActionBarActivity {
     }
 
 
-
+    /**
+     * Checks if we can read from internal storage
+     */
     public boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {

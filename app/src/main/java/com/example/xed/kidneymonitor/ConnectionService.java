@@ -21,21 +21,38 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 
+/**
+ * Background service, can run in "foreground" with notification is status bar.
+ * Service automatically restarts after being stopped by system.
+ * It starts BluetoothChatService and handles messages from it.
+ * Received messages are sent to parcer, which performs check for correct checksum,
+ * and sets received values that then are send to MainActivity via broadcast message.
+ */
 
 public class ConnectionService extends Service {
 
     public static boolean isServiceRunning=false;
 
+    /**
+     * Values for handler of BluetoothChatService messages
+     */
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
 
+    /**
+     * Default values for choosed device
+     */
     public static final String DEVICE_NAME = "device_name";
     public static final String DEVICE_ADDRESS = "00:00:00:00:00:00";
     public static final String TOAST = "toast";
 
+    /**
+     * Values for broadcast receiver to handle messages from MainActivity for
+     * choosing current procedure and starting/stopping it
+     */
     public final static String PARAM_TASK = "task";
     public final static String PARAM_ARG = "arg";
     public final static String BROADCAST_ACTION = "SetStatus";
@@ -49,14 +66,13 @@ public class ConnectionService extends Service {
     public final static int TASK_ARG_SHUTDOWN = 2;
     public final static int TASK_ARG_DISINFECTION = 3;
 
-    private static  int NOTIFY_ID = 238;
-
     /**
      * Initialisation of LowWriter
      */
     final String logTag = "ConnectionService";
+
     /**
-     * Default values for parameters
+     * Default values for values
      */
     public int STATE = 9;
     public int STATUS = 9;
@@ -65,15 +81,21 @@ public class ConnectionService extends Service {
     public int SORBTIME = -1;
     public int BATT = -1;
     public int LASTCONNECTED = -1;
+
+    //Initialising log writer
     LogWriter lw = new LogWriter();
-    /**
-     * Handler that sends messages to MainActivity every one second
-     */
+
+    //Random value for notifications IDs
+    private static  int NOTIFY_ID = 238;
+
+    // Handler that sends messages to MainActivity every one second
     Handler RefreshHandler = new Handler();
+
     private StringBuffer mOutStringBuffer;
     private BluetoothChatService mChatService = null;
     private String mConnectedDeviceName = null;
     private String mConnectedDeviceAddress = null;
+
     /**
      * Handling BluetoothChatService messages
      */
@@ -116,7 +138,7 @@ public class ConnectionService extends Service {
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     lw.appendLog(logTag, "\n" + mConnectedDeviceName + ":  " + readMessage);
-                    parseandexecute(readMessage);
+                    parseandexecute(readMessage);//start parser with received string
                     break;
 
                 case MESSAGE_DEVICE_NAME:
@@ -181,7 +203,7 @@ public class ConnectionService extends Service {
                     lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_ADDRESS+"@"+PrefActivity.CHOSEN_ADDRESS);
                     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                     BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(PrefActivity.CHOSEN_ADDRESS);
-                    mChatService.connect(device, true);
+                    mChatService.connect(device, true);//securely connect to chosen device
                     break;
                 }
 
@@ -199,7 +221,7 @@ public class ConnectionService extends Service {
         Bitmap icon = BitmapFactory.decodeResource(ConnectionService.this.getResources(),
                 R.drawable.ic_refresh_grey600_24dp);
 
-        //start MainActivity on click
+        //start MainActivity on notification click
         Intent notificationIntent = new Intent(ConnectionService.this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(ConnectionService.this,
                 0, notificationIntent,
@@ -224,6 +246,8 @@ public class ConnectionService extends Service {
         startForeground(237, notif);
     }
 
+    //Send message to connected device
+    //TODO: send with \r\n
     public void sendMessage(String input){
         String temp="!$"+input+"*";
         temp+=crc7Check(temp.getBytes());
@@ -233,6 +257,7 @@ public class ConnectionService extends Service {
 
 
     // CRC7 checksum
+    //TODO: generate correct checksum
     public static byte crc7Check(byte[] by1) {
         byte[] crc7byte = {
                 0x00, 0x12, 0x24, 0x36, 0x48, 0x5a, 0x6c, 0x7e,
@@ -273,8 +298,10 @@ public class ConnectionService extends Service {
         return (byte) (((result * 2) + 0x01)& 0xFF);
     }
 
+    /**
+     *Send values to MainActivity every second
+     */
     Runnable timedTask = new Runnable() {
-
         @Override
         public void run() {
             Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
@@ -306,7 +333,7 @@ public class ConnectionService extends Service {
             intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_LASTCONNECTED);
             intent.putExtra(MainActivity.PARAM_ARG, LASTCONNECTED);
             sendBroadcast(intent);
-            LASTCONNECTED=-1;
+            LASTCONNECTED=-1;//Set default state to fix value on main screen
 
             RefreshHandler.postDelayed(timedTask, 1000);//refresh after one second
         }
@@ -316,6 +343,7 @@ public class ConnectionService extends Service {
         super.onCreate();
         Log.d(logTag, "onCreate");
         lw.appendLog(logTag, "onCreate");
+
         if (mChatService == null) setupChat();
         if (mChatService != null) {
             // Only if the state is STATE_NONE, do we know that we haven't started already
@@ -326,9 +354,11 @@ public class ConnectionService extends Service {
         }
         RefreshHandler.post(timedTask);
 
+        //Register receiver with filter to receive messages from MainActivity
         IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(StatusReceiver, intFilt);
 
+        //Register receiver with filter to handle situation when choosen device disconnected
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         registerReceiver(DisconnectReceiver, filter);
@@ -351,21 +381,31 @@ public class ConnectionService extends Service {
         }
     };
 
+    /**
+     * Start service. If foreground setting is on then start it in foreground
+     */
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(logTag, "onStartCommand");
         lw.appendLog(logTag, "onStartCommand");
         isServiceRunning=true;
+
         SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
         if(sPref.getBoolean(PrefActivity.IS_FOREGROUND, false))
             startInForeground();
+
         return START_STICKY;//Service will be restarted if killed by Android
     }
 
+    /**
+     * On service stop deregister all broadcast receivers, stop foreground service and stop service
+     */
     public void onDestroy() {
         super.onDestroy();
         Log.d(logTag, "onDestroy");
         lw.appendLog(logTag, "onDestroy");
-        if (mChatService != null) mChatService.stop();
+
+        if (mChatService != null)
+            mChatService.stop();
         isServiceRunning=false;
         unregisterReceiver(StatusReceiver);
         unregisterReceiver(DisconnectReceiver);
@@ -383,7 +423,6 @@ public class ConnectionService extends Service {
         Log.d(logTag, "setupChat()");
         lw.appendLog(logTag, "setupChat()");
 
-
         // Initialize the BluetoothChatService to perform bluetooth connections
         mChatService = new BluetoothChatService(this, mHandler);
 
@@ -393,24 +432,25 @@ public class ConnectionService extends Service {
 
     /**
      * Parse received string, check checksum and set values
+     * TODO: make chechsum check
      */
     private void parseandexecute(String input) {
-        Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
         input = input.toUpperCase();
-        if (input.indexOf("*") != -1 && input.indexOf("$") != -1) {
-            String hash = input.substring(input.indexOf("*") + 1, input.indexOf("\n") - 1);
-            String commandLine = input.substring(input.indexOf("$"), input.indexOf("*") + 1);
+        if (input.indexOf("*") != -1 && input.indexOf("$") != -1) {//If string is barely correct
+            String hash = input.substring(input.indexOf("*") + 1, input.indexOf("\n") - 1);//Get hash
+            String commandLine = input.substring(input.indexOf("$"), input.indexOf("*") + 1);//Get commands
 
-			/*if (commandLine.equals(checkSum(commandLine))) {
+			/*if (commandLine.equals(checkSum(commandLine))) {//Perform check for checksum
 
             }
             lw.appendLog(logTag,"got checksum="+(int)checkSum(commandLine));*/
             lw.appendLog(logTag, "GOT CHECHSUM=" + crc7Check(input.getBytes()) + " and hash=" + hash);
-            commandLine = commandLine.substring(input.indexOf("$"), input.indexOf("*") - 1);
-            String[] commands = commandLine.split(";");
+
+            commandLine = commandLine.substring(input.indexOf("$"), input.indexOf("*") - 1);//Get commands
+            String[] commands = commandLine.split(";");//Split line into different commands
             for (int i = 0; i < commands.length; i++) {
-                String currentCommand = commands[i].substring(0, commands[i].indexOf("="));
-                String currentArg = commands[i].substring(commands[i].indexOf("=") + 1);
+                String currentCommand = commands[i].substring(0, commands[i].indexOf("="));//Get command itself
+                String currentArg = commands[i].substring(commands[i].indexOf("=") + 1);//Get arguments
                 RequestType request = RequestType.getType(currentCommand);
                 LASTCONNECTED=0;
                 switch (request) {

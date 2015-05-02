@@ -93,6 +93,34 @@
 
     <string name="title_debug">Debug</string>
 
+    <string name="instruction_shutdown">There we have an instruction, which appears\n
+                                        when user selects "Shutdown" option.\n
+                                        As you can see, we can make it in long strings\n
+                                        and built-in images!\n
+                                        Confirmation is provided by "OK" and "Cancel" buttons.
+    </string>
+
+    <string name="instruction_dialysis">There we have an instruction, which appears\n
+                                        when user selects "Dialysis" option.\n
+                                        As you can see, we can make it in long strings\n
+                                        and built-in images!\n
+                                        Confirmation is provided by "OK" and "Cancel" buttons.
+    </string>
+
+   <string name="instruction_disinfection">There we have an instruction, which appears\n
+                                        when user selects "Disinfection" option.\n
+                                        As you can see, we can make it in long strings\n
+                                        and built-in images!\n
+                                        Confirmation is provided by "OK" and "Cancel" buttons.
+    </string>
+
+    <string name="instruction_filling">There we have an instruction, which appears\n
+                                        when user selects "Filling" option.\n
+                                        As you can see, we can make it in long strings\n
+                                        and built-in images!\n
+                                        Confirmation is provided by "OK" and "Cancel" buttons.
+    </string>
+
     <string-array name="status_selection">
         <item>Dialysis</item>
         <item>Filling</item>

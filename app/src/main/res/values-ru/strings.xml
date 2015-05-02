@@ -32,7 +32,7 @@
     <string name="value_status_testing">Тест</string>
     <string name="button_settings">Настройки</string>
     <string name="title_activity_pref">Настройки</string>
-    <string name="button_log">Лог</string>
+    <string name="button_log">Журнал</string>
     <string name="button_scan">Найти устройства</string>
     <string name="none_found">Устройства не найдены</string>
     <string name="none_paired">Нет сопряженных устройств</string>
@@ -73,6 +73,7 @@
         <item>Выключение</item>
         <item>Дезинфекция</item>
     </string-array>
+
     <string name="title_pause_procedure">Приостановить процедуру</string>
     <string name="title_continue_procedure">Возобновить процедуру</string>
     <string name="title_choose_device">Выберите устройство</string>
@@ -82,5 +83,33 @@
     <string name="no">Нет</string>
     <string name="starting_filling">Начинается заполнение...</string>
     <string name="title_debug">Режим отладки</string>
+
+    <string name="instruction_dialysis">Тут инструкция, которая появляется\n
+        когда пользователь выбирает пункт "Диализ".\n
+        Как вы видите, инструкция может быть многострочной\n
+        и со встроенными картинками!\n
+        Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".
+    </string>
+
+    <string name="instruction_disinfection">Тут инструкция, которая появляется\n
+        когда пользователь выбирает пункт "Дезинфекция".\n
+        Как вы видите, инструкция может быть многострочной\n
+        и со встроенными картинками!\n
+        Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".
+    </string>
+
+    <string name="instruction_filling">Тут инструкция, которая появляется\n
+        когда пользователь выбирает пункт "Заполнение".\n
+        Как вы видите, инструкция может быть многострочной\n
+        и со встроенными картинками!\n
+        Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".
+    </string>
+
+    <string name="instruction_shutdown">Тут инструкция, которая появляется\n
+        когда пользователь выбирает пункт "Выключение".\n
+        Как вы видите, инструкция может быть многострочной\n
+        и со встроенными картинками!\n
+        Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".
+    </string>
 
 </resources>

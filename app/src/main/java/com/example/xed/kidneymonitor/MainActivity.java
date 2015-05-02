@@ -1,6 +1,7 @@
 package com.example.xed.kidneymonitor;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -450,58 +451,153 @@ public class MainActivity extends ActionBarActivity {
                         switch (selectedPosition){
                             case 0://If user chooses "Filling" show confirmation to check if patient is connected
                             {
-                                AlertDialog.Builder confirm = new AlertDialog.Builder(MainActivity.this);
-                                confirm.setTitle(getResources().getText(R.string.title_filling_confirmation).toString());
-                                confirm.setMessage(getResources().getText(R.string.filling_confirmation).toString());
-                                confirm.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
+                                final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                instructionDialog.setContentView(R.layout.shutdowndialog);
+                                instructionDialog.setTitle(getResources().getText(R.string.value_status_filling).toString());
 
-                                    public void onClick(DialogInterface dialog, int arg1) {//If user choose "OK" then send command to start filling
+                                // set the custom dialog components - text, image and button
+                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                text.setText(getResources().getText(R.string.instruction_filling).toString());
+                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                image.setImageResource(R.drawable.filling);
+
+                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
                                         Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                                         intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
                                         sendBroadcast(intent);
-                                        Toast.makeText(MainActivity.this, getResources().getText(R.string.starting_filling).toString(),
-                                                Toast.LENGTH_LONG).show();
+                                        instructionDialog.dismiss();
                                     }
                                 });
 
-                                confirm.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int arg1) {
-
+                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        instructionDialog.dismiss();
                                     }
                                 });
 
-                                confirm.setCancelable(true);
-                                confirm.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                    public void onCancel(DialogInterface dialog) {
-
-                                    }
-                                });
-                                confirm.show();
+                                instructionDialog.show();
                                 break;
                             }
 
                             case 1:{
-                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
-                                sendBroadcast(intent);
+                                final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                instructionDialog.setContentView(R.layout.shutdowndialog);
+                                instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
+
+                                // set the custom dialog components - text, image and button
+                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                text.setText(getResources().getText(R.string.instruction_dialysis).toString());
+                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                image.setImageResource(R.drawable.dialysis);
+
+                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
+                                        sendBroadcast(intent);
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                instructionDialog.show();
+
                                 break;
                             }
 
                             case 2:{
-                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
-                                sendBroadcast(intent);
+                                final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                instructionDialog.setContentView(R.layout.shutdowndialog);
+                                instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
+
+                                // set the custom dialog components - text, image and button
+                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                text.setText(getResources().getText(R.string.instruction_shutdown).toString());
+                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                image.setImageResource(R.drawable.shutdown);
+
+                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
+                                        sendBroadcast(intent);
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                instructionDialog.show();
+
                                 break;
                             }
 
                             case 3:{
-                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
-                                sendBroadcast(intent);
+                                final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                instructionDialog.setContentView(R.layout.shutdowndialog);
+                                instructionDialog.setTitle(getResources().getText(R.string.value_status_disinfection).toString());
+
+                                // set the custom dialog components - text, image and button
+                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                text.setText(getResources().getText(R.string.instruction_disinfection).toString());
+                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                image.setImageResource(R.drawable.disinfection);
+
+                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
+                                        sendBroadcast(intent);
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                instructionDialog.show();
+
                                 break;
                             }
 
@@ -512,5 +608,7 @@ public class MainActivity extends ActionBarActivity {
                 })
                 .show();
     }
+
+
 
 }

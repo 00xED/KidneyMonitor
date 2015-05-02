@@ -65,13 +65,13 @@
     <string name="title_service_options">Опции сервиса</string>
     <string name="title_sound">Звук</string>
     <string name="title_vibration">Вибрация</string>
-    <string name="value_sorbtime_mins">м. </string>
+    <string name="value_sorbtime_mins">м.</string>
 
     <string-array name="status_selection">
         <item>Заполнение</item>
         <item>Диализ</item>
         <item>Выключение</item>
-        <item>Дизинфекция</item>
+        <item>Дезинфекция</item>
     </string-array>
     <string name="title_pause_procedure">Приостановить процедуру</string>
     <string name="title_continue_procedure">Возобновить процедуру</string>

@@ -310,7 +310,7 @@ public class MainActivity extends ActionBarActivity {
                     case TASK_SET_LASTCONNECTED:{
                         if(arg!=-1){
                             Calendar c = Calendar.getInstance();
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd:MM:yyyy HH:mm:ss");
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd:MM HH:mm");
                             String strDate = sdf.format(c.getTime());
                             tvLastConnected.setText(getResources().getText(R.string.last_connected).toString()+strDate);
                         }

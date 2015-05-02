@@ -165,18 +165,22 @@ public class ConnectionService extends Service {
                     switch (arg) {
                         case TASK_ARG_DIALYSIS: {
                             sendMessage("SET_STATE_DIALYSIS");
+                            lw.appendLog(logTag, "User switching to DIALYSIS", true);
                             break;
                         }
                         case TASK_ARG_FILLING: {
                             sendMessage("SET_STATE_FILLING");
+                            lw.appendLog(logTag, "User switching to FILLING", true);
                             break;
                         }
                         case TASK_ARG_SHUTDOWN: {
                             sendMessage("SET_STATE_SHUTDOWN");
+                            lw.appendLog(logTag, "User switching to SHUTDOWN", true);
                             break;
                         }
                         case TASK_ARG_DISINFECTION: {
                             sendMessage("SET_STATE_DISINFECTION");
+                            lw.appendLog(logTag, "User switching to DISINFECTION", true);
                             break;
                         }
                         default:
@@ -188,19 +192,21 @@ public class ConnectionService extends Service {
 
                 case TASK_SET_PAUSE: {
                     sendMessage("SET_PAUSE");
+                    lw.appendLog(logTag, "User set PAUSE", true);
                     break;
                 }
 
                 case TASK_SET_RESUME: {
                     sendMessage("SET_RESUME");
+                    lw.appendLog(logTag, "User set RESUME", true);
                     break;
                 }
 
                 case TASK_DO_PAIRING: {
-                    lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_ADDRESS+"@"+PrefActivity.CHOSEN_ADDRESS);
                     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                     BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(PrefActivity.CHOSEN_ADDRESS);
                     mChatService.connect(device, true);//securely connect to chosen device
+                    lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_NAME+'@'+PrefActivity.CHOSEN_ADDRESS, true);
                     break;
                 }
 
@@ -379,17 +385,17 @@ public class ConnectionService extends Service {
                         RequestType requestArg = RequestType.getType(currentArg);
                         switch (requestArg) {
                             case A0: {
-                                lw.appendLog(logTag, "setting STATE to ON");
+                                lw.appendLog(logTag, "setting STATE to ON", true);
                                 STATE = 0;
                                 break;
                             }
                             case A1: {
-                                lw.appendLog(logTag, "setting STATE to OFF");
+                                lw.appendLog(logTag, "setting STATE to OFF", true);
                                 STATE = 1;
                                 break;
                             }
                             default: {
-                                lw.appendLog(logTag, "setting STATE to UNKNOWN");
+                                lw.appendLog(logTag, "setting STATE to UNKNOWN", true);
                                 STATE = 9;
                                 break;
                             }
@@ -398,7 +404,7 @@ public class ConnectionService extends Service {
                     }
 
                     case BATT: {
-                        lw.appendLog(logTag, "got command BATT and " + currentArg);
+                        lw.appendLog(logTag, "setting BATT to " + currentArg, true);
                         lw.appendLog(logTag, "setting battery to " + currentArg + "%");
                         BATT = Integer.parseInt(currentArg);
                         break;
@@ -409,28 +415,28 @@ public class ConnectionService extends Service {
                         RequestType requestArg = RequestType.getType(currentArg);
                         switch (requestArg) {
                             case A0: {
-                                lw.appendLog(logTag, "setting STATUS to FILLING");
+                                lw.appendLog(logTag, "setting STATUS to FILLING", true);
                                 STATUS = 0;
                                 break;
                             }
                             case A1: {
 
-                                lw.appendLog(logTag, "setting STATUS to DIALYSIS");
+                                lw.appendLog(logTag, "setting STATUS to DIALYSIS", true);
                                 STATUS = 1;
                                 break;
                             }
                             case A2: {
-                                lw.appendLog(logTag, "setting STATUS to SHUTDOWN");
+                                lw.appendLog(logTag, "setting STATUS to SHUTDOWN", true);
                                 STATUS = 2;
                                 break;
                             }
                             case A3: {
-                                lw.appendLog(logTag, "setting STATUS to DISINFECTION");
+                                lw.appendLog(logTag, "setting STATUS to DISINFECTION", true);
                                 STATUS = 3;
                                 break;
                             }
                             default: {
-                                lw.appendLog(logTag, "setting STATUS to UNKNOWN");
+                                lw.appendLog(logTag, "setting STATUS to UNKNOWN", true);
                                 STATUS = 9;
                                 break;
                             }
@@ -443,17 +449,17 @@ public class ConnectionService extends Service {
                         RequestType requestArg = RequestType.getType(currentArg);
                         switch (requestArg) {
                             case A0: {
-                                lw.appendLog(logTag, "setting PARAMS to NORMAL");
+                                lw.appendLog(logTag, "setting PARAMS to NORMAL", true);
                                 PARAMS = 0;
                                 break;
                             }
                             case A1: {
-                                lw.appendLog(logTag, "setting PARAMS to DANGER");
+                                lw.appendLog(logTag, "setting PARAMS to DANGER", true);
                                 PARAMS = 1;
                                 break;
                             }
                             default: {
-                                lw.appendLog(logTag, "setting PARAMS to UNKNOWN");
+                                lw.appendLog(logTag, "setting PARAMS to UNKNOWN", true);
                                 PARAMS = 9;
                                 break;
                             }
@@ -462,7 +468,7 @@ public class ConnectionService extends Service {
                     }
 
                     case SORBTIME: {
-                        lw.appendLog(logTag, "got command SORBTIME and " + currentArg);
+                        lw.appendLog(logTag, "setting SORBTIME to " + currentArg, true);
                         SORBTIME = Integer.parseInt(currentArg);
                         break;
                     }
@@ -472,17 +478,17 @@ public class ConnectionService extends Service {
                         RequestType requestArg = RequestType.getType(currentArg);
                         switch (requestArg) {
                             case A0: {
-                                lw.appendLog(logTag, "setting FUNCT to CORRECT");
+                                lw.appendLog(logTag, "setting FUNCT to CORRECT", true);
                                 FUNCT = 0;
                                 break;
                             }
                             case A1: {
-                                lw.appendLog(logTag, "setting FUNCT to FAULT");
+                                lw.appendLog(logTag, "setting FUNCT to FAULT", true);
                                 FUNCT = 1;
                                 break;
                             }
                             default: {
-                                lw.appendLog(logTag, "setting FUNCT to UNKNOWN");
+                                lw.appendLog(logTag, "setting FUNCT to UNKNOWN", true);
                                 FUNCT = 9;
                                 break;
                             }
@@ -491,6 +497,7 @@ public class ConnectionService extends Service {
                     }
 
                     case NOTIF: {
+                        lw.appendLog(logTag, "got NOTIF and "+currentArg, true);
                         Context context = ConnectionService.this;
 
                         Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
@@ -535,17 +542,17 @@ public class ConnectionService extends Service {
                         RequestType requestArg = RequestType.getType(currentArg);
                         switch (requestArg) {
                             case A0: {
-                                lw.appendLog(logTag, "setting PAUSE to NOT");
+                                lw.appendLog(logTag, "setting PAUSE to NOT", true);
                                 PAUSE = 0;
                                 break;
                             }
                             case A1: {
-                                lw.appendLog(logTag, "setting PAUSE to YES");
+                                lw.appendLog(logTag, "setting PAUSE to YES", true);
                                 PAUSE = 1;
                                 break;
                             }
                             default: {
-                                lw.appendLog(logTag, "setting PAUSE to UNKNOWN");
+                                lw.appendLog(logTag, "setting PAUSE to UNKNOWN", true);
                                 PAUSE = 9;
                                 break;
                             }

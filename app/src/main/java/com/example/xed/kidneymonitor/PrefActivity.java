@@ -33,6 +33,7 @@ public class PrefActivity extends ActionBarActivity {
     public static final String IS_FOREGROUND = "FOREGROUND_SERVICE";
     public static final String VIBRATION = "VIBRATION";
     public static final String SOUND = "SOUND";
+    public static final String DEBUG = "DEBUG";
 
     public static String CHOSEN_ADDRESS = "00:00:00:00:00:00";
     public static String CHOSEN_NAME = "NONE";
@@ -43,7 +44,7 @@ public class PrefActivity extends ActionBarActivity {
     private Button btStopService;
 
     private TextView tvCurrentDeviceName, tvCurrentDeviceAddress;
-    private CheckBox cbForegroundService, cbVibrate, cbSound;
+    private CheckBox cbForegroundService, cbVibrate, cbSound, cbDebug;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,12 @@ public class PrefActivity extends ActionBarActivity {
                 cbSound.setChecked(true);
             else
                 cbSound.setChecked(false);
+
+            cbDebug = (CheckBox)findViewById(R.id.cb_Debug);
+            if(sPref.getBoolean(DEBUG, false))
+                cbDebug.setChecked(true);
+            else
+                cbDebug.setChecked(false);
 
         btStopService = (Button) findViewById(R.id.bt_StopService);
     }
@@ -188,6 +195,18 @@ public class PrefActivity extends ActionBarActivity {
                     ed.putBoolean(SOUND, true);
                 else
                     ed.putBoolean(SOUND, false);
+                ed.commit();
+                break;
+            }
+
+            case R.id.cb_Debug://Save setting for debug mode
+            {
+                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+                Editor ed = sPref.edit(); //Setting for preference editing
+                if(cbDebug.isChecked())
+                    ed.putBoolean(DEBUG, true);
+                else
+                    ed.putBoolean(DEBUG, false);
                 ed.commit();
                 break;
             }

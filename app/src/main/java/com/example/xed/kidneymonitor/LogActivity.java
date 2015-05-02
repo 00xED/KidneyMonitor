@@ -1,5 +1,6 @@
 package com.example.xed.kidneymonitor;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -19,6 +20,9 @@ public class LogActivity extends ActionBarActivity {
     //Initialising LogWriter
     private static final String logTag = "LogActivity";
     LogWriter lw = new LogWriter();
+
+    public static final String APP_PREFERENCES = "KIDNEYMON_SETTINGS";
+    public static final String DEBUG = "DEBUG";
 
     public TextView mTvLog;
     public CheckBox mCbAutoscroll;
@@ -55,8 +59,18 @@ public class LogActivity extends ActionBarActivity {
      * Reads log file kidneymonitor.log and updates textview
      */
     public void readLog() {
-        //Get the text file
-        File file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
+        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+        File file;
+        if(sPref.getBoolean(DEBUG, false)) {
+            //Get the text file
+            file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
+        }
+        else
+        {
+            //Get the text file
+            file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
+        }
 
         //Read text from file
         StringBuilder text = new StringBuilder();
@@ -99,6 +113,15 @@ public class LogActivity extends ActionBarActivity {
                 } else {
                     lw.appendLog(logTag, "Log file NOT deleted");
                     mTvLog.append("Log file NOT deleted");
+                }
+
+                File verboseLogFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
+                if (verboseLogFile.exists()) if (verboseLogFile.delete()) {
+                    lw.appendLog(logTag, "Debug log file deleted");
+                    mTvLog.setText("Debug log file deleted");
+                } else {
+                    lw.appendLog(logTag, "Debug log file NOT deleted");
+                    mTvLog.append("Debug log file NOT deleted");
                 }
                 break;
             }

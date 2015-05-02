@@ -408,13 +408,12 @@ public class MainActivity extends ActionBarActivity {
             }
             case R.id.bt_Pause:// pause current procedure
             {
-                if(procedurePaused==0) {
-                    //TODO: implement starting function
+                if(procedurePaused!=1) {
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
                     sendBroadcast(intent);
                 }
-                else if(procedurePaused==1){
+                else {
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_RESUME);
                     sendBroadcast(intent);

@@ -179,4 +179,14 @@
         android:layout_toRightOf="@+id/cb_Vibtation"
         android:layout_toEndOf="@+id/cb_Vibtation"
         android:onClick="OnClick" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_debug"
+        android:id="@+id/cb_Debug"
+        android:layout_above="@+id/bt_SetDefaults"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="OnClick" />
 </RelativeLayout>

@@ -81,5 +81,6 @@
     <string name="filling_confirmation">Пациент подсоединен?</string>
     <string name="no">Нет</string>
     <string name="starting_filling">Начинается заполнение...</string>
+    <string name="title_debug">Режим отладки</string>
 
 </resources>

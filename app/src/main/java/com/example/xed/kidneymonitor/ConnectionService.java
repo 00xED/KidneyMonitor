@@ -94,6 +94,50 @@ public class ConnectionService extends Service {
     private String mConnectedDeviceAddress = null;
 
     /**
+     * Bytes for output commands
+     */
+        final byte CM_SYNC_S = (byte) 0x55;//Start of package
+        final byte CM_SYNC_E = (byte) 0xAA;//End of package
+
+        final byte bPAUSE  = (byte) 0x91;//Pause current procedure
+        final byte bRESUME = (byte) 0x92;//Resume current procedure
+
+        final byte bFILLING      = (byte) 0x81;//Set procedure to FILLING
+        final byte bDIALYSIS     = (byte) 0x82;//Set procedure to DIALYSIS
+        final byte bDISINFECTION = (byte) 0x83;//Set procedure to DISINFECTION
+        final byte bSHUTDOWN     = (byte) 0x84;//Set procedure to SHUTDOWN
+
+        final byte bBATT = (byte) 0x71;
+
+        final byte bSTATE = (byte) 0x72;
+            final byte bSTATE_ON =(byte) 0x10;
+            final byte bSTATE_OFF =(byte) 0x11;
+
+        final byte bSTATUS = (byte) 0x73;
+            final byte bSTATUS_FILLING =      (byte) 0x10;
+            final byte bSTATUS_DIALYSIS =     (byte) 0x11;
+            final byte bSTATUS_DISINFECTION = (byte) 0x12;
+            final byte bSTATUS_SHUTDOWN =     (byte) 0x13;
+            final byte bSTATUS_READY =        (byte) 0x14;
+
+        final byte bPARAMS = (byte) 0x74;
+            final byte bPARAMS_NORM   = (byte) 0x10;
+            final byte bPARAMS_DANGER = (byte) 0x11;
+
+        final byte bSORBTIME =(byte) 0x75;
+
+        final byte bFUNCT = (byte) 0x76;
+            final byte bFUNCT_CORRECT = (byte) 0x10;
+            final byte bFUNCT_FAULT   = (byte) 0x11;
+
+        final byte bRUNNING = (byte) 0x77;
+            final byte bRUNNING_YES = (byte) 0x10;
+            final byte bRUNNING_NO  = (byte) 0x11;
+
+        final byte bNOTIF =(byte) 0x78;
+
+
+    /**
      * Handling BluetoothChatService messages
      */
     private final Handler mHandler = new Handler() {
@@ -135,7 +179,8 @@ public class ConnectionService extends Service {
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     lw.appendLog(logTag, "\n" + mConnectedDeviceName + ":  " + readMessage);
-                    parseandexecute(readMessage);//start parser with received string
+                    //parseandexecute(readMessage);//start parser with received string
+                    parseInBytes(readBuf);
                     break;
 
                 case MESSAGE_DEVICE_NAME:
@@ -151,6 +196,212 @@ public class ConnectionService extends Service {
         }
     };
 
+    public static int byteArrayToInt(byte[] b)
+    {
+        return   b[3] & 0xFF |
+                (b[2] & 0xFF) << 8 |
+                (b[1] & 0xFF) << 16 |
+                (b[0] & 0xFF) << 24;
+    }
+
+    void parseInBytes(byte[] inp){
+
+        if(inp[0]==CM_SYNC_S && inp[7]==CM_SYNC_E)
+        {
+            byte currentArg = inp[3];
+            byte[] databytes = new byte[] {inp[3],inp[4],inp[5],inp[6]};
+            int full_data_int = byteArrayToInt(databytes);
+
+            //int full_data_int = java.nio.ByteBuffer.wrap(databytes).getInt();
+            LASTCONNECTED = 0;
+            switch (inp[1]){
+
+                case bBATT:{
+                    lw.appendLog(logTag, "setting BATT to " + full_data_int, true);
+                    lw.appendLog(logTag, "setting battery to " + full_data_int + "%");
+                    BATT = full_data_int;
+                    break;
+                }
+
+                case bSTATE: {
+                    lw.appendLog(logTag, "got command STATE and " + currentArg);
+                    switch (currentArg) {
+                        case bSTATE_ON: {
+                            lw.appendLog(logTag, "setting STATE to ON", true);
+                            STATE = 0;
+                            break;
+                        }
+                        case bSTATE_OFF: {
+                            lw.appendLog(logTag, "setting STATE to OFF", true);
+                            STATE = 1;
+                            break;
+                        }
+                        default: {
+                            lw.appendLog(logTag, "setting STATE to UNKNOWN", true);
+                            STATE = 9;
+                            break;
+                        }
+                    }
+                    break;
+                }
+
+                case bSTATUS: {
+                    lw.appendLog(logTag, "got command STATUS and " + currentArg);
+                    switch (currentArg) {
+                        case bSTATUS_FILLING: {
+                            lw.appendLog(logTag, "setting STATUS to FILLING", true);
+                            STATUS = 0;
+                            break;
+                        }
+                        case bSTATUS_DIALYSIS: {
+
+                            lw.appendLog(logTag, "setting STATUS to DIALYSIS", true);
+                            STATUS = 1;
+                            break;
+                        }
+                        case bSTATUS_SHUTDOWN: {
+                            lw.appendLog(logTag, "setting STATUS to SHUTDOWN", true);
+                            STATUS = 2;
+                            break;
+                        }
+                        case bSTATUS_DISINFECTION: {
+                            lw.appendLog(logTag, "setting STATUS to DISINFECTION", true);
+                            STATUS = 3;
+                            break;
+                        }
+                        case bSTATUS_READY: {
+                            lw.appendLog(logTag, "setting STATUS to READY", true);
+                            STATUS = 4;
+                            break;
+                        }
+                        default: {
+                            lw.appendLog(logTag, "setting STATUS to UNKNOWN", true);
+                            STATUS = 9;
+                            break;
+                        }
+                    }
+                    break;
+                }
+
+                case bPARAMS: {
+                    lw.appendLog(logTag, "got command PARAMS and " + currentArg);
+                    switch (currentArg) {
+                        case bPARAMS_NORM: {
+                            lw.appendLog(logTag, "setting PARAMS to NORMAL", true);
+                            PARAMS = 0;
+                            break;
+                        }
+                        case bPARAMS_DANGER: {
+                            lw.appendLog(logTag, "setting PARAMS to DANGER", true);
+                            PARAMS = 1;
+                            break;
+                        }
+                        default: {
+                            lw.appendLog(logTag, "setting PARAMS to UNKNOWN", true);
+                            PARAMS = 9;
+                            break;
+                        }
+                    }
+                    break;
+                }
+
+                case bSORBTIME: {
+                    lw.appendLog(logTag, "setting SORBTIME to " + currentArg, true);
+                    SORBTIME = full_data_int;
+                    break;
+                }
+
+                case bFUNCT: {
+                    lw.appendLog(logTag, "got command FUNCT and " + currentArg);
+                    switch (currentArg) {
+                        case bFUNCT_CORRECT: {
+                            lw.appendLog(logTag, "setting FUNCT to CORRECT", true);
+                            FUNCT = 0;
+                            break;
+                        }
+                        case bFUNCT_FAULT: {
+                            lw.appendLog(logTag, "setting FUNCT to FAULT", true);
+                            FUNCT = 1;
+                            break;
+                        }
+                        default: {
+                            lw.appendLog(logTag, "setting FUNCT to UNKNOWN", true);
+                            FUNCT = 9;
+                            break;
+                        }
+                    }
+                    break;
+                }
+
+                case bNOTIF: {
+                    lw.appendLog(logTag, "got NOTIF and "+currentArg, true);
+                    Context context = ConnectionService.this;
+
+                    Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                            R.drawable.ic_refresh_grey600_24dp);
+
+                    //start MainActivity on click
+                    Intent notificationIntent = new Intent(context, MainActivity.class);
+                    PendingIntent contentIntent = PendingIntent.getActivity(context,
+                            0, notificationIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT);
+
+                    Notification notification = new Notification.Builder(context)
+                            .setContentIntent(contentIntent)
+                            .setContentTitle(getResources().getText(R.string.app_name))
+                            .setContentText("some notifications")
+                            .setSmallIcon(R.drawable.ic_help_grey600_24dp)
+                            .setLargeIcon(icon)
+                            .setAutoCancel(true)
+                            .setLights(Color.WHITE, 0, 1)
+                            .build();
+
+                    notification.flags = notification.flags | Notification.FLAG_SHOW_LIGHTS;
+
+                    SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                    if (sPref.getBoolean(PrefActivity.VIBRATION, false))
+                        notification.vibrate = new long[]{1000, 1000, 1000};
+
+
+                    Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    if (sPref.getBoolean(PrefActivity.SOUND, false))
+                        notification.sound = soundUri;
+
+                    NotificationManager notificationManager = (NotificationManager) context
+                            .getSystemService(Context.NOTIFICATION_SERVICE);
+                    notificationManager.notify(NOTIFY_ID, notification);
+                    NOTIFY_ID++;
+                    break;
+                }
+
+                case bRUNNING: {
+                    lw.appendLog(logTag, "got command PAUSE and " + currentArg);
+                    switch (currentArg) {
+                        case bRUNNING_YES: {
+                            lw.appendLog(logTag, "setting PAUSE to YES", true);
+                            PAUSE = 0;
+                            break;
+                        }
+                        case bRUNNING_NO: {
+                            lw.appendLog(logTag, "setting PAUSE to NO", true);
+                            PAUSE = 1;
+                            break;
+                        }
+                        default: {
+                            lw.appendLog(logTag, "setting PAUSE to UNKNOWN", true);
+                            PAUSE = 9;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+
+        }
+    }
+
     /**
      * Handle messages received from main screen activity: setting status and pause/resume
      */
@@ -164,22 +415,26 @@ public class ConnectionService extends Service {
                 case TASK_SET_STATUS: {
                     switch (arg) {
                         case TASK_ARG_DIALYSIS: {
-                            sendMessage("SET_STATE_DIALYSIS");
+                            //sendMessage("SET_STATE_DIALYSIS");
+                            sendMessageBytes(bDIALYSIS);
                             lw.appendLog(logTag, "User switching to DIALYSIS", true);
                             break;
                         }
                         case TASK_ARG_FILLING: {
-                            sendMessage("SET_STATE_FILLING");
+                            //sendMessage("SET_STATE_FILLING");
+                            sendMessageBytes(bFILLING);
                             lw.appendLog(logTag, "User switching to FILLING", true);
                             break;
                         }
                         case TASK_ARG_SHUTDOWN: {
-                            sendMessage("SET_STATE_SHUTDOWN");
+                            //sendMessage("SET_STATE_SHUTDOWN");
+                            sendMessageBytes(bSHUTDOWN);
                             lw.appendLog(logTag, "User switching to SHUTDOWN", true);
                             break;
                         }
                         case TASK_ARG_DISINFECTION: {
-                            sendMessage("SET_STATE_DISINFECTION");
+                            //sendMessage("SET_STATE_DISINFECTION");
+                            sendMessageBytes(bDISINFECTION);
                             lw.appendLog(logTag, "User switching to DISINFECTION", true);
                             break;
                         }
@@ -191,13 +446,15 @@ public class ConnectionService extends Service {
 
 
                 case TASK_SET_PAUSE: {
-                    sendMessage("SET_PAUSE");
+                    //sendMessage("SET_PAUSE");
+                    sendMessageBytes(bPAUSE);
                     lw.appendLog(logTag, "User set PAUSE", true);
                     break;
                 }
 
                 case TASK_SET_RESUME: {
-                    sendMessage("SET_RESUME");
+                    //sendMessage("SET_RESUME");
+                    sendMessageBytes(bRESUME);
                     lw.appendLog(logTag, "User set RESUME", true);
                     break;
                 }
@@ -217,6 +474,18 @@ public class ConnectionService extends Service {
         }
 
     };
+
+    void sendMessageBytes(byte com1)
+    {
+        byte[] outp= new byte[] {CM_SYNC_S, com1, (byte)0x00, (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00, CM_SYNC_E};
+        mChatService.write(outp);
+    }
+
+    void sendMessageBytes(byte com1, byte com2)
+    {
+        byte[] outp= new byte[] {CM_SYNC_S, com1, com2,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00, CM_SYNC_E};
+        mChatService.write(outp);
+    }
 
     /**
      *Send values to MainActivity every second

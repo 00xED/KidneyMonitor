@@ -44,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
     //Is procedure paused? 0-no, 1-yes, other-unknown
     public int procedurePaused = 9;
+    public int selectedProcedure = -1;
 
     /**
      * Settings for BroadcastReceiver
@@ -184,6 +185,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                     case TASK_SET_STATUS:
                     {
+                        selectedProcedure=arg;
                         switch (arg) {
                             case 0:
                             {
@@ -451,7 +453,11 @@ public class MainActivity extends ActionBarActivity {
     /**
      * Creates dialog, where user chooses what procedure to run
      */
+    //TODO:disable button until connected and settings are sent
     public void alertSingleChooseStatus(){
+        int defaultSelection = selectedProcedure;
+        if(selectedProcedure == 4)//if state=ready
+            defaultSelection = -1;
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         // Set the dialog title
         builder.setTitle(getResources().getText(R.string.title_status_select).toString())
@@ -459,9 +465,10 @@ public class MainActivity extends ActionBarActivity {
                 // specify the list array, the items to be selected by default (null for none),
                 // and the listener through which to receive call backs when items are selected
                 // again, R.array.choices were set in the resources res/values/strings.xml
-                .setSingleChoiceItems(R.array.status_selection, 0, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(R.array.status_selection, defaultSelection, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface arg0, int arg1) {}
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
                 })
                         // Set the action buttons
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

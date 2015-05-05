@@ -87,7 +87,7 @@ public class LogActivity extends ActionBarActivity {
 
                 br.close();
             } catch (IOException e) {
-                //You'll need to add proper error handling here
+                lw.appendLog(logTag, e.toString());
             }
         }
         mTvLog.setText(text);

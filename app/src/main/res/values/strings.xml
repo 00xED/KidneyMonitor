@@ -35,7 +35,7 @@
     <string name="caption_battery_charge">Battery\ncharge:</string>
     <string name="value_battery_charge_unknown">Unknown</string>
 
-    <string name="button_start">Pause/resume procedure</string>
+    <string name="button_start">Pause/resume</string>
     <string name="button_change_state">Change\nstate</string>
     <string name="button_notification">Notification</string>
     <string name="button_log">Log</string>
@@ -77,7 +77,7 @@
 
     <string name="title_choose_device">Choose device</string>
     <string name="title_service_options">Service options</string>
-    <string name="title_notification_options">Notofication options</string>
+    <string name="title_notification_options">Notification options</string>
     <string name="title_vibration">Vibration</string>
     <string name="title_sound">Sound</string>
 

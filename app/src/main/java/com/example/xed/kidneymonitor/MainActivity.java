@@ -132,8 +132,16 @@ public class MainActivity extends ActionBarActivity {
         if (mBluetoothAdapter == null) {
             lw.appendLog(logTag, "Bluetooth is not available");
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-            finish();
+            //finish();
         }
+        else
+            // If BT is not on, request that it be enabled.
+            if (!mBluetoothAdapter.isEnabled()) {
+                lw.appendLog(logTag, "Trying to start bluetooth...");
+                Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+                // Otherwise, setup the chat session
+            }
 
         /**
          * Initialise broadcast receiver that listens for messages from ConnectionService
@@ -359,7 +367,7 @@ public class MainActivity extends ActionBarActivity {
         registerReceiver(broadcastReceiver, intFilt);
 
         //If service is not running - start it
-        if(!ConnectionService.isServiceRunning)
+        if(!ConnectionService.isServiceRunning && (mBluetoothAdapter != null))
             startService(new Intent(this, ConnectionService.class));
 
     }
@@ -369,13 +377,7 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
         lw.appendLog(logTag, "+++ ON START +++");
 
-        // If BT is not on, request that it be enabled.
-        if (!mBluetoothAdapter.isEnabled()) {
-            lw.appendLog(logTag, "Trying to start bluetooth...");
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-            // Otherwise, setup the chat session
-        }
+
     }
 
     @Override

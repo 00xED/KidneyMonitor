@@ -116,8 +116,8 @@ public class PrefActivity extends ActionBarActivity {
                 tvCurrentDeviceAddress.setText(address);
 
                 //Saving values
-                ed.putString(SAVED_NAME, name.trim());
-                ed.putString(SAVED_ADDRESS, address.trim());
+                ed.putString(SAVED_NAME, name);
+                ed.putString(SAVED_ADDRESS, address);
                 ed.commit();
                 Toast.makeText(this,
                         getResources().getText(R.string.title_prefs_saved).toString(),

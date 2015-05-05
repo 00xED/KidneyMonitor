@@ -110,9 +110,9 @@ public class MainActivity extends ActionBarActivity {
         /**
          * Load preferences; If saved device address is default - open preferences to find device
          */
-        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-        String address = sPref.getString(SAVED_ADDRESS,
-                getResources().getText(R.string.value_current_device_default_address).toString());
+        //TODO:fix reading default address
+        /*sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+        String address = sPref.getString(SAVED_ADDRESS,"00:00:00:00:00:00");
         if (("00:00:00:00:00:00").equals(address)) { //If address is default start PrefActivity
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
@@ -121,7 +121,7 @@ public class MainActivity extends ActionBarActivity {
                     Toast.LENGTH_SHORT).show();
         } else Toast.makeText(this,
                 getResources().getText(R.string.title_prefs_loaded).toString(),
-                Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show();*/
 
 
         /**
@@ -419,6 +419,26 @@ public class MainActivity extends ActionBarActivity {
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_RESUME);
                     sendBroadcast(intent);
                 }
+                break;
+            }
+            case R.id.tv_CaptionStatus:
+            {
+                alertSingleChooseStatus();
+                break;
+            }
+            case R.id.iv_Status:
+            {
+                alertSingleChooseStatus();
+                break;
+            }
+            case R.id.tv_ValueStatus:
+            {
+                alertSingleChooseStatus();
+                break;
+            }
+            case R.id.tr_StatusRow:
+            {
+                alertSingleChooseStatus();
                 break;
             }
             default:

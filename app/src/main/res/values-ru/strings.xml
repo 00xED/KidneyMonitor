@@ -29,7 +29,6 @@
     <string name="value_state_on">Включено</string>
     <string name="value_status_disinfection">Дезинфекция</string>
     <string name="value_status_filling">Заполнение</string>
-    <string name="value_status_testing">Тест</string>
     <string name="button_settings">Настройки</string>
     <string name="title_activity_pref">Настройки</string>
     <string name="button_log">Журнал</string>
@@ -111,5 +110,6 @@
         и со встроенными картинками!\n
         Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".
     </string>
+    <string name="value_status_ready">Готов</string>
 
 </resources>

@@ -13,7 +13,7 @@
     <string name="value_status_filling">Filling</string>
     <string name="value_status_shutdown">Shutdown</string>
     <string name="value_status_disinfection">Disinfection</string>
-    <string name="value_status_testing">Testing</string>
+    <string name="value_status_ready">Ready</string>
     <string name="value_status_unknown">Unknown</string>
 
     <string name="value_sorbtime_hours"> h. </string>

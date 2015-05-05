@@ -212,7 +212,7 @@ public class MainActivity extends ActionBarActivity {
                             case 4:
                             {
                                 tvStatus.
-                                        setText(getResources().getText(R.string.value_status_testing).toString());
+                                        setText(getResources().getText(R.string.value_status_ready).toString());
                                 break;
                             }
                             default:

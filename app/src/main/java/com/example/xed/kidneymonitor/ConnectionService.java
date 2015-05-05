@@ -208,7 +208,7 @@ public class ConnectionService extends Service {
 
         if(inp[0]==CM_SYNC_S && inp[7]==CM_SYNC_E)
         {
-            byte currentArg = inp[3];
+            byte currentArg = inp[6];
             byte[] databytes = new byte[] {inp[3],inp[4],inp[5],inp[6]};
             int full_data_int = byteArrayToInt(databytes);
 

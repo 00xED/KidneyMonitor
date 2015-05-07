@@ -107,52 +107,51 @@ public class ConnectionService extends Service {
         final byte CM_SYNC_S = (byte) 0x55;//Start of package
         final byte CM_SYNC_E = (byte) 0xAA;//End of package
 
-        final byte bPAUSE  = (byte) 0x91;//Pause current procedure
-        final byte bRESUME = (byte) 0x92;//Resume current procedure
-
         final byte bSETTINGS = (byte) 0x56;//Send settings
 
-        final byte bFILLING      = (byte) 0x81;//Set procedure to FILLING
-        final byte bDIALYSIS     = (byte) 0x82;//Set procedure to DIALYSIS
-        final byte bDISINFECTION = (byte) 0x83;//Set procedure to DISINFECTION
-        final byte bSHUTDOWN     = (byte) 0x84;//Set procedure to SHUTDOWN
+        final byte bSETDPUMP     = (byte) 0x60;//Send to set dialysis pump
+        final byte bSETDPRES     = (byte) 0x61;//Send to set dialysis pressure
+        final byte bSETDCOND     = (byte) 0x62;//Send to set dialysis conductivity
+        final byte bSETDTEMP     = (byte) 0x63;//Send to set dialysis temperature
+        final byte bSETDCUR      = (byte) 0x64;//Send to set dialysis current
+        final byte bSETFPUMP     = (byte) 0x65;//Send to set filling pump
+        final byte bSETUFPUMP    = (byte) 0x66;//Send to set unfilling pump
 
-        final byte bSETDPUMP     = (byte) 0x90;//Set dialysis pump
-        final byte bSETDPRES     = (byte) 0x91;//Set dialysis pressure
-        final byte bSETDCOND     = (byte) 0x92;//Set dialysis conductivity
-        final byte bSETDTEMP     = (byte) 0x93;//Set dialysis current
-        final byte bSETDCUR      = (byte) 0x94;//Set dialysis current
-        final byte bSETFPUMP     = (byte) 0x95;//Set filling pump
-        final byte bSETUFPUMP    = (byte) 0x96;//Set unfilling pump
+        final byte bFILLING      = (byte) 0x70;//Send to set procedure to FILLING
+        final byte bDIALYSIS     = (byte) 0x71;//Send to set procedure to DIALYSIS
+        final byte bDISINFECTION = (byte) 0x72;//Send to set procedure to DISINFECTION
+        final byte bSHUTDOWN     = (byte) 0x73;//Send to set procedure to SHUTDOWN
+        final byte bPAUSE        = (byte) 0x74;//Send to pause current procedure
+        final byte bRESUME       = (byte) 0x75;//Send to resume current procedure
 
-        final byte bBATT = (byte) 0x71;
+        final byte bBATT = (byte) 0x81;//Receiving battery stats
 
-        final byte bSTATE = (byte) 0x72;
+        final byte bSTATE = (byte) 0x82;//Receiving state
             final byte bSTATE_ON =(byte) 0x10;
             final byte bSTATE_OFF =(byte) 0x11;
 
-        final byte bSTATUS = (byte) 0x73;
+        final byte bSTATUS = (byte) 0x83;//Receiving current procedure
             final byte bSTATUS_FILLING =      (byte) 0x10;
             final byte bSTATUS_DIALYSIS =     (byte) 0x11;
             final byte bSTATUS_DISINFECTION = (byte) 0x12;
             final byte bSTATUS_SHUTDOWN =     (byte) 0x13;
             final byte bSTATUS_READY =        (byte) 0x14;
 
-        final byte bPARAMS = (byte) 0x74;
+        final byte bPARAMS = (byte) 0x84;//Receiving procedure params
             final byte bPARAMS_NORM   = (byte) 0x10;
             final byte bPARAMS_DANGER = (byte) 0x11;
 
-        final byte bSORBTIME =(byte) 0x75;
+        final byte bSORBTIME =(byte) 0x85;//Receiving sorbtime
 
-        final byte bFUNCT = (byte) 0x76;
+        final byte bFUNCT = (byte) 0x86;//Receiving device functioning
             final byte bFUNCT_CORRECT = (byte) 0x10;
             final byte bFUNCT_FAULT   = (byte) 0x11;
 
-        final byte bRUNNING = (byte) 0x77;
+        final byte bRUNNING = (byte) 0x87;//Receiving is procedure running
             final byte bRUNNING_YES = (byte) 0x10;
             final byte bRUNNING_NO  = (byte) 0x11;
 
-        final byte bNOTIF =(byte) 0x78;
+        final byte bNOTIF =(byte) 0x88;//Receiving some notification
 
 
     /**
@@ -169,7 +168,6 @@ public class ConnectionService extends Service {
 
                         case BluetoothChatService.STATE_CONNECTED:
                             lw.appendLog(logTag, "\nConnected to: " + mConnectedDeviceName);
-                            sendSettingsFromFile();
                             break;
 
                         case BluetoothChatService.STATE_CONNECTING:
@@ -429,18 +427,19 @@ public class ConnectionService extends Service {
     void sendSettingsFromFile()
     {
         try{
-            FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+"/settings.txt");
+            FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+"/settings.txt");//Read from file
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             //Read File Line By Line
-            while ((strLine = br.readLine()) != null) {
+            while ((strLine = br.readLine()) != null) {//Reading file line by line
                 if (!strLine.startsWith(";")) {//If string is not a comment
                     strLine=strLine.trim();
-                    String snumber = strLine.substring(strLine.indexOf("=") + 1, strLine.indexOf(":"));//Get arguments
+                    String snumber = strLine.substring(strLine.indexOf("=") + 1, strLine.indexOf(":"));//Get channel #
                     int number = Integer.decode(snumber);
                     byte bnumber = ((byte) number);
 
-                    String svalue = strLine.substring(strLine.indexOf(":") + 1, strLine.indexOf(";"));//Get arguments
+                    String svalue = strLine.substring(strLine.indexOf(":") + 1, strLine.indexOf(";"));//Get value
+
                     byte[] bvalue;
                     int ivalue;
                     float fvalue;
@@ -454,48 +453,47 @@ public class ConnectionService extends Service {
                         bvalue = ByteBuffer.allocate(4).putInt(ivalue).array();
                     }
 
-
                     String setting = strLine.substring(0, strLine.indexOf("="));//Get command itself
-                    RequestTypeSettings reqSetting = RequestTypeSettings.getType(setting);
+                    RequestTypeSettings reqSetting = RequestTypeSettings.getType(setting);//Get enum type
 
                     switch (reqSetting) {
-                        case dPump:
+                        case dPump://Send dialysis pump #number value
                         {
                             sendMessageBytes(bSETDPUMP, bnumber, bvalue);
                             lw.appendLog(logTag, "set dPump#"+number+"to "+svalue);
                             break;
                         }
-                        case dPres:
+                        case dPres://Send dialysis pressure #number value
                         {
                             sendMessageBytes(bSETDPRES, bnumber, bvalue);
                             lw.appendLog(logTag, "set dPres#" + number + " to " + svalue);
                             break;
                         }
-                        case dCond:
+                        case dCond://Send dialysis conductivity #number value
                         {
                             sendMessageBytes(bSETDCOND, bnumber, bvalue);
                             lw.appendLog(logTag, "set dCond#" + number + " to " + svalue);
                             break;
                         }
-                        case dTemp:
+                        case dTemp://Send dialysis temperature #number value
                         {
                             sendMessageBytes(bSETDTEMP, bnumber, bvalue);
                             lw.appendLog(logTag, "set dTemp#" + number + " to " + svalue);
                             break;
                         }
-                        case dCur:
+                        case dCur://Send dialysis current #number value
                         {
                             sendMessageBytes(bSETDCUR, bnumber, bvalue);
                             lw.appendLog(logTag, "set dCur#" + number + " to " + svalue);
                             break;
                         }
-                        case fPump:
+                        case fPump://Send filling pump #number value
                         {
                             sendMessageBytes(bSETFPUMP, bnumber, bvalue);
                             lw.appendLog(logTag, "set fPump#" + number + " to " + svalue);
                             break;
                         }
-                        case ufPump:
+                        case ufPump://Send unfilling pump #number value
                         {
                             sendMessageBytes(bSETUFPUMP, bnumber, bvalue);
                             lw.appendLog(logTag, "set ufPump#" + number + " to " + svalue);
@@ -516,8 +514,6 @@ public class ConnectionService extends Service {
             lw.appendLog(logTag, e.toString()+" while reading settings file"); // handle exception
         }
     }
-
-
 
     /**
      * Handle messages received from main screen activity: setting status and pause/resume

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ScrollView;
@@ -70,6 +71,15 @@ public class LogActivity extends ActionBarActivity {
         {
             //Get the text file
             file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
+        }
+        if (!file.exists()) {
+            try {
+                if(!file.createNewFile())
+                    Log.d("LogWriter", "can't create new file");
+            } catch (IOException e) {
+                Log.d("LogWriter", e.toString());
+                e.printStackTrace();
+            }
         }
 
         //Read text from file

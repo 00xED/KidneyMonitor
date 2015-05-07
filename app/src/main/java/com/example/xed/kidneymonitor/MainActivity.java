@@ -481,6 +481,30 @@ public class MainActivity extends ActionBarActivity {
                 alertSingleChooseStatus();
                 break;
             }
+            case R.id.tv_CaptionProcedureParams:
+            {
+                Intent intent = new Intent(this, ParamsActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.tv_ValueProcedureParams:
+            {
+                Intent intent = new Intent(this, ParamsActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.iv_Params:
+            {
+                Intent intent = new Intent(this, ParamsActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.tr_ParamsRow:
+            {
+                Intent intent = new Intent(this, ParamsActivity.class);
+                startActivity(intent);
+                break;
+            }
             default:
                 break;
         }

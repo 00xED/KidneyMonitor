@@ -117,7 +117,8 @@
 
         <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:onClick="OnClick">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,7 +126,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/caption_procedure_params"
                 android:id="@+id/tv_CaptionProcedureParams"
-                android:layout_column="1" />
+                android:layout_column="1"
+                android:onClick="OnClick" />
 
             <Space
                 android:layout_width="5dp"
@@ -135,7 +137,8 @@
             <ImageView
                 android:id="@+id/iv_Params"
                 android:layout_column="3"
-                android:src="@drawable/ic_help_grey600_24dp" />
+                android:src="@drawable/ic_help_grey600_24dp"
+                android:onClick="OnClick" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -143,7 +146,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/value_procedure_params_unknown"
                 android:id="@+id/tv_ValueProcedureParams"
-                android:layout_column="4" />
+                android:layout_column="4"
+                android:onClick="OnClick" />
         </TableRow>
 
         <TableRow

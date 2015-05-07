@@ -129,5 +129,6 @@
         <item>Shutdown</item>
         <item>Disinfection</item>
     </string-array>
+    <string name="title_activity_params">ParamsActivity</string>
 
 </resources>

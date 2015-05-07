@@ -424,7 +424,6 @@ public class ConnectionService extends Service {
                 case bSETTINGSOK:{
                     SETTINGSOK = 0;
                     lw.appendLog(logTag, "Settings OK", true);
-                    //sendSettingsFromFile();
                     break;
                 }
                 default:

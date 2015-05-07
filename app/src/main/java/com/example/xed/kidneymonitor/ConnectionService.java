@@ -16,10 +16,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
 
 /**
  * Background service, can run in "foreground" with notification is status bar.
@@ -102,10 +110,20 @@ public class ConnectionService extends Service {
         final byte bPAUSE  = (byte) 0x91;//Pause current procedure
         final byte bRESUME = (byte) 0x92;//Resume current procedure
 
+        final byte bSETTINGS = (byte) 0x56;//Send settings
+
         final byte bFILLING      = (byte) 0x81;//Set procedure to FILLING
         final byte bDIALYSIS     = (byte) 0x82;//Set procedure to DIALYSIS
         final byte bDISINFECTION = (byte) 0x83;//Set procedure to DISINFECTION
         final byte bSHUTDOWN     = (byte) 0x84;//Set procedure to SHUTDOWN
+
+        final byte bSETDPUMP     = (byte) 0x90;//Set dialysis pump
+        final byte bSETDPRES     = (byte) 0x91;//Set dialysis pressure
+        final byte bSETDCOND     = (byte) 0x92;//Set dialysis conductivity
+        final byte bSETDTEMP     = (byte) 0x93;//Set dialysis current
+        final byte bSETDCUR      = (byte) 0x94;//Set dialysis current
+        final byte bSETFPUMP     = (byte) 0x95;//Set filling pump
+        final byte bSETUFPUMP    = (byte) 0x96;//Set unfilling pump
 
         final byte bBATT = (byte) 0x71;
 
@@ -151,6 +169,7 @@ public class ConnectionService extends Service {
 
                         case BluetoothChatService.STATE_CONNECTED:
                             lw.appendLog(logTag, "\nConnected to: " + mConnectedDeviceName);
+                            sendSettingsFromFile();
                             break;
 
                         case BluetoothChatService.STATE_CONNECTING:
@@ -395,12 +414,110 @@ public class ConnectionService extends Service {
                     }
                     break;
                 }
+
+                case bSETTINGS:{
+                    sendSettingsFromFile();
+                    break;
+                }
                 default:
                     break;
             }
 
         }
     }
+
+    void sendSettingsFromFile()
+    {
+        try{
+            FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+"/settings.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine;
+            //Read File Line By Line
+            while ((strLine = br.readLine()) != null) {
+                if (!strLine.startsWith(";")) {//If string is not a comment
+                    strLine=strLine.trim();
+                    String snumber = strLine.substring(strLine.indexOf("=") + 1, strLine.indexOf(":"));//Get arguments
+                    int number = Integer.decode(snumber);
+                    byte bnumber = ((byte) number);
+
+                    String svalue = strLine.substring(strLine.indexOf(":") + 1, strLine.indexOf(";"));//Get arguments
+                    byte[] bvalue;
+                    int ivalue;
+                    float fvalue;
+                    if(svalue.contains(".")){//if float - convert to float
+                        fvalue = Float.parseFloat(svalue);
+                        bvalue = ByteBuffer.allocate(4).putFloat(fvalue).array();
+                    }
+                    else//otherwise convert to int
+                    {
+                        ivalue = Integer.parseInt(svalue);
+                        bvalue = ByteBuffer.allocate(4).putInt(ivalue).array();
+                    }
+
+
+                    String setting = strLine.substring(0, strLine.indexOf("="));//Get command itself
+                    RequestTypeSettings reqSetting = RequestTypeSettings.getType(setting);
+
+                    switch (reqSetting) {
+                        case dPump:
+                        {
+                            sendMessageBytes(bSETDPUMP, bnumber, bvalue);
+                            lw.appendLog(logTag, "set dPump#"+number+"to "+svalue);
+                            break;
+                        }
+                        case dPres:
+                        {
+                            sendMessageBytes(bSETDPRES, bnumber, bvalue);
+                            lw.appendLog(logTag, "set dPres#" + number + " to " + svalue);
+                            break;
+                        }
+                        case dCond:
+                        {
+                            sendMessageBytes(bSETDCOND, bnumber, bvalue);
+                            lw.appendLog(logTag, "set dCond#" + number + " to " + svalue);
+                            break;
+                        }
+                        case dTemp:
+                        {
+                            sendMessageBytes(bSETDTEMP, bnumber, bvalue);
+                            lw.appendLog(logTag, "set dTemp#" + number + " to " + svalue);
+                            break;
+                        }
+                        case dCur:
+                        {
+                            sendMessageBytes(bSETDCUR, bnumber, bvalue);
+                            lw.appendLog(logTag, "set dCur#" + number + " to " + svalue);
+                            break;
+                        }
+                        case fPump:
+                        {
+                            sendMessageBytes(bSETFPUMP, bnumber, bvalue);
+                            lw.appendLog(logTag, "set fPump#" + number + " to " + svalue);
+                            break;
+                        }
+                        case ufPump:
+                        {
+                            sendMessageBytes(bSETUFPUMP, bnumber, bvalue);
+                            lw.appendLog(logTag, "set ufPump#" + number + " to " + svalue);
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            //Close the input stream
+            br.close();
+            lw.appendLog(logTag, "Settings file read complete");
+        }
+        catch (Exception e)
+        {
+            lw.appendLog(logTag, e.toString()+" while reading settings file"); // handle exception
+        }
+    }
+
+
 
     /**
      * Handle messages received from main screen activity: setting status and pause/resume
@@ -477,13 +594,25 @@ public class ConnectionService extends Service {
 
     void sendMessageBytes(byte com1)
     {
-        byte[] outp= new byte[] {CM_SYNC_S, com1, (byte)0x00, (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00, CM_SYNC_E};
+        byte[] outp = new byte[] {CM_SYNC_S, com1, (byte)0x00, (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00, CM_SYNC_E};
+        mChatService.write(outp);
+    }
+
+    void sendMessageBytes(byte com1, byte[] data)
+    {
+        byte[] outp = new byte[] {CM_SYNC_S, com1, (byte)0x00, data[0], data[1], data[2], data[3], CM_SYNC_E};
         mChatService.write(outp);
     }
 
     void sendMessageBytes(byte com1, byte com2)
     {
-        byte[] outp= new byte[] {CM_SYNC_S, com1, com2,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00, CM_SYNC_E};
+        byte[] outp = new byte[] {CM_SYNC_S, com1, com2,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00, CM_SYNC_E};
+        mChatService.write(outp);
+    }
+
+    void sendMessageBytes(byte com1, byte com2, byte[] data)
+    {
+        byte[] outp = new byte[] {CM_SYNC_S, com1, com2, data[0], data[1], data[2], data[3], CM_SYNC_E};
         mChatService.write(outp);
     }
 
@@ -939,6 +1068,37 @@ public class ConnectionService extends Service {
 
         static public RequestType getType(String pType) {
             for (RequestType type : RequestType.values()) {
+                if (type.getTypeValue().equals(pType)) {
+                    return type;
+                }
+            }
+            throw new RuntimeException("unknown type");
+        }
+
+        public String getTypeValue() {
+            return typeValue;
+        }
+    }
+
+    enum RequestTypeSettings {
+
+        dPump("dPump"),
+        dPres("dPres"),
+        dCond("dCond"),
+        dTemp("dTemp"),
+        dCur("dCur"),
+        fPump("fPump"),
+        ufPump("ufPump"),
+        A0("0"), A1("1"), A2("2"), A3("3"), A4("4"), A5("5"), A6("6"), A7("7"), A8("8"), A9("9");
+
+        private String typeValue;
+
+        RequestTypeSettings(String type) {
+            typeValue = type;
+        }
+
+        static public RequestTypeSettings getType(String pType) {
+            for (RequestTypeSettings type : RequestTypeSettings.values()) {
                 if (type.getTypeValue().equals(pType)) {
                     return type;
                 }

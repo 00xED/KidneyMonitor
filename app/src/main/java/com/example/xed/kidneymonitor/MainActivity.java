@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
     public final static int TASK_SET_BATT = 5;
     public final static int TASK_SET_LASTCONNECTED = 6;
     public final static int TASK_SET_PAUSE = 7;
+    public final static int TASK_SET_SETTINGSOK = 8;
 
     //Is procedure paused? 0-no, 1-yes, other-unknown
     public int procedurePaused = 9;
@@ -70,9 +72,10 @@ public class MainActivity extends ActionBarActivity {
     /**
      * TextViews for main screen
      */
-    private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected;
+    private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected, tvCaptionStatus;
     private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt;
-    private Button btPause;
+    private Button btPause, btState;
+    private TableRow trStatusRow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class MainActivity extends ActionBarActivity {
         tvSorbtime = (TextView) findViewById(R.id.tv_ValueSorbentTime);
         tvBatt = (TextView) findViewById(R.id.tv_ValueBatteryCharge);
         tvLastConnected = (TextView) findViewById(R.id.tv_LastConnected);
+        tvCaptionStatus = (TextView) findViewById(R.id.tv_CaptionStatus);
 
         ivBatt = (ImageView) findViewById(R.id.iv_Battery);
         ivFunct = (ImageView) findViewById(R.id.iv_Functioning);
@@ -107,6 +111,10 @@ public class MainActivity extends ActionBarActivity {
         ivParams = (ImageView) findViewById(R.id.iv_Params);
 
         btPause = (Button) findViewById(R.id.bt_Pause);
+        btState = (Button) findViewById(R.id.bt_State);
+
+        trStatusRow = (TableRow ) findViewById(R.id.tr_StatusRow);
+
 
         /**
          * Load preferences; If saved device address is default - open preferences to find device
@@ -352,6 +360,34 @@ public class MainActivity extends ActionBarActivity {
                                 btPause.
                                         setText(getResources().getText(R.string.button_start).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_help_grey600_24dp, 0, 0, 0);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
+                    case TASK_SET_SETTINGSOK:
+                    {
+                        procedurePaused=arg;
+                        switch (arg) {
+                            case 0:
+                            {
+                                btPause.setEnabled(true);
+                                btState.setEnabled(true);
+                                tvStatus.setEnabled(true);
+                                ivStatus.setEnabled(true);
+                                trStatusRow.setEnabled(true);
+                                tvCaptionStatus.setEnabled(true);
+                                break;
+                            }
+                            default:
+                            {
+                                btPause.setEnabled(false);
+                                btState.setEnabled(false);
+                                tvStatus.setEnabled(false);
+                                ivStatus.setEnabled(false);
+                                trStatusRow.setEnabled(false);
+                                tvCaptionStatus.setEnabled(false);
                                 break;
                             }
                         }

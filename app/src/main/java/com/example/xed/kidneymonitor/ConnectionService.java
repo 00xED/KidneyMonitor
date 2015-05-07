@@ -89,6 +89,7 @@ public class ConnectionService extends Service {
     public int SORBTIME = -1;
     public int BATT = -1;
     public int LASTCONNECTED = -1;
+    public int SETTINGSOK = 9;
 
     //Random value for notifications IDs
     private static  int NOTIFY_ID = 238;
@@ -108,6 +109,7 @@ public class ConnectionService extends Service {
         final byte CM_SYNC_E = (byte) 0xAA;//End of package
 
         final byte bSETTINGS = (byte) 0x56;//Send settings
+        final byte bSETTINGSOK = (byte) 0x57;//Send if received settings OK
 
         final byte bSETDPUMP     = (byte) 0x60;//Send to set dialysis pump
         final byte bSETDPRES     = (byte) 0x61;//Send to set dialysis pressure
@@ -415,6 +417,14 @@ public class ConnectionService extends Service {
 
                 case bSETTINGS:{
                     sendSettingsFromFile();
+                    lw.appendLog(logTag, "Sending settings to device", true);
+                    break;
+                }
+
+                case bSETTINGSOK:{
+                    SETTINGSOK = 0;
+                    lw.appendLog(logTag, "Settings OK", true);
+                    //sendSettingsFromFile();
                     break;
                 }
                 default:
@@ -646,6 +656,10 @@ public class ConnectionService extends Service {
 
             intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_PAUSE);
             intent.putExtra(MainActivity.PARAM_ARG, PAUSE);
+            sendBroadcast(intent);
+
+            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_SETTINGSOK);
+            intent.putExtra(MainActivity.PARAM_ARG, SETTINGSOK);
             sendBroadcast(intent);
 
             intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_LASTCONNECTED);

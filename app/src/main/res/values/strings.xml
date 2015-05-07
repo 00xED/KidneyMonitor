@@ -121,6 +121,8 @@
                                         Confirmation is provided by "OK" and "Cancel" buttons.
     </string>
 
+    <string name="title_settings_ok">Device settings are OK</string>
+
     <string-array name="status_selection">
         <item>Dialysis</item>
         <item>Filling</item>

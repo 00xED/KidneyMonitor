@@ -91,6 +91,17 @@ public class ConnectionService extends Service {
     public int LASTCONNECTED = -1;
     public int SETTINGSOK = 9;
 
+    public String DPUMPFLOW1  = "0";
+    public String DPUMPFLOW2  = "0";
+    public String DPUMPFLOW3  = "0";
+    public String DUFVOLUME1 = "0.0";
+    public String DPRESS1     = "0.0";
+    public String DPRESS2     = "0.0";
+    public String DPRESS3     = "0.0";
+    public String DTEMP1      = "0.0";
+    public String DCOND1      = "0.0";
+    public String DCUR1       = "0.0";
+
     //Random value for notifications IDs
     private static  int NOTIFY_ID = 238;
 
@@ -153,7 +164,20 @@ public class ConnectionService extends Service {
             final byte bRUNNING_YES = (byte) 0x10;
             final byte bRUNNING_NO  = (byte) 0x11;
 
-        final byte bNOTIF =(byte) 0x88;//Receiving some notification
+        final byte bNOTIF = (byte) 0x88;//Receiving some notification
+
+    final byte bDPUMPFLOW1 = (byte) 0x89;//Receiving dialysis pump1 flow
+    final byte bDPUMPFLOW2 = (byte) 0x90;//Receiving dialysis pump2 flow
+    final byte bDPUMPFLOW3 = (byte) 0x91;//Receiving dialysis pump3 flow
+    final byte bDPUFVOLUME1 = (byte) 0x92;//Receiving dialysis pump3 flow
+
+    final byte bDPRESS1 = (byte) 0x93;//Receiving dialysis pressure1
+    final byte bDPRESS2 = (byte) 0x94;//Receiving dialysis pressure2
+    final byte bDPRESS3 = (byte) 0x95;//Receiving dialysis pressure3
+
+    final byte bDTEMP1 = (byte) 0x96;//Receiving dialysis temperature1
+    final byte bDCOND1 = (byte) 0x97;//Receiving dialysis conductivity1
+    final byte bDCUR1 = (byte) 0x98;//Receiving dialysis current1
 
 
     /**
@@ -230,6 +254,7 @@ public class ConnectionService extends Service {
             byte currentArg = inp[6];
             byte[] databytes = new byte[] {inp[3],inp[4],inp[5],inp[6]};
             int full_data_int = byteArrayToInt(databytes);
+            float full_data_float = ByteBuffer.wrap(databytes).getFloat();
 
             //int full_data_int = java.nio.ByteBuffer.wrap(databytes).getInt();
             LASTCONNECTED = 0;
@@ -426,6 +451,67 @@ public class ConnectionService extends Service {
                     lw.appendLog(logTag, "Settings OK", true);
                     break;
                 }
+
+                case bDPUMPFLOW1:{
+                    DPUMPFLOW1 = String.valueOf(full_data_int);
+                    lw.appendLog(logTag, "setting DPUMPFLOW1 to " + DPUMPFLOW1, true);
+                    break;
+                }
+
+                case bDPUMPFLOW2:{
+                    DPUMPFLOW2 = String.valueOf(full_data_int);
+                    lw.appendLog(logTag, "setting DPUMPFLOW2 to " + DPUMPFLOW2, true);
+                    break;
+                }
+
+                case bDPUMPFLOW3:{
+                    DPUMPFLOW3 = String.valueOf(full_data_int);
+                    lw.appendLog(logTag, "setting DPUMPFLOW3 to " + DPUMPFLOW3, true);
+                    break;
+                }
+
+                case bDPUFVOLUME1:{
+                    DUFVOLUME1 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DUFVOLUME1 to " + DUFVOLUME1, true);
+                    break;
+                }
+
+                case bDPRESS1:{
+                    DPRESS1 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DPRESS1 to " + DPRESS1, true);
+                    break;
+                }
+
+                case bDPRESS2:{
+                    DPRESS2 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DPRESS2 to " + DPRESS2, true);
+                    break;
+                }
+
+                case bDPRESS3:{
+                    DPRESS3 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DPRESS3 to " + DPRESS3, true);
+                    break;
+                }
+
+                case bDTEMP1:{
+                    DTEMP1 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DTEMP1 to " + DTEMP1, true);
+                    break;
+                }
+
+                case bDCOND1:{
+                    DCOND1 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DCOND1 to " + DCOND1, true);
+                    break;
+                }
+
+                case bDCUR1:{
+                    DCUR1 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DCUR1 to " + DCUR1, true);
+                    break;
+                }
+
                 default:
                     break;
             }
@@ -665,6 +751,46 @@ public class ConnectionService extends Service {
             intent.putExtra(MainActivity.PARAM_ARG, LASTCONNECTED);
             sendBroadcast(intent);
             LASTCONNECTED=-1;//Set default state to fix value on main screen
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW1);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW1);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW2);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW2);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW3);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW3);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DUFVOLUME1);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS1);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DPRESS1);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS2);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DPRESS2);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS3);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DPRESS3);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DTEMP1);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DTEMP1);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCOND1);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DCOND1);
+            sendBroadcast(intent);
+
+            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCUR1);
+            intent.putExtra(ParamsActivity.PARAM_ARG, DCUR1);
+            sendBroadcast(intent);
 
             RefreshHandler.postDelayed(timedTask, 1000);//refresh after one second
         }

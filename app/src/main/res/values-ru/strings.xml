@@ -111,5 +111,14 @@
         Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".
     </string>
     <string name="value_status_ready">Готов</string>
+    <string name="cells">Ячейки: </string>
+    <string name="l">л</string>
+    <string name="lh">\ л/час</string>
+    <string name="macm2">\ мА/см2</string>
+    <string name="mmHg">\ мм.рт.ст.</string>
+    <string name="title_activity_params">Параметры процедуры</string>
+    <string name="title_pump_flows">Расходы насосов: ±20 мл/мин</string>
+    <string name="title_sensors_readings">Показания датчиков: ±10 мм.рт.ст.</string>
+    <string name="title_settings_ok">Настройки приняты</string>
 
 </resources>

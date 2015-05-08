@@ -40,7 +40,7 @@
     <string name="button_notification">Notification</string>
     <string name="button_log">Log</string>
     <string name="button_settings">Settings</string>
-    <string name="title_activity_pref">PrefActivity</string>
+    <string name="title_activity_pref">Preferences</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="scanning">Scanning for devices...</string>
@@ -58,7 +58,7 @@
     <string name="title_prefs_loaded">Preferences loaded</string>
     <string name="title_prefs_cleared">Preferences cleared</string>
     <string name="title_prefs_new">Choose device to connect</string>
-    <string name="title_activity_log">LogActivity</string>
+    <string name="title_activity_log">Log</string>
     <string name="title_clear_log">Clear log</string>
     <string name="title_set_defaults">Set defaults</string>
     <string name="title_service_start">Start service</string>
@@ -123,12 +123,21 @@
 
     <string name="title_settings_ok">Device settings are OK</string>
 
+    <string name="lh">\ l/hr.</string>
+    <string name="l">\ l</string>
+    <string name="macm2">\ mA/cm2</string>
+    <string name="mmHg">\ mm Hg</string>
+    <string name="cells">Cells: </string>
+    <string name="title_pump_flows">Pumps flows: ±20 ml/min</string>
+    <string name="title_sensors_readings">Sensors readings: ±10 mm Hg</string>
+    <string name="title_electrolyzer">Electrolyzer</string>
+
     <string-array name="status_selection">
         <item>Dialysis</item>
         <item>Filling</item>
         <item>Shutdown</item>
         <item>Disinfection</item>
     </string-array>
-    <string name="title_activity_params">ParamsActivity</string>
+    <string name="title_activity_params">Procedure parameters</string>
 
 </resources>

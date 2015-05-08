@@ -46,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
 
     //Is procedure paused? 0-no, 1-yes, other-unknown
     public int procedurePaused = 9;
+
     public int selectedProcedure = -1;
 
     /**
@@ -72,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * TextViews for main screen
      */
-    private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected, tvCaptionStatus;
+    private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected, tvCaptionStatus, tvCaptionProcedureParams;
     private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt;
     private Button btPause, btState;
     private TableRow trStatusRow;
@@ -103,6 +104,7 @@ public class MainActivity extends ActionBarActivity {
         tvBatt = (TextView) findViewById(R.id.tv_ValueBatteryCharge);
         tvLastConnected = (TextView) findViewById(R.id.tv_LastConnected);
         tvCaptionStatus = (TextView) findViewById(R.id.tv_CaptionStatus);
+        tvCaptionProcedureParams = (TextView) findViewById(R.id.tv_CaptionProcedureParams);
 
         ivBatt = (ImageView) findViewById(R.id.iv_Battery);
         ivFunct = (ImageView) findViewById(R.id.iv_Functioning);
@@ -113,7 +115,7 @@ public class MainActivity extends ActionBarActivity {
         btPause = (Button) findViewById(R.id.bt_Pause);
         btState = (Button) findViewById(R.id.bt_State);
 
-        trStatusRow = (TableRow ) findViewById(R.id.tr_StatusRow);
+        trStatusRow = (TableRow) findViewById(R.id.tr_StatusRow);
 
 
         /**

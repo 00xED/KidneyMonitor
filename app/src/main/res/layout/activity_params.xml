@@ -16,6 +16,56 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textView9"
+                android:id="@+id/TableLayout3"
+                android:layout_below="@+id/textView21">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="ДН1 "
+                        android:id="@+id/textView20"
+                        android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar4"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="5"
+                        android:id="@+id/tv_Cur1"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="  мА/см2"
+                        android:id="@+id/textView37"
+                        android:layout_column="4" />
+                </TableRow>
+
+            </TableLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView9"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
+                android:layout_alignParentEnd="true"
+                android:id="@+id/TableLayout1">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -51,6 +102,35 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/progressBar2"
                         android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Q="
+                        android:id="@+id/textView16"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/tv_PumpFlow1"
+                        android:layout_column="4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=" л/час"
+                        android:id="@+id/textView41"
+                        android:layout_column="5" />
                 </TableRow>
 
                 <TableRow
@@ -64,6 +144,42 @@
                         android:text="ДН2 "
                         android:id="@+id/textView11"
                         android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar3"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Q="
+                        android:id="@+id/textView17"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/tv_PumpFlow2"
+                        android:layout_column="4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=" л/час"
+                        android:id="@+id/textView42"
+                        android:layout_column="5" />
                 </TableRow>
 
                 <TableRow
@@ -77,6 +193,42 @@
                         android:text="УФ "
                         android:id="@+id/textView12"
                         android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar5"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="V="
+                        android:id="@+id/textView18"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/tv_PumpFlow3"
+                        android:layout_column="4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=" л"
+                        android:id="@+id/textView43"
+                        android:layout_column="5" />
                 </TableRow>
             </TableLayout>
 
@@ -94,9 +246,10 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView5"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:id="@+id/TableLayout2"
+                android:layout_below="@+id/textView5">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -117,6 +270,35 @@
                         android:id="@+id/progressBar"
                         android:layout_column="1" />
 
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="P1="
+                        android:id="@+id/textView19"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/tv_PumpPress1"
+                        android:layout_column="4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=" мм.рт.ст."
+                        android:id="@+id/textView32"
+                        android:layout_column="5" />
+
                 </TableRow>
 
                 <TableRow
@@ -131,6 +313,42 @@
                         android:id="@+id/textView7"
                         android:layout_column="0" />
 
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar6"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="P2="
+                        android:id="@+id/textView22"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/tv_PumpPress2"
+                        android:layout_column="4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=" мм.рт.ст."
+                        android:id="@+id/textView33"
+                        android:layout_column="5" />
+
                 </TableRow>
 
                 <TableRow
@@ -144,6 +362,42 @@
                         android:text="ДДД2"
                         android:id="@+id/textView8"
                         android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar7"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="P3="
+                        android:id="@+id/textView23"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/tv_PumpPress3"
+                        android:layout_column="4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=" мм.рт.ст."
+                        android:id="@+id/textView34"
+                        android:layout_column="5" />
                 </TableRow>
 
                 <TableRow
@@ -157,6 +411,42 @@
                         android:text="ДТ"
                         android:id="@+id/textView13"
                         android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar8"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="T="
+                        android:id="@+id/textView24"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/tv_Temp1"
+                        android:layout_column="4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text=" °C"
+                        android:id="@+id/textView35"
+                        android:layout_column="5" />
                 </TableRow>
 
                 <TableRow
@@ -170,89 +460,117 @@
                         android:text="ДП"
                         android:id="@+id/textView14"
                         android:layout_column="0" />
-                </TableRow>
-
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView5"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" >
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="ДДП"
-                        android:id="@+id/textView15"
-                        android:layout_column="0" />
 
                     <ProgressBar
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/progressBar3"
+                        android:id="@+id/progressBar9"
                         android:layout_column="1" />
-                </TableRow>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="ДДД1"
-                        android:id="@+id/textView16"
-                        android:layout_column="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="ДДД2"
-                        android:id="@+id/textView17"
-                        android:layout_column="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                        android:text="G="
+                        android:id="@+id/textView25"
+                        android:layout_column="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="ДТ"
-                        android:id="@+id/textView18"
-                        android:layout_column="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                        android:text="0"
+                        android:id="@+id/tv_Cond1"
+                        android:layout_column="4" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="ДП"
-                        android:id="@+id/textView19"
-                        android:layout_column="0" />
+                        android:text=" ед."
+                        android:id="@+id/textView36"
+                        android:layout_column="5" />
                 </TableRow>
+
             </TableLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Электролизер"
+                android:id="@+id/textView21"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="false"
+                android:layout_below="@+id/TableLayout2" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/TableLayout3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Ячейки"
+                    android:id="@+id/textView15"
+                    android:layout_marginTop="13dp" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView2"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    android:src="@drawable/abc_list_focused_holo" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView3"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    android:src="@drawable/abc_list_focused_holo" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView4"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    android:src="@drawable/abc_list_pressed_holo_dark" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView5"
+                    android:src="@drawable/abc_list_pressed_holo_dark" />
+            </TableRow>
 
         </RelativeLayout>
     </ScrollView>

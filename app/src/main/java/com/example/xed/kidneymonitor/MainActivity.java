@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
      * Parameters for loading preferences
      */
     private static final String SAVED_ADDRESS = "SAVED_ADDRESS";
-    private static final String APP_PREFERENCES = "mysettings";
+    private static final String APP_PREFERENCES = "KIDNEYMON_SETTINGS";
     private SharedPreferences sPref;
 
     public BluetoothAdapter mBluetoothAdapter = null;
@@ -121,10 +121,8 @@ public class MainActivity extends ActionBarActivity {
         /**
          * Load preferences; If saved device address is default - open preferences to find device
          */
-        //TODO:fix reading default address
-        /*sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-        String address = sPref.getString(SAVED_ADDRESS,"00:00:00:00:00:00");
-        if (("00:00:00:00:00:00").equals(address)) { //If address is default start PrefActivity
+        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+        if(!sPref.contains(SAVED_ADDRESS)) { //If address is default start PrefActivity
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
             Toast.makeText(this,
@@ -132,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
                     Toast.LENGTH_SHORT).show();
         } else Toast.makeText(this,
                 getResources().getText(R.string.title_prefs_loaded).toString(),
-                Toast.LENGTH_SHORT).show();*/
+                Toast.LENGTH_SHORT).show();
 
 
         /**
@@ -320,7 +318,7 @@ public class MainActivity extends ActionBarActivity {
                         else{//Otherwise set value and image
                             tvBatt.setText(arg + "%");
                             int batts = Integer.parseInt(arg);
-                            if(batts>=batts)ivBatt.setImageResource(R.drawable.ic_battery_full_grey600_24dp);
+                            if(batts>=95)ivBatt.setImageResource(R.drawable.ic_battery_full_grey600_24dp);
                             else if(batts>=90)ivBatt.setImageResource(R.drawable.ic_battery_90_grey600_24dp);
                             else if(batts>=80)ivBatt.setImageResource(R.drawable.ic_battery_80_grey600_24dp);
                             else if(batts>=60)ivBatt.setImageResource(R.drawable.ic_battery_60_grey600_24dp);

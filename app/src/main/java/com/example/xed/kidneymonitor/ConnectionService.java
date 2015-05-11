@@ -671,10 +671,10 @@ public class ConnectionService extends Service {
 
                 case TASK_DO_PAIRING: {
                     SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences;
-                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(sPref.getString(PrefActivity.SAVED_ADDRESS,
-                            "00:00:00:00:00:00"));
-                    if(!device.getAddress().equals("00:00:00:00:00:00")){
+                    String address = sPref.getString(PrefActivity.SAVED_ADDRESS, "00:00:00:00:00:00");
+                    if(!"00:00:00:00:00:00".equals(address)){
+                        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
                         mChatService.connect(device, true);//securely connect to chosen device
                         lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_NAME+'@'+PrefActivity.CHOSEN_ADDRESS, true);
                     }
@@ -763,47 +763,49 @@ public class ConnectionService extends Service {
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW1);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW2);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DPUMPFLOW2);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW2);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW3);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DPUMPFLOW3);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW3);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DUFVOLUME1);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DUFVOLUME1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS1);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DPRESS1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DPRESS1);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS2);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DPRESS2);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DPRESS2);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS3);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DPRESS3);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DPRESS3);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DTEMP1);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DTEMP1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DTEMP1);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCOND1);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DCOND1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCOND1);
             sendBroadcast(intentParams);
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCUR1);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DCUR1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR1);
             sendBroadcast(intentParams);
 
-            if(DEVICE_ADDRESS.equals("00:00:00:00:00:00")){
-                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_DO_PAIRING);
-                sendBroadcast(intent);
-            }
+            SharedPreferences sPref =  getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE);
+            if(sPref.getBoolean(PrefActivity.AUTOCONNECT, false))
+                if(DEVICE_ADDRESS.equals("00:00:00:00:00:00")){
+                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_DO_PAIRING);
+                    sendBroadcast(intent);
+                }
 
             RefreshHandler.postDelayed(timedTask, 1000);//refresh after one second
         }

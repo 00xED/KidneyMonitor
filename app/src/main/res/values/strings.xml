@@ -131,6 +131,8 @@
     <string name="title_pump_flows">Pumps flows: ±20 ml/min</string>
     <string name="title_sensors_readings">Sensors readings: ±10 mm Hg</string>
     <string name="title_electrolyzer">Electrolyzer</string>
+    <string name="title_autoconnect_options">Autoconnect</string>
+    <string name="title_connect_auto">Connect automatically</string>
 
     <string-array name="status_selection">
         <item>Dialysis</item>

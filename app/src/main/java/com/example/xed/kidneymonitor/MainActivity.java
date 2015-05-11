@@ -129,8 +129,8 @@ public class MainActivity extends ActionBarActivity {
                     getResources().getText(R.string.title_prefs_new).toString(),
                     Toast.LENGTH_SHORT).show();
         } else Toast.makeText(this,
-                getResources().getText(R.string.title_prefs_loaded).toString(),
-                Toast.LENGTH_SHORT).show();
+                    getResources().getText(R.string.title_prefs_loaded).toString(),
+                    Toast.LENGTH_SHORT).show();
 
 
         /**
@@ -141,7 +141,7 @@ public class MainActivity extends ActionBarActivity {
         if (mBluetoothAdapter == null) {
             lw.appendLog(logTag, "Bluetooth is not available");
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-            //finish();
+            finish();
         }
         else
             // If BT is not on, request that it be enabled.

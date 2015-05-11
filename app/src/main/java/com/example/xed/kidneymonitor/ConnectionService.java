@@ -200,7 +200,9 @@ public class ConnectionService extends Service {
                             lw.appendLog(logTag, "\nConnecting to: " + mConnectedDeviceName);
                             break;
 
-                        case BluetoothChatService.STATE_LISTEN:
+                        case BluetoothChatService.STATE_LISTEN:{
+                            break;
+                        }
 
                         case BluetoothChatService.STATE_NONE:
                             lw.appendLog(logTag, "\nNot connected");
@@ -668,10 +670,14 @@ public class ConnectionService extends Service {
                 }
 
                 case TASK_DO_PAIRING: {
+                    SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences;
                     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(PrefActivity.CHOSEN_ADDRESS);
-                    mChatService.connect(device, true);//securely connect to chosen device
-                    lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_NAME+'@'+PrefActivity.CHOSEN_ADDRESS, true);
+                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(sPref.getString(PrefActivity.SAVED_ADDRESS,
+                            "00:00:00:00:00:00"));
+                    if(!device.getAddress().equals("00:00:00:00:00:00")){
+                        mChatService.connect(device, true);//securely connect to chosen device
+                        lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_NAME+'@'+PrefActivity.CHOSEN_ADDRESS, true);
+                    }
                     break;
                 }
 
@@ -792,6 +798,12 @@ public class ConnectionService extends Service {
             intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCUR1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR1);
             sendBroadcast(intentParams);
+
+            if(DEVICE_ADDRESS.equals("00:00:00:00:00:00")){
+                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_DO_PAIRING);
+                sendBroadcast(intent);
+            }
 
             RefreshHandler.postDelayed(timedTask, 1000);//refresh after one second
         }

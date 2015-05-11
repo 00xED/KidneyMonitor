@@ -16,20 +16,20 @@ public class ParamsActivity extends ActionBarActivity {
     private TextView tvDTemp1, tvDCond1, tvDCur1;
 
     private BroadcastReceiver brParams;
-    public final static String PARAM_TASK = "task";
+    public final static String PARAM_TASK = "SetParams";
     public final static String PARAM_ARG = "arg";
     public final static String BROADCAST_ACTION = "SetParams";
 
-    public final static int TASK_SET_DPUMPFLOW1 = 1;
-    public final static int TASK_SET_DPUMPFLOW2 = 2;
-    public final static int TASK_SET_DPUMPFLOW3 = 3;
-    public final static int TASK_SET_DUFVOLUME1 = 4;
-    public final static int TASK_SET_DPRESS1 = 5;
-    public final static int TASK_SET_DPRESS2 = 6;
-    public final static int TASK_SET_DPRESS3 = 7;
-    public final static int TASK_SET_DTEMP1 = 8;
-    public final static int TASK_SET_DCOND1 = 9;
-    public final static int TASK_SET_DCUR1  = 10;
+    public final static int TASK_SET_DPUMPFLOW1 = 31;
+    public final static int TASK_SET_DPUMPFLOW2 = 32;
+    public final static int TASK_SET_DPUMPFLOW3 = 33;
+    public final static int TASK_SET_DUFVOLUME1 = 34;
+    public final static int TASK_SET_DPRESS1 = 35;
+    public final static int TASK_SET_DPRESS2 = 36;
+    public final static int TASK_SET_DPRESS3 = 37;
+    public final static int TASK_SET_DTEMP1 = 38;
+    public final static int TASK_SET_DCOND1 = 39;
+    public final static int TASK_SET_DCUR1  = 40;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class ParamsActivity extends ActionBarActivity {
          */
         brParams = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
-                int task = intent.getIntExtra(PARAM_TASK, 0);
+                int task = intent.getIntExtra(PARAM_TASK, -1);
                 String args = intent.getStringExtra(PARAM_ARG);
 
                 // switch tasks for setting main screen values

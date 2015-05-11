@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * Settings for BroadcastReceiver
      */
-    public final static String PARAM_TASK = "task";
+    public final static String PARAM_TASK = "SetValues";
     public final static String PARAM_ARG = "arg";
     public final static String BROADCAST_ACTION = "SetValues";
     private BroadcastReceiver broadcastReceiver;
@@ -160,23 +160,23 @@ public class MainActivity extends ActionBarActivity {
          */
         broadcastReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
-                int task = intent.getIntExtra(PARAM_TASK, 9);
-                int arg = intent.getIntExtra(PARAM_ARG, 9);
-
+                int task = intent.getIntExtra(PARAM_TASK, -1);
+                //int arg = intent.getIntExtra(PARAM_ARG, -1);
+                String arg = intent.getStringExtra(PARAM_ARG);
                 // switch tasks for setting main screen values
                 if(ConnectionService.isServiceRunning)
                 switch (task) {
                     case TASK_SET_STATE:
                     {
                         switch (arg) {
-                            case 0:
+                            case "0":
                             {
                                 tvState.
                                         setText(getResources().getText(R.string.value_state_on).toString());
                                 ivState.setImageResource(R.drawable.ic_flash_on_grey600_24dp);
                                 break;
                             }
-                            case 1:
+                            case "1":
                             {
                                 tvState.
                                         setText(getResources().getText(R.string.value_state_off).toString());
@@ -195,33 +195,33 @@ public class MainActivity extends ActionBarActivity {
                     }
                     case TASK_SET_STATUS:
                     {
-                        selectedProcedure=arg;
+                        selectedProcedure=Integer.parseInt(arg);
                         switch (arg) {
-                            case 0:
-                            {
-                                tvStatus.
-                                        setText(getResources().getText(R.string.value_status_dialysis).toString());
-                                break;
-                            }
-                            case 1:
+                            case "0":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_filling).toString());
                                 break;
                             }
-                            case 2:
+                            case "1":
+                            {
+                                tvStatus.
+                                        setText(getResources().getText(R.string.value_status_dialysis).toString());
+                                break;
+                            }
+                            case "2":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_shutdown).toString());
                                 break;
                             }
-                            case 3:
+                            case "3":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_disinfection).toString());
                                 break;
                             }
-                            case 4:
+                            case "4":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_ready).toString());
@@ -240,14 +240,14 @@ public class MainActivity extends ActionBarActivity {
                     case TASK_SET_PARAMS:
                     {
                         switch (arg) {
-                            case 0:
+                            case "0":
                             {
                                 tvParams.
                                         setText(getResources().getText(R.string.value_procedure_params_normal).toString());
                                 ivParams.setImageResource(R.drawable.ic_check_circle_grey600_24dp);
                                 break;
                             }
-                            case 1:
+                            case "1":
                             {
                                 tvParams.
                                         setText(getResources().getText(R.string.value_procedure_params_danger).toString());
@@ -267,14 +267,14 @@ public class MainActivity extends ActionBarActivity {
                     case TASK_SET_FUNCT:
                     {
                         switch (arg) {
-                            case 0:
+                            case "0":
                             {
                                 tvFunct.
                                         setText(getResources().getText(R.string.value_device_functioning_correct).toString());
                                 ivFunct.setImageResource(R.drawable.ic_check_circle_grey600_24dp);
                                 break;
                             }
-                            case 1:
+                            case "1":
                             {
                                 tvFunct.
                                         setText(getResources().getText(R.string.value_device_functioning_fault).toString());
@@ -293,15 +293,16 @@ public class MainActivity extends ActionBarActivity {
                     }
                     case TASK_SET_SORBTIME:
                     {
-                        if (arg == -1)//If received value is default then set to unknown
+                        if (arg.equals("-1"))//If received value is default then set to unknown
                         {
                             tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
                         }
                         else    //Convert received time in seconds to hours and minutes
                         {
-                            int hours = (int) TimeUnit.SECONDS.toHours(arg);
-                            arg -= TimeUnit.HOURS.toSeconds(hours);
-                            int mins = (int) TimeUnit.SECONDS.toMinutes(arg);
+                            int times = Integer.parseInt(arg);
+                            int hours = (int) TimeUnit.SECONDS.toHours(times);
+                            times -= TimeUnit.HOURS.toSeconds(hours);
+                            int mins = (int) TimeUnit.SECONDS.toMinutes(times);
                             tvSorbtime.setText(hours +
                                                getResources().getText(R.string.value_sorbtime_hours).toString() +
                                                mins +
@@ -311,25 +312,26 @@ public class MainActivity extends ActionBarActivity {
                     }
                     case TASK_SET_BATT:
                     {
-                        if (arg == -1)//If received value is default then set battery to unknown
+                        if (arg.equals("-1"))//If received value is default then set battery to unknown
                         {
                             tvBatt.setText(getResources().getText(R.string.value_battery_charge_unknown).toString());
                             ivBatt.setImageResource(R.drawable.ic_battery_unknown_grey600_24dp);
                         }
                         else{//Otherwise set value and image
                             tvBatt.setText(arg + "%");
-                            if(arg>=95)ivBatt.setImageResource(R.drawable.ic_battery_full_grey600_24dp);
-                            else if(arg>=90)ivBatt.setImageResource(R.drawable.ic_battery_90_grey600_24dp);
-                            else if(arg>=80)ivBatt.setImageResource(R.drawable.ic_battery_80_grey600_24dp);
-                            else if(arg>=60)ivBatt.setImageResource(R.drawable.ic_battery_60_grey600_24dp);
-                            else if(arg>=50)ivBatt.setImageResource(R.drawable.ic_battery_50_grey600_24dp);
-                            else if(arg>=30)ivBatt.setImageResource(R.drawable.ic_battery_30_grey600_24dp);
+                            int batts = Integer.parseInt(arg);
+                            if(batts>=batts)ivBatt.setImageResource(R.drawable.ic_battery_full_grey600_24dp);
+                            else if(batts>=90)ivBatt.setImageResource(R.drawable.ic_battery_90_grey600_24dp);
+                            else if(batts>=80)ivBatt.setImageResource(R.drawable.ic_battery_80_grey600_24dp);
+                            else if(batts>=60)ivBatt.setImageResource(R.drawable.ic_battery_60_grey600_24dp);
+                            else if(batts>=50)ivBatt.setImageResource(R.drawable.ic_battery_50_grey600_24dp);
+                            else if(batts>=30)ivBatt.setImageResource(R.drawable.ic_battery_30_grey600_24dp);
                             else ivBatt.setImageResource(R.drawable.ic_battery_20_grey600_24dp);
                         }
                         break;
                     }
                     case TASK_SET_LASTCONNECTED:{
-                        if(arg!=-1){
+                        if(!arg.equals("-1")){
                             Calendar c = Calendar.getInstance();
                             SimpleDateFormat sdf = new SimpleDateFormat("dd:MM HH:mm");
                             String strDate = sdf.format(c.getTime());
@@ -340,9 +342,9 @@ public class MainActivity extends ActionBarActivity {
 
                     case TASK_SET_PAUSE:
                     {
-                        procedurePaused=arg;
+                        procedurePaused=Integer.parseInt(arg);
                         switch (arg) {
-                            case 0:
+                            case "0":
                             {
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
@@ -350,7 +352,7 @@ public class MainActivity extends ActionBarActivity {
 
                                 break;
                             }
-                            case 1:
+                            case "1":
                             {
                                 btPause.
                                         setText(getResources().getText(R.string.title_continue_procedure).toString());
@@ -370,9 +372,9 @@ public class MainActivity extends ActionBarActivity {
 
                     case TASK_SET_SETTINGSOK:
                     {
-                        procedurePaused=arg;
+                        procedurePaused=Integer.parseInt(arg);
                         switch (arg) {
-                            case 0:
+                            case "0":
                             {
                                 btPause.setEnabled(true);
                                 btState.setEnabled(true);

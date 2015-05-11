@@ -81,15 +81,15 @@ public class ConnectionService extends Service {
     /**
      * Default values for values
      */
-    public int STATE = 9;
-    public int STATUS = 9;
-    public int PARAMS = 9;
-    public int FUNCT = 9;
-    public int PAUSE = 9;
-    public int SORBTIME = -1;
-    public int BATT = -1;
-    public int LASTCONNECTED = -1;
-    public int SETTINGSOK = 9;
+    public String STATE = "-1";
+    public String STATUS = "-1";
+    public String PARAMS = "-1";
+    public String FUNCT = "-1";
+    public String PAUSE = "-1";
+    public String SORBTIME = "-1";
+    public String BATT = "-1";
+    public String LASTCONNECTED = "-1";
+    public String SETTINGSOK = "-1";
 
     public String DPUMPFLOW1  = "0";
     public String DPUMPFLOW2  = "0";
@@ -169,7 +169,7 @@ public class ConnectionService extends Service {
     final byte bDPUMPFLOW1 = (byte) 0x89;//Receiving dialysis pump1 flow
     final byte bDPUMPFLOW2 = (byte) 0x90;//Receiving dialysis pump2 flow
     final byte bDPUMPFLOW3 = (byte) 0x91;//Receiving dialysis pump3 flow
-    final byte bDPUFVOLUME1 = (byte) 0x92;//Receiving dialysis pump3 flow
+    final byte bDPUFVOLUME1 = (byte) 0x92;//Receiving dialysis uf volume
 
     final byte bDPRESS1 = (byte) 0x93;//Receiving dialysis pressure1
     final byte bDPRESS2 = (byte) 0x94;//Receiving dialysis pressure2
@@ -248,7 +248,7 @@ public class ConnectionService extends Service {
     }
 
     void parseInBytes(byte[] inp){
-
+        //if(inp.length==7)
         if(inp[0]==CM_SYNC_S && inp[7]==CM_SYNC_E)
         {
             byte currentArg = inp[6];
@@ -257,13 +257,13 @@ public class ConnectionService extends Service {
             float full_data_float = ByteBuffer.wrap(databytes).getFloat();
 
             //int full_data_int = java.nio.ByteBuffer.wrap(databytes).getInt();
-            LASTCONNECTED = 0;
+            LASTCONNECTED = "0";
             switch (inp[1]){
 
                 case bBATT:{
                     lw.appendLog(logTag, "setting BATT to " + full_data_int, true);
                     lw.appendLog(logTag, "setting battery to " + full_data_int + "%");
-                    BATT = full_data_int;
+                    BATT = String.valueOf(full_data_int);
                     break;
                 }
 
@@ -272,17 +272,17 @@ public class ConnectionService extends Service {
                     switch (currentArg) {
                         case bSTATE_ON: {
                             lw.appendLog(logTag, "setting STATE to ON", true);
-                            STATE = 0;
+                            STATE = "0";
                             break;
                         }
                         case bSTATE_OFF: {
                             lw.appendLog(logTag, "setting STATE to OFF", true);
-                            STATE = 1;
+                            STATE = "1";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting STATE to UNKNOWN", true);
-                            STATE = 9;
+                            STATE = "9";
                             break;
                         }
                     }
@@ -294,33 +294,33 @@ public class ConnectionService extends Service {
                     switch (currentArg) {
                         case bSTATUS_FILLING: {
                             lw.appendLog(logTag, "setting STATUS to FILLING", true);
-                            STATUS = 0;
+                            STATUS = "0";
                             break;
                         }
                         case bSTATUS_DIALYSIS: {
 
                             lw.appendLog(logTag, "setting STATUS to DIALYSIS", true);
-                            STATUS = 1;
+                            STATUS = "1";
                             break;
                         }
                         case bSTATUS_SHUTDOWN: {
                             lw.appendLog(logTag, "setting STATUS to SHUTDOWN", true);
-                            STATUS = 2;
+                            STATUS = "2";
                             break;
                         }
                         case bSTATUS_DISINFECTION: {
                             lw.appendLog(logTag, "setting STATUS to DISINFECTION", true);
-                            STATUS = 3;
+                            STATUS = "3";
                             break;
                         }
                         case bSTATUS_READY: {
                             lw.appendLog(logTag, "setting STATUS to READY", true);
-                            STATUS = 4;
+                            STATUS = "4";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting STATUS to UNKNOWN", true);
-                            STATUS = 9;
+                            STATUS = "9";
                             break;
                         }
                     }
@@ -332,17 +332,17 @@ public class ConnectionService extends Service {
                     switch (currentArg) {
                         case bPARAMS_NORM: {
                             lw.appendLog(logTag, "setting PARAMS to NORMAL", true);
-                            PARAMS = 0;
+                            PARAMS = "0";
                             break;
                         }
                         case bPARAMS_DANGER: {
                             lw.appendLog(logTag, "setting PARAMS to DANGER", true);
-                            PARAMS = 1;
+                            PARAMS = "1";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting PARAMS to UNKNOWN", true);
-                            PARAMS = 9;
+                            PARAMS = "9";
                             break;
                         }
                     }
@@ -351,7 +351,7 @@ public class ConnectionService extends Service {
 
                 case bSORBTIME: {
                     lw.appendLog(logTag, "setting SORBTIME to " + currentArg, true);
-                    SORBTIME = full_data_int;
+                    SORBTIME = String.valueOf(full_data_int);
                     break;
                 }
 
@@ -360,17 +360,17 @@ public class ConnectionService extends Service {
                     switch (currentArg) {
                         case bFUNCT_CORRECT: {
                             lw.appendLog(logTag, "setting FUNCT to CORRECT", true);
-                            FUNCT = 0;
+                            FUNCT = "0";
                             break;
                         }
                         case bFUNCT_FAULT: {
                             lw.appendLog(logTag, "setting FUNCT to FAULT", true);
-                            FUNCT = 1;
+                            FUNCT = "1";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting FUNCT to UNKNOWN", true);
-                            FUNCT = 9;
+                            FUNCT = "9";
                             break;
                         }
                     }
@@ -423,17 +423,17 @@ public class ConnectionService extends Service {
                     switch (currentArg) {
                         case bRUNNING_YES: {
                             lw.appendLog(logTag, "setting PAUSE to YES", true);
-                            PAUSE = 0;
+                            PAUSE = "0";
                             break;
                         }
                         case bRUNNING_NO: {
                             lw.appendLog(logTag, "setting PAUSE to NO", true);
-                            PAUSE = 1;
+                            PAUSE = "1";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting PAUSE to UNKNOWN", true);
-                            PAUSE = 9;
+                            PAUSE = "9";
                             break;
                         }
                     }
@@ -447,7 +447,7 @@ public class ConnectionService extends Service {
                 }
 
                 case bSETTINGSOK:{
-                    SETTINGSOK = 0;
+                    SETTINGSOK = "0";
                     lw.appendLog(logTag, "Settings OK", true);
                     break;
                 }
@@ -615,8 +615,8 @@ public class ConnectionService extends Service {
      */
     BroadcastReceiver StatusReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
-            int task = intent.getIntExtra(PARAM_TASK, 9);
-            int arg = intent.getIntExtra(PARAM_ARG, 9);
+            int task = intent.getIntExtra(PARAM_TASK, -1);
+            int arg = intent.getIntExtra(PARAM_ARG, -1);
 
             // switch tasks for setting main screen values
             switch (task) {
@@ -713,84 +713,85 @@ public class ConnectionService extends Service {
     Runnable timedTask = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
+            Intent intentValues = new Intent(MainActivity.BROADCAST_ACTION);
+            Intent intentParams = new Intent(ParamsActivity.BROADCAST_ACTION);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_STATE);
-            intent.putExtra(MainActivity.PARAM_ARG, STATE);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_STATE);
+            intentValues.putExtra(MainActivity.PARAM_ARG, STATE);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_STATUS);
-            intent.putExtra(MainActivity.PARAM_ARG, STATUS);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_STATUS);
+            intentValues.putExtra(MainActivity.PARAM_ARG, STATUS);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_PARAMS);
-            intent.putExtra(MainActivity.PARAM_ARG, PARAMS);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_PARAMS);
+            intentValues.putExtra(MainActivity.PARAM_ARG, PARAMS);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_FUNCT);
-            intent.putExtra(MainActivity.PARAM_ARG, FUNCT);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_FUNCT);
+            intentValues.putExtra(MainActivity.PARAM_ARG, FUNCT);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_SORBTIME);
-            intent.putExtra(MainActivity.PARAM_ARG, SORBTIME);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_SORBTIME);
+            intentValues.putExtra(MainActivity.PARAM_ARG, SORBTIME);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_BATT);
-            intent.putExtra(MainActivity.PARAM_ARG, BATT);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_BATT);
+            intentValues.putExtra(MainActivity.PARAM_ARG, BATT);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_PAUSE);
-            intent.putExtra(MainActivity.PARAM_ARG, PAUSE);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_PAUSE);
+            intentValues.putExtra(MainActivity.PARAM_ARG, PAUSE);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_SETTINGSOK);
-            intent.putExtra(MainActivity.PARAM_ARG, SETTINGSOK);
-            sendBroadcast(intent);
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_SETTINGSOK);
+            intentValues.putExtra(MainActivity.PARAM_ARG, SETTINGSOK);
+            sendBroadcast(intentValues);
 
-            intent.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_LASTCONNECTED);
-            intent.putExtra(MainActivity.PARAM_ARG, LASTCONNECTED);
-            sendBroadcast(intent);
-            LASTCONNECTED=-1;//Set default state to fix value on main screen
+            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_LASTCONNECTED);
+            intentValues.putExtra(MainActivity.PARAM_ARG, LASTCONNECTED);
+            sendBroadcast(intentValues);
+            LASTCONNECTED="-1";//Set default state to fix value on main screen
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW1);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW1);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW1);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW1);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW2);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW2);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW2);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW2);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW3);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW3);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW3);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW3);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DUFVOLUME1);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DUFVOLUME1);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS1);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DPRESS1);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS1);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPRESS1);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS2);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DPRESS2);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS2);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPRESS2);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS3);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DPRESS3);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPRESS3);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPRESS3);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DTEMP1);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DTEMP1);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DTEMP1);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DTEMP1);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCOND1);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DCOND1);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCOND1);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DCOND1);
+            sendBroadcast(intentParams);
 
-            intent.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCUR1);
-            intent.putExtra(ParamsActivity.PARAM_ARG, DCUR1);
-            sendBroadcast(intent);
+            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DCUR1);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR1);
+            sendBroadcast(intentParams);
 
             RefreshHandler.postDelayed(timedTask, 1000);//refresh after one second
         }
@@ -891,17 +892,11 @@ public class ConnectionService extends Service {
      * Parse received string, check checksum and set values
      * TODO: make chechsum check
      */
-    private void parseandexecute(String input) {
+   /* private void parseandexecute(String input) {
         if (input.contains("*") && input.contains("$")) {//If string is barely correct
             String hash = input.substring(input.indexOf("*") + 1, input.indexOf("\n") - 1);//Get hash
             String commandLine = input.substring(input.indexOf("$"), input.indexOf("*") + 1);//Get commands
 
-			/*if (commandLine.equals(checkSum(commandLine))) {//Perform check for checksum
-
-            }
-            lw.appendLog(logTag,"got checksum="+(int)checkSum(commandLine));
-            lw.appendLog(logTag, "GOT CHECHSUM=" + crc7Check(commandLine.getBytes()) + " and hash=" + hash);
-            */
 
             commandLine = commandLine.toUpperCase();
             commandLine = commandLine.substring(input.indexOf("$"), input.indexOf("*") - 1);//Get commands
@@ -911,7 +906,7 @@ public class ConnectionService extends Service {
                 String currentCommand = command.substring(0, command.indexOf("="));//Get command itself
                 String currentArg = command.substring(command.indexOf("=") + 1);//Get arguments
                 RequestType request = RequestType.getType(currentCommand);
-                LASTCONNECTED = 0;
+                LASTCONNECTED = "0";
                 switch (request) {
                     case STATE: {
                         lw.appendLog(logTag, "got command STATE and " + currentArg);
@@ -919,17 +914,17 @@ public class ConnectionService extends Service {
                         switch (requestArg) {
                             case A0: {
                                 lw.appendLog(logTag, "setting STATE to ON", true);
-                                STATE = 0;
+                                STATE = "0";
                                 break;
                             }
                             case A1: {
                                 lw.appendLog(logTag, "setting STATE to OFF", true);
-                                STATE = 1;
+                                STATE = "1";
                                 break;
                             }
                             default: {
                                 lw.appendLog(logTag, "setting STATE to UNKNOWN", true);
-                                STATE = 9;
+                                STATE = "9";
                                 break;
                             }
                         }
@@ -1098,7 +1093,7 @@ public class ConnectionService extends Service {
                 }
             }
         }
-    }
+    }*/
 
     //Start service in foreground with notification in bar
     public void startInForeground(){

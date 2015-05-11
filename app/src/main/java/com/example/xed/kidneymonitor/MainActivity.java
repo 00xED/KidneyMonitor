@@ -428,7 +428,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void OnClick(View v) {
-
         switch (v.getId()) {
 
             case R.id.bt_Settings://Start settings activity
@@ -444,11 +443,13 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
                 break;
             }
+
             case R.id.bt_State://Start log activity
             {
                 alertSingleChooseStatus();
                 break;
             }
+
             case R.id.bt_Pause:// pause current procedure
             {
                 if(procedurePaused!=1) {
@@ -463,50 +464,59 @@ public class MainActivity extends ActionBarActivity {
                 }
                 break;
             }
+
             case R.id.tv_CaptionStatus:
             {
                 alertSingleChooseStatus();
                 break;
             }
+
             case R.id.iv_Status:
             {
                 alertSingleChooseStatus();
                 break;
             }
+
             case R.id.tv_ValueStatus:
             {
                 alertSingleChooseStatus();
                 break;
             }
+
             case R.id.tr_StatusRow:
             {
                 alertSingleChooseStatus();
                 break;
             }
+
             case R.id.tv_CaptionProcedureParams:
             {
                 Intent intent = new Intent(this, ParamsActivity.class);
                 startActivity(intent);
                 break;
             }
+
             case R.id.tv_ValueProcedureParams:
             {
                 Intent intent = new Intent(this, ParamsActivity.class);
                 startActivity(intent);
                 break;
             }
+
             case R.id.iv_Params:
             {
                 Intent intent = new Intent(this, ParamsActivity.class);
                 startActivity(intent);
                 break;
             }
+
             case R.id.tr_ParamsRow:
             {
                 Intent intent = new Intent(this, ParamsActivity.class);
                 startActivity(intent);
                 break;
             }
+
             default:
                 break;
         }

@@ -533,7 +533,6 @@ public class MainActivity extends ActionBarActivity {
     /**
      * Creates dialog, where user chooses what procedure to run
      */
-    //TODO:disable button until connected and settings are sent
     public void alertSingleChooseStatus(){
         int defaultSelection = selectedProcedure;
         if(selectedProcedure == 4)//if state=ready

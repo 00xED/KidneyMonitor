@@ -44,9 +44,6 @@ public class MainActivity extends ActionBarActivity {
     public final static int TASK_SET_PAUSE = 7;
     public final static int TASK_SET_SETTINGSOK = 8;
 
-    //Is procedure paused? 0-no, 1-yes, other-unknown
-    public int procedurePaused = -1;
-
     public int selectedProcedure = -1;
 
     /**
@@ -199,24 +196,36 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_filling).toString());
+                                btPause.
+                                        setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
                                 break;
                             }
                             case "1":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_dialysis).toString());
+                                btPause.
+                                        setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
                                 break;
                             }
                             case "2":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_shutdown).toString());
+                                btPause.
+                                        setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
                                 break;
                             }
                             case "3":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_disinfection).toString());
+                                btPause.
+                                        setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
                                 break;
                             }
                             case "4":
@@ -230,6 +239,9 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_flush).toString());
+                                btPause.
+                                        setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
                                 break;
                             }
                             default:
@@ -345,38 +357,6 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     }
 
-                    case TASK_SET_PAUSE:
-                    {
-
-                        switch (arg) {
-                            case "0":
-                            {
-                                btPause.
-                                        setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
-                                procedurePaused=0;
-                                break;
-                            }
-                            case "1":
-                            {
-                                btPause.
-                                        setText(getResources().getText(R.string.title_continue_procedure).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_grey600_24dp, 0, 0, 0);
-                                procedurePaused=1;
-                                break;
-                            }
-                            default:
-                            {
-                                btPause.
-                                        setText(getResources().getText(R.string.button_start).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_help_grey600_24dp, 0, 0, 0);
-                                procedurePaused=-1;
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
                     case TASK_SET_SETTINGSOK:
                     {
                         switch (arg) {
@@ -460,16 +440,9 @@ public class MainActivity extends ActionBarActivity {
 
             case R.id.bt_Pause:// pause current procedure
             {
-                if(procedurePaused==0) {
-                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
-                    sendBroadcast(intent);
-                }
-                else {
-                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_RESUME);
-                    sendBroadcast(intent);
-                }
+                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                sendBroadcast(intent);
                 break;
             }
 

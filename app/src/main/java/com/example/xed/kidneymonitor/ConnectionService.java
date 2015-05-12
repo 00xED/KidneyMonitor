@@ -66,7 +66,6 @@ public class ConnectionService extends Service {
     public final static String BROADCAST_ACTION = "SetStatus";
     public final static int TASK_SET_STATUS = 0;
     public final static int TASK_SET_PAUSE = 1;
-    public final static int TASK_SET_RESUME = 2;
     public final static int TASK_DO_PAIRING = 3;
 
     public final static int TASK_ARG_FILLING = 0;
@@ -148,7 +147,6 @@ public class ConnectionService extends Service {
         final byte bSHUTDOWN     = (byte) 0x73;//Send to set procedure to SHUTDOWN
         final byte bFLUSH        = (byte) 0x5D;//Send to set procedure to FLUSH
         final byte bPAUSE        = (byte) 0x74;//Send to pause current procedure
-        final byte bRESUME       = (byte) 0x75;//Send to resume current procedure
 
         final byte bBATT = (byte) 0x81;//Receiving battery stats
 
@@ -173,10 +171,6 @@ public class ConnectionService extends Service {
         final byte bFUNCT = (byte) 0x86;//Receiving device functioning
             final byte bFUNCT_CORRECT = (byte) 0x10;
             final byte bFUNCT_FAULT   = (byte) 0x11;
-
-        final byte bRUNNING = (byte) 0x87;//Receiving is procedure running
-            final byte bRUNNING_YES = (byte) 0x10;
-            final byte bRUNNING_NO  = (byte) 0x11;
 
         final byte bNOTIF = (byte) 0x88;//Receiving some notification
 
@@ -445,69 +439,6 @@ public class ConnectionService extends Service {
                         default: {
                             lw.appendLog(logTag, "setting FUNCT to UNKNOWN", true);
                             FUNCT = "9";
-                            break;
-                        }
-                    }
-                    break;
-                }
-
-                case bNOTIF: {
-                    lw.appendLog(logTag, "got NOTIF and "+currentArg, true);
-                    Context context = ConnectionService.this;
-
-                    Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
-                            R.drawable.ic_refresh_grey600_24dp);
-
-                    //start MainActivity on click
-                    Intent notificationIntent = new Intent(context, MainActivity.class);
-                    PendingIntent contentIntent = PendingIntent.getActivity(context,
-                            0, notificationIntent,
-                            PendingIntent.FLAG_CANCEL_CURRENT);
-
-                    Notification notification = new Notification.Builder(context)
-                            .setContentIntent(contentIntent)
-                            .setContentTitle(getResources().getText(R.string.app_name))
-                            .setContentText("some notifications")
-                            .setSmallIcon(R.drawable.ic_help_grey600_24dp)
-                            .setLargeIcon(icon)
-                            .setAutoCancel(true)
-                            .setLights(Color.WHITE, 0, 1)
-                            .build();
-
-                    notification.flags = notification.flags | Notification.FLAG_SHOW_LIGHTS;
-
-                    SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                    if (sPref.getBoolean(PrefActivity.VIBRATION, false))
-                        notification.vibrate = new long[]{1000, 1000, 1000};
-
-
-                    Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                    if (sPref.getBoolean(PrefActivity.SOUND, false))
-                        notification.sound = soundUri;
-
-                    NotificationManager notificationManager = (NotificationManager) context
-                            .getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager.notify(NOTIFY_ID, notification);
-                    NOTIFY_ID++;
-                    break;
-                }
-
-                case bRUNNING: {
-                    lw.appendLog(logTag, "got command PAUSE and " + currentArg);
-                    switch (currentArg) {
-                        case bRUNNING_YES: {
-                            lw.appendLog(logTag, "setting PAUSE to NO", true);
-                            PAUSE = "0";
-                            break;
-                        }
-                        case bRUNNING_NO: {
-                            lw.appendLog(logTag, "setting PAUSE to YES", true);
-                            PAUSE = "1";
-                            break;
-                        }
-                        default: {
-                            lw.appendLog(logTag, "setting PAUSE to UNKNOWN", true);
-                            PAUSE = "-1";
                             break;
                         }
                     }
@@ -829,12 +760,6 @@ public class ConnectionService extends Service {
                 case TASK_SET_PAUSE: {
                     sendMessageBytes(bPAUSE);
                     lw.appendLog(logTag, "User set PAUSE", true);
-                    break;
-                }
-
-                case TASK_SET_RESUME: {
-                    sendMessageBytes(bRESUME);
-                    lw.appendLog(logTag, "User set RESUME", true);
                     break;
                 }
 

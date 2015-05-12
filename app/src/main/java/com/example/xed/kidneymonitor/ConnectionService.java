@@ -527,9 +527,13 @@ public class ConnectionService extends Service {
             FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+"/settings.txt");//Read from file
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
-            //Read File Line By Line
+            //Read File Line By Lined
             while ((strLine = br.readLine()) != null) {//Reading file line by line
-                if (!strLine.startsWith(";")) {//If string is not a comment
+                if (!strLine.startsWith(";") && strLine.endsWith(";") &&
+                strLine.contains("=") && strLine.contains(":") &&
+                (strLine.contains("dPump") || strLine.contains("dPres") || strLine.contains("dCond") || strLine.contains("dTemp") ||
+                strLine.contains("dCur")  || strLine.contains("fPump")  || strLine.contains("ufPump"))) {//If string is not a comment
+
                     strLine=strLine.trim();
                     String snumber = strLine.substring(strLine.indexOf("=") + 1, strLine.indexOf(":"));//Get channel #
                     int number = Integer.decode(snumber);
@@ -580,8 +584,8 @@ public class ConnectionService extends Service {
                         }
                         case dCur://Send dialysis current #number value
                         {
-                            sendMessageBytes(bSETDCUR, bnumber, bvalue);
-                            lw.appendLog(logTag, "set dCur#" + number + " to " + svalue);
+                            //sendMessageBytes(bSETDCUR, bnumber, bvalue);
+                            //lw.appendLog(logTag, "set dCur#" + number + " to " + svalue);
                             break;
                         }
                         case fPump://Send filling pump #number value

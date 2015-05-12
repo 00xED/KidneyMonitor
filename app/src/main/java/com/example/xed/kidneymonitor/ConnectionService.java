@@ -316,7 +316,9 @@ public class ConnectionService extends Service {
 
             byte currentArg = inp[6];
             byte[] databytes = new byte[] {inp[3],inp[4],inp[5],inp[6]};
-            int full_data_int = byteArrayToInt(databytes);
+            //int full_data_int = byteArrayToInt(databytes);
+
+            int full_data_int = ByteBuffer.wrap(databytes).getInt();
             float full_data_float = ByteBuffer.wrap(databytes).getFloat();
 
             //int full_data_int = java.nio.ByteBuffer.wrap(databytes).getInt();
@@ -502,12 +504,6 @@ public class ConnectionService extends Service {
                     }
                     break;
                 }
-
-                /*case bSETTINGS:{
-                    //sendSettingsFromFile();
-                    //lw.appendLog(logTag, "Sending settings to device", true);
-                    break;
-                }*/
 
                 case bSETTINGSOK:{
                     SETTINGSOK = "0";
@@ -757,101 +753,6 @@ public class ConnectionService extends Service {
         return ByteBuffer.allocate(4).putInt(ivalue).array();
     }
 
-    /*void sendSettingsFromFile()
-    {
-        try{
-            FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+"/settings.txt");//Read from file
-            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-            String strLine;
-            //Read File Line By Lined
-            while ((strLine = br.readLine()) != null) {//Reading file line by line
-                if (!strLine.startsWith(";") && strLine.endsWith(";") &&
-                strLine.contains("=") && strLine.contains(":") &&
-                (strLine.contains("dPump") || strLine.contains("dPres") || strLine.contains("dCond") || strLine.contains("dTemp") ||
-                strLine.contains("dCur")  || strLine.contains("fPump")  || strLine.contains("ufPump"))) {//If string is not a comment
-
-                    strLine=strLine.trim();
-                    String snumber = strLine.substring(strLine.indexOf("=") + 1, strLine.indexOf(":"));//Get channel #
-                    int number = Integer.decode(snumber);
-                    byte bnumber = ((byte) number);
-
-                    String svalue = strLine.substring(strLine.indexOf(":") + 1, strLine.indexOf(";"));//Get value
-
-                    byte[] bvalue;
-                    int ivalue;
-                    float fvalue;
-                    if(svalue.contains(".")){//if float - convert to float
-                        fvalue = Float.parseFloat(svalue);
-                        bvalue = ByteBuffer.allocate(4).putFloat(fvalue).array();
-                    }
-                    else//otherwise convert to int
-                    {
-                        ivalue = Integer.parseInt(svalue);
-                        bvalue = ByteBuffer.allocate(4).putInt(ivalue).array();
-                    }
-
-                    String setting = strLine.substring(0, strLine.indexOf("="));//Get command itself
-                    RequestTypeSettings reqSetting = RequestTypeSettings.getType(setting);//Get enum type
-
-                    switch (reqSetting) {
-                        case dPump://Send dialysis pump #number value
-                        {
-                            sendMessageBytes(bSETDPUMP, bnumber, bvalue);
-                            lw.appendLog(logTag, "set dPump#"+number+"to "+svalue);
-                            break;
-                        }
-                        case dPres://Send dialysis pressure #number value
-                        {
-                            sendMessageBytes(bSETDPRES, bnumber, bvalue);
-                            lw.appendLog(logTag, "set dPres#" + number + " to " + svalue);
-                            break;
-                        }
-                        case dCond://Send dialysis conductivity #number value
-                        {
-                            sendMessageBytes(bSETDCOND, bnumber, bvalue);
-                            lw.appendLog(logTag, "set dCond#" + number + " to " + svalue);
-                            break;
-                        }
-                        case dTemp://Send dialysis temperature #number value
-                        {
-                            sendMessageBytes(bSETDTEMP, bnumber, bvalue);
-                            lw.appendLog(logTag, "set dTemp#" + number + " to " + svalue);
-                            break;
-                        }
-                        case dCur://Send dialysis current #number value
-                        {
-                            //sendMessageBytes(bSETDCUR, bnumber, bvalue);
-                            //lw.appendLog(logTag, "set dCur#" + number + " to " + svalue);
-                            break;
-                        }
-                        case fPump://Send filling pump #number value
-                        {
-                            sendMessageBytes(bSETFPUMP, bnumber, bvalue);
-                            lw.appendLog(logTag, "set fPump#" + number + " to " + svalue);
-                            break;
-                        }
-                        case ufPump://Send unfilling pump #number value
-                        {
-                            sendMessageBytes(bSETUFPUMP, bnumber, bvalue);
-                            lw.appendLog(logTag, "set ufPump#" + number + " to " + svalue);
-                            break;
-                        }
-                        default:
-                            break;
-                    }
-                }
-            }
-
-            //Close the input stream
-            br.close();
-            lw.appendLog(logTag, "Settings file read complete");
-        }
-        catch (Exception e)
-        {
-            lw.appendLog(logTag, e.toString()+" while reading settings file"); // handle exception
-        }
-    }*/
-
     /**
      * Handle messages received from main screen activity: setting status and pause/resume
      */
@@ -865,25 +766,21 @@ public class ConnectionService extends Service {
                 case TASK_SET_STATUS: {
                     switch (arg) {
                         case TASK_ARG_DIALYSIS: {
-                            //sendMessage("SET_STATE_DIALYSIS");
                             sendMessageBytes(bDIALYSIS);
                             lw.appendLog(logTag, "User switching to DIALYSIS", true);
                             break;
                         }
                         case TASK_ARG_FILLING: {
-                            //sendMessage("SET_STATE_FILLING");
                             sendMessageBytes(bFILLING);
                             lw.appendLog(logTag, "User switching to FILLING", true);
                             break;
                         }
                         case TASK_ARG_SHUTDOWN: {
-                            //sendMessage("SET_STATE_SHUTDOWN");
                             sendMessageBytes(bSHUTDOWN);
                             lw.appendLog(logTag, "User switching to SHUTDOWN", true);
                             break;
                         }
                         case TASK_ARG_DISINFECTION: {
-                            //sendMessage("SET_STATE_DISINFECTION");
                             sendMessageBytes(bDISINFECTION);
                             lw.appendLog(logTag, "User switching to DISINFECTION", true);
                             break;
@@ -894,16 +791,13 @@ public class ConnectionService extends Service {
                     break;
                 }
 
-
                 case TASK_SET_PAUSE: {
-                    //sendMessage("SET_PAUSE");
                     sendMessageBytes(bPAUSE);
                     lw.appendLog(logTag, "User set PAUSE", true);
                     break;
                 }
 
                 case TASK_SET_RESUME: {
-                    //sendMessage("SET_RESUME");
                     sendMessageBytes(bRESUME);
                     lw.appendLog(logTag, "User set RESUME", true);
                     break;
@@ -1156,212 +1050,6 @@ public class ConnectionService extends Service {
         mOutStringBuffer = new StringBuffer("");
     }
 
-    /**
-     * Parse received string, check checksum and set values
-     * TODO: make chechsum check
-     */
-   /* private void parseandexecute(String input) {
-        if (input.contains("*") && input.contains("$")) {//If string is barely correct
-            String hash = input.substring(input.indexOf("*") + 1, input.indexOf("\n") - 1);//Get hash
-            String commandLine = input.substring(input.indexOf("$"), input.indexOf("*") + 1);//Get commands
-
-
-            commandLine = commandLine.toUpperCase();
-            commandLine = commandLine.substring(input.indexOf("$"), input.indexOf("*") - 1);//Get commands
-            String[] commands = commandLine.split(";");//Split line into different commands
-
-            for (String command : commands) {
-                String currentCommand = command.substring(0, command.indexOf("="));//Get command itself
-                String currentArg = command.substring(command.indexOf("=") + 1);//Get arguments
-                RequestType request = RequestType.getType(currentCommand);
-                LASTCONNECTED = "0";
-                switch (request) {
-                    case STATE: {
-                        lw.appendLog(logTag, "got command STATE and " + currentArg);
-                        RequestType requestArg = RequestType.getType(currentArg);
-                        switch (requestArg) {
-                            case A0: {
-                                lw.appendLog(logTag, "setting STATE to ON", true);
-                                STATE = "0";
-                                break;
-                            }
-                            case A1: {
-                                lw.appendLog(logTag, "setting STATE to OFF", true);
-                                STATE = "1";
-                                break;
-                            }
-                            default: {
-                                lw.appendLog(logTag, "setting STATE to UNKNOWN", true);
-                                STATE = "9";
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
-                    case BATT: {
-                        lw.appendLog(logTag, "setting BATT to " + currentArg, true);
-                        lw.appendLog(logTag, "setting battery to " + currentArg + "%");
-                        BATT = Integer.parseInt(currentArg);
-                        break;
-                    }
-
-                    case STATUS: {
-                        lw.appendLog(logTag, "got command STATUS and " + currentArg);
-                        RequestType requestArg = RequestType.getType(currentArg);
-                        switch (requestArg) {
-                            case A0: {
-                                lw.appendLog(logTag, "setting STATUS to FILLING", true);
-                                STATUS = 0;
-                                break;
-                            }
-                            case A1: {
-
-                                lw.appendLog(logTag, "setting STATUS to DIALYSIS", true);
-                                STATUS = 1;
-                                break;
-                            }
-                            case A2: {
-                                lw.appendLog(logTag, "setting STATUS to SHUTDOWN", true);
-                                STATUS = 2;
-                                break;
-                            }
-                            case A3: {
-                                lw.appendLog(logTag, "setting STATUS to DISINFECTION", true);
-                                STATUS = 3;
-                                break;
-                            }
-                            default: {
-                                lw.appendLog(logTag, "setting STATUS to UNKNOWN", true);
-                                STATUS = 9;
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
-                    case PARAMS: {
-                        lw.appendLog(logTag, "got command PARAMS and " + currentArg);
-                        RequestType requestArg = RequestType.getType(currentArg);
-                        switch (requestArg) {
-                            case A0: {
-                                lw.appendLog(logTag, "setting PARAMS to NORMAL", true);
-                                PARAMS = 0;
-                                break;
-                            }
-                            case A1: {
-                                lw.appendLog(logTag, "setting PARAMS to DANGER", true);
-                                PARAMS = 1;
-                                break;
-                            }
-                            default: {
-                                lw.appendLog(logTag, "setting PARAMS to UNKNOWN", true);
-                                PARAMS = 9;
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
-                    case SORBTIME: {
-                        lw.appendLog(logTag, "setting SORBTIME to " + currentArg, true);
-                        SORBTIME = Integer.parseInt(currentArg);
-                        break;
-                    }
-
-                    case FUNCT: {
-                        lw.appendLog(logTag, "got command FUNCT and " + currentArg);
-                        RequestType requestArg = RequestType.getType(currentArg);
-                        switch (requestArg) {
-                            case A0: {
-                                lw.appendLog(logTag, "setting FUNCT to CORRECT", true);
-                                FUNCT = 0;
-                                break;
-                            }
-                            case A1: {
-                                lw.appendLog(logTag, "setting FUNCT to FAULT", true);
-                                FUNCT = 1;
-                                break;
-                            }
-                            default: {
-                                lw.appendLog(logTag, "setting FUNCT to UNKNOWN", true);
-                                FUNCT = 9;
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
-                    case NOTIF: {
-                        lw.appendLog(logTag, "got NOTIF and "+currentArg, true);
-                        Context context = ConnectionService.this;
-
-                        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
-                                R.drawable.ic_refresh_grey600_24dp);
-
-                        //start MainActivity on click
-                        Intent notificationIntent = new Intent(context, MainActivity.class);
-                        PendingIntent contentIntent = PendingIntent.getActivity(context,
-                                0, notificationIntent,
-                                PendingIntent.FLAG_CANCEL_CURRENT);
-
-                        Notification notification = new Notification.Builder(context)
-                                .setContentIntent(contentIntent)
-                                .setContentTitle(getResources().getText(R.string.app_name))
-                                .setContentText(currentArg)
-                                .setSmallIcon(R.drawable.ic_help_grey600_24dp)
-                                .setLargeIcon(icon)
-                                .setAutoCancel(true)
-                                .setLights(Color.WHITE, 0, 1)
-                                .build();
-
-                        notification.flags = notification.flags | Notification.FLAG_SHOW_LIGHTS;
-
-                        SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                        if (sPref.getBoolean(PrefActivity.VIBRATION, false))
-                            notification.vibrate = new long[]{1000, 1000, 1000};
-
-
-                        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                        if (sPref.getBoolean(PrefActivity.SOUND, false))
-                            notification.sound = soundUri;
-
-                        NotificationManager notificationManager = (NotificationManager) context
-                                .getSystemService(Context.NOTIFICATION_SERVICE);
-                        notificationManager.notify(NOTIFY_ID, notification);
-                        NOTIFY_ID++;
-                        break;
-                    }
-
-                    case PAUSE: {
-                        lw.appendLog(logTag, "got command PAUSE and " + currentArg);
-                        RequestType requestArg = RequestType.getType(currentArg);
-                        switch (requestArg) {
-                            case A0: {
-                                lw.appendLog(logTag, "setting PAUSE to NOT", true);
-                                PAUSE = 0;
-                                break;
-                            }
-                            case A1: {
-                                lw.appendLog(logTag, "setting PAUSE to YES", true);
-                                PAUSE = 1;
-                                break;
-                            }
-                            default: {
-                                lw.appendLog(logTag, "setting PAUSE to UNKNOWN", true);
-                                PAUSE = 9;
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
-                    default:
-                        break;
-                }
-            }
-        }
-    }*/
 
     //Start service in foreground with notification in bar
     public void startInForeground(){

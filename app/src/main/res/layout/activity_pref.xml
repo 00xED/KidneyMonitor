@@ -46,7 +46,8 @@
         android:onClick="OnClick"
         android:layout_alignTop="@+id/space2"
         android:layout_toRightOf="@+id/space2"
-        android:layout_alignBottom="@+id/space2" />
+        android:layout_alignBottom="@+id/space2"
+        android:layout_marginLeft="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -110,7 +111,8 @@
         android:onClick="OnClick"
         android:layout_alignTop="@+id/cb_ForegroundService"
         android:layout_toRightOf="@+id/space2"
-        android:layout_toEndOf="@+id/space2" />
+        android:layout_toEndOf="@+id/space2"
+        android:layout_marginLeft="30dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -136,9 +138,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/title_choose_device"
         android:id="@+id/textView"
-        android:layout_alignBottom="@+id/space"
-        android:layout_toRightOf="@+id/tv_ValueCurrentDeviceName"
-        android:layout_toEndOf="@+id/tv_ValueCurrentDeviceName" />
+        android:layout_above="@+id/tv_CaptionCurrentDevice"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"

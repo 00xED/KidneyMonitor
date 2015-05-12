@@ -120,5 +120,8 @@
     <string name="title_pump_flows">Расходы насосов: ±20 мл/мин</string>
     <string name="title_sensors_readings">Показания датчиков: ±10 мм.рт.ст.</string>
     <string name="title_settings_ok">Настройки приняты</string>
+    <string name="title_autoconnect_options">Автоподключение</string>
+    <string name="title_connect_auto">Подключаться автоматически</string>
+    <string name="title_electrolyzer">Электролизер</string>
 
 </resources>

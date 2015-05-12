@@ -255,6 +255,7 @@ public class ConnectionService extends Service {
 
                         case BluetoothChatService.STATE_CONNECTED:
                             lw.appendLog(logTag, "\nConnected to: " + mConnectedDeviceName);
+                            sendMessageBytes((byte)0x00);
                             break;
 
                         case BluetoothChatService.STATE_CONNECTING:
@@ -713,55 +714,55 @@ public class ConnectionService extends Service {
                 }
 
                 case PE_PRESS1:{
-
+                    sendNotification("ERROR PE_PRESS1");
                     lw.appendLog(logTag, "ERROR PE_PRESS1", true);
                     break;
                 }
 
                 case PE_PRESS2:{
-
+                    sendNotification("ERROR PE_PRESS2");
                     lw.appendLog(logTag, "ERROR PE_PRESS2", true);
                     break;
                 }
 
                 case PE_PRESS3:{
-
-                    lw.appendLog(logTag, "ERROR PE_PRESS1", true);
+                    sendNotification("ERROR PE_PRESS3");
+                    lw.appendLog(logTag, "ERROR PE_PRESS3", true);
                     break;
                 }
 
                 case PE_TEMP:{
-
+                    sendNotification("ERROR PE_TEMP");
                     lw.appendLog(logTag, "ERROR PE_TEMP", true);
                     break;
                 }
 
                 case PE_ELECTRO:{
-
+                    sendNotification("ERROR PE_ELECTRO");
                     lw.appendLog(logTag, "ERROR PE_ELECTRO", true);
                     break;
                 }
 
                 case PE_EDS1:{
-
+                    sendNotification("ERROR PE_EDS1");
                     lw.appendLog(logTag, "ERROR PE_EDS1", true);
                     break;
                 }
 
                 case PE_EDS2:{
-
+                    sendNotification("ERROR PE_EDS2");
                     lw.appendLog(logTag, "ERROR PE_EDS2", true);
                     break;
                 }
 
                 case PE_EDS3:{
-
+                    sendNotification("ERROR PE_EDS3");
                     lw.appendLog(logTag, "ERROR PE_EDS3", true);
                     break;
                 }
 
                 case PE_EDS4:{
-
+                    sendNotification("ERROR PE_EDS4");
                     lw.appendLog(logTag, "ERROR PE_EDS4", true);
                     break;
                 }
@@ -856,6 +857,7 @@ public class ConnectionService extends Service {
         }
 
     };
+
 
     void sendMessageBytes(byte com1)
     {
@@ -1232,7 +1234,45 @@ public class ConnectionService extends Service {
         }
     }
 
+    void sendNotification(String currentArg){
+        lw.appendLog(logTag, "NOTIF:"+currentArg, true);
+        Context context = ConnectionService.this;
 
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.ic_refresh_grey600_24dp);
+
+        //start MainActivity on click
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context,
+                0, notificationIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Notification notification = new Notification.Builder(context)
+                .setContentIntent(contentIntent)
+                .setContentTitle(getResources().getText(R.string.app_name))
+                .setContentText(currentArg)
+                .setSmallIcon(R.drawable.ic_help_grey600_24dp)
+                .setLargeIcon(icon)
+                .setAutoCancel(true)
+                .setLights(Color.WHITE, 0, 1)
+                .build();
+
+        notification.flags = notification.flags | Notification.FLAG_SHOW_LIGHTS;
+
+        SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+        if (sPref.getBoolean(PrefActivity.VIBRATION, false))
+            notification.vibrate = new long[]{1000, 1000, 1000};
+
+
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (sPref.getBoolean(PrefActivity.SOUND, false))
+            notification.sound = soundUri;
+
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFY_ID, notification);
+        NOTIFY_ID++;
+    }
 
     enum RequestType {
 

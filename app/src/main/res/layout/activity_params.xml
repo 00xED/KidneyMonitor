@@ -31,15 +31,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="ДН1 "
-                        android:id="@+id/textView20"
+                        android:text="I "
+                        android:id="@+id/textView30"
                         android:layout_column="0" />
 
                     <ProgressBar
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/progressBar4"
+                        android:id="@+id/progressBar11"
                         android:layout_column="1" />
 
                     <Space
@@ -60,7 +60,130 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/macm2"
+                        android:id="@+id/textView38"
+                        android:layout_column="4" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="II "
+                        android:id="@+id/textView27"
+                        android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar10"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="5"
+                        android:id="@+id/tv_DCur2"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/macm2"
+                        android:id="@+id/textView29"
+                        android:layout_column="4" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="III "
+                        android:id="@+id/textView20"
+                        android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar4"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="5"
+                        android:id="@+id/tv_DCur3"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/macm2"
                         android:id="@+id/textView37"
+                        android:layout_column="4" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="IV "
+                        android:id="@+id/textView39"
+                        android:layout_column="0" />
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBar12"
+                        android:layout_column="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_column="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="5"
+                        android:id="@+id/tv_DCur4"
+                        android:layout_column="3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/macm2"
+                        android:id="@+id/textView44"
                         android:layout_column="4" />
                 </TableRow>
 

@@ -101,6 +101,9 @@ public class ConnectionService extends Service {
     public String DTEMP1      = "0.0";
     public String DCOND1      = "0.0";
     public String DCUR1       = "0.0";
+    public String DCUR2       = "0.0";
+    public String DCUR3       = "0.0";
+    public String DCUR4       = "0.0";
 
     //Random value for notifications IDs
     private static  int NOTIFY_ID = 238;
@@ -119,21 +122,29 @@ public class ConnectionService extends Service {
         final byte CM_SYNC_S = (byte) 0x55;//Start of package
         final byte CM_SYNC_E = (byte) 0xAA;//End of package
 
-        final byte bSETTINGS = (byte) 0x56;//Send settings
-        final byte bSETTINGSOK = (byte) 0x57;//Send if received settings OK
+        //final byte bSETTINGS = (byte) 0x57;//Send settings
+        final byte bSETTINGSOK = (byte) 0x49;//Send if received settings OK
 
-        final byte bSETDPUMP     = (byte) 0x60;//Send to set dialysis pump
-        final byte bSETDPRES     = (byte) 0x61;//Send to set dialysis pressure
-        final byte bSETDCOND     = (byte) 0x62;//Send to set dialysis conductivity
-        final byte bSETDTEMP     = (byte) 0x63;//Send to set dialysis temperature
-        final byte bSETDCUR      = (byte) 0x64;//Send to set dialysis current
-        final byte bSETFPUMP     = (byte) 0x65;//Send to set filling pump
-        final byte bSETUFPUMP    = (byte) 0x66;//Send to set unfilling pump
+        final byte bSENDDPUMP1     = (byte) 0x50;//Send to set dialysis pump
+        final byte bSENDDPUMP2     = (byte) 0x51;//Send to set dialysis pump
+        final byte bSENDDPUMP3     = (byte) 0x52;//Send to set dialysis pump
 
-        final byte bFILLING      = (byte) 0x70;//Send to set procedure to FILLING
-        final byte bDIALYSIS     = (byte) 0x71;//Send to set procedure to DIALYSIS
-        final byte bDISINFECTION = (byte) 0x72;//Send to set procedure to DISINFECTION
-        final byte bSHUTDOWN     = (byte) 0x73;//Send to set procedure to SHUTDOWN
+        final byte bSENDDPRESS1     = (byte) 0x53;//Send to set dialysis pressure1
+        final byte bSENDDPRESS2     = (byte) 0x54;//Send to set dialysis pressure2conductivity
+        final byte bSENDDPRESS3     = (byte) 0x55;//Send to set dialysis pressure3
+        final byte bSENDDTEMP       = (byte) 0x56;//Send to set dialysis temperaturecurrent
+        final byte bSENDDCOND       = (byte) 0x57;//Send to set dialysis conductivity
+        final byte bSENDFPUMP1    = (byte) 0x58;//Send to set filling pump1
+        final byte bSENDFPUMP2    = (byte) 0x59;//Send to set filling pump1
+        final byte bSENDFPUMP3    = (byte) 0x60;//Send to set filling pump1
+        final byte bSENDUFPUMP1    = (byte) 0x61;//Send to set unfilling pump1
+        final byte bSENDUFPUMP2    = (byte) 0x62;//Send to set unfilling pump1
+        final byte bSENDUFPUMP3    = (byte) 0x63;//Send to set unfilling pump1
+
+        final byte bFILLING      = (byte) 0x5B;//Send to set procedure to FILLING
+        final byte bDIALYSIS     = (byte) 0x5C;//Send to set procedure to DIALYSIS
+        final byte bDISINFECTION = (byte) 0x5E;//Send to set procedure to DISINFECTION
+        final byte bSHUTDOWN     = (byte) 0x73;//Send to set procedure to SHUTDOWN          TODO:flush
         final byte bPAUSE        = (byte) 0x74;//Send to pause current procedure
         final byte bRESUME       = (byte) 0x75;//Send to resume current procedure
 
@@ -166,18 +177,65 @@ public class ConnectionService extends Service {
 
         final byte bNOTIF = (byte) 0x88;//Receiving some notification
 
-    final byte bDPUMPFLOW1 = (byte) 0x89;//Receiving dialysis pump1 flow
-    final byte bDPUMPFLOW2 = (byte) 0x90;//Receiving dialysis pump2 flow
-    final byte bDPUMPFLOW3 = (byte) 0x91;//Receiving dialysis pump3 flow
-    final byte bDPUFVOLUME1 = (byte) 0x92;//Receiving dialysis uf volume
+        final byte bDPUMPFLOW1 = (byte) 0xE9;//Receiving dialysis pump1 flow
+        final byte bDPUMPFLOW2 = (byte) 0xEA;//Receiving dialysis pump2 flow
+        final byte bDPUMPFLOW3 = (byte) 0xEB;//Receiving dialysis pump3 flow
+        final byte bDPUFVOLUME1 = (byte) 0x92;//Receiving dialysis uf volume TODO:volume equation
 
-    final byte bDPRESS1 = (byte) 0x93;//Receiving dialysis pressure1
-    final byte bDPRESS2 = (byte) 0x94;//Receiving dialysis pressure2
-    final byte bDPRESS3 = (byte) 0x95;//Receiving dialysis pressure3
+        final byte bDPRESS1 = (byte) 0xE0;//Receiving dialysis pressure1
+        final byte bDPRESS2 = (byte) 0xE1;//Receiving dialysis pressure2
+        final byte bDPRESS3 = (byte) 0xE2;//Receiving dialysis pressure3
 
-    final byte bDTEMP1 = (byte) 0x96;//Receiving dialysis temperature1
-    final byte bDCOND1 = (byte) 0x97;//Receiving dialysis conductivity1
-    final byte bDCUR1 = (byte) 0x98;//Receiving dialysis current1
+        final byte bDTEMP1 = (byte) 0xE3;//Receiving dialysis temperature1
+        final byte bDCOND1 = (byte) 0xE4;//Receiving dialysis conductivity1
+
+        final byte bDCUR1 = (byte) 0xE5;//Receiving dialysis current1
+        final byte bDCUR2 = (byte) 0xE6;//Receiving dialysis current1
+        final byte bDCUR3 = (byte) 0xE7;//Receiving dialysis current1
+        final byte bDCUR4 = (byte) 0xE8;//Receiving dialysis current1
+
+
+    /**
+    **ERROR codes
+     */
+    final byte  PE_PRESS1 = (byte)  0xF0;    // Ошибка допустимого диапазона давления датчика 1
+    final byte  PE_PRESS2 = (byte)  0xF1;    // Ошибка допустимого диапазона давления датчика 2
+    final byte  PE_PRESS3 = (byte)  0xF2;    // Ошибка допустимого диапазона давления датчика 3
+    final byte  PE_TEMP   = (byte)  0xF3;    // Ошибка допустимого диапазона температуры
+    final byte  PE_ELECTRO= (byte)  0xF4;    // Ошибка допустимого диапазона электропроводности
+    final byte  PE_EDS1   = (byte)  0xF5;    // Ошибка допустимого диапазона тока банки 1
+    final byte  PE_EDS2   = (byte)  0xF6;    // Ошибка допустимого диапазона тока банки 2
+    final byte  PE_EDS3   = (byte)  0xF7;    // Ошибка допустимого диапазона тока банки 3
+    final byte  PE_EDS4   = (byte)  0xF8;    // Ошибка допустимого диапазона тока банки 4
+
+
+    /**
+     * Values read from settings file
+     */
+    public static int DPUMP1FLOW = 0;
+    public static int DPUMP2FLOW = 0;
+    public static int DPUMP3FLOW = 0;
+
+    public static float DPRESS1MIN = 0.0f;
+    public static float DPRESS1MAX = 0.0f;
+    public static float DPRESS2MIN = 0.0f;
+    public static float DPRESS2MAX = 0.0f;
+    public static float DPRESS3MIN = 0.0f;
+    public static float DPRESS3MAX = 0.0f;
+
+    public static float DTEMP1MIN = 0.0f;
+    public static float DTEMP1MAX = 0.0f;
+
+    public static float DCOND1MIN = 0.0f;
+    public static float DCOND1MAX = 0.0f;
+
+    public static int FPUMP1FLOW = 0;
+    public static int FPUMP2FLOW = 0;
+    public static int FPUMP3FLOW = 0;
+
+    public static int UFPUMP1FLOW = 0;
+    public static int UFPUMP2FLOW = 0;
+    public static int UFPUMP3FLOW = 0;
 
 
     /**
@@ -253,6 +311,9 @@ public class ConnectionService extends Service {
         if(inp.length==10)
         if(inp[0]==CM_SYNC_S && inp[7]==CM_SYNC_E)
         {
+            byte com1 = inp[1];
+            byte com2 = inp[2];
+
             byte currentArg = inp[6];
             byte[] databytes = new byte[] {inp[3],inp[4],inp[5],inp[6]};
             int full_data_int = byteArrayToInt(databytes);
@@ -260,7 +321,7 @@ public class ConnectionService extends Service {
 
             //int full_data_int = java.nio.ByteBuffer.wrap(databytes).getInt();
             LASTCONNECTED = "0";
-            switch (inp[1]){
+            switch (com1){
 
                 case bBATT:{
                     lw.appendLog(logTag, "setting BATT to " + full_data_int, true);
@@ -442,11 +503,11 @@ public class ConnectionService extends Service {
                     break;
                 }
 
-                case bSETTINGS:{
-                    sendSettingsFromFile();
-                    lw.appendLog(logTag, "Sending settings to device", true);
+                /*case bSETTINGS:{
+                    //sendSettingsFromFile();
+                    //lw.appendLog(logTag, "Sending settings to device", true);
                     break;
-                }
+                }*/
 
                 case bSETTINGSOK:{
                     SETTINGSOK = "0";
@@ -514,6 +575,173 @@ public class ConnectionService extends Service {
                     break;
                 }
 
+                case bDCUR2:{
+                    DCUR2 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DCUR2 to " + DCUR2, true);
+                    break;
+                }
+
+                case bDCUR3:{
+                    DCUR3 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DCUR3 to " + DCUR3, true);
+                    break;
+                }
+
+                case bDCUR4:{
+                    DCUR4 = String.valueOf(full_data_float);
+                    lw.appendLog(logTag, "setting DCUR4 to " + DCUR4, true);
+                    break;
+                }
+
+                case bSENDDPUMP1:{
+                    sendMessageBytes((byte)(bSENDDPUMP1+(byte)0x01), intTo4byte(DPUMP1FLOW));
+                    lw.appendLog(logTag, "send DPUMP1 " + DPUMP1FLOW, true);
+                    break;
+                }
+
+                case bSENDDPUMP2:{
+                    sendMessageBytes((byte)(bSENDDPUMP2+(byte)0x01), intTo4byte(DPUMP2FLOW));
+                    lw.appendLog(logTag, "send DPUMP2 " + DPUMP2FLOW, true);
+                    break;
+                }
+
+                case bSENDDPUMP3:{
+                    sendMessageBytes((byte)(bSENDDPUMP3+(byte)0x01), intTo4byte(DPUMP3FLOW));
+                    lw.appendLog(logTag, "send DPUMP3 " + DPUMP3FLOW, true);
+                    break;
+                }
+
+                case bSENDDPRESS1:{
+                    sendMessageBytes((byte)(bSENDDPRESS1+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS1MIN));
+                    lw.appendLog(logTag, "send DPRESS1MIN " + DPRESS1MIN, true);
+                    sendMessageBytes((byte)(bSENDDPRESS1+(byte)0x01), (byte)0x11, floatTo4byte(DPRESS1MAX));
+                    lw.appendLog(logTag, "send DPRESS1MAX " + DPRESS1MAX, true);
+                    break;
+                }
+
+                case bSENDDPRESS2:{
+                    sendMessageBytes((byte)(bSENDDPRESS2+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS2MIN));
+                    lw.appendLog(logTag, "send DPRESS2MIN " + DPRESS2MIN, true);
+                    sendMessageBytes((byte)(bSENDDPRESS2+(byte)0x01), (byte)0x11, floatTo4byte(DPRESS1MAX));
+                    lw.appendLog(logTag, "send DPRESS2MAX " + DPRESS2MAX, true);
+                    break;
+                }
+
+                case bSENDDPRESS3:{
+                    sendMessageBytes((byte)(bSENDDPRESS3+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS3MIN));
+                    lw.appendLog(logTag, "send DPRESS3MIN " + DPRESS3MIN, true);
+                    sendMessageBytes((byte)(bSENDDPRESS3+(byte)0x01), (byte)0x11, floatTo4byte(DPRESS3MAX));
+                    lw.appendLog(logTag, "send DPRESS3MAX " + DPRESS3MAX, true);
+                    break;
+                }
+
+                case bSENDDTEMP:{
+                    sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01), (byte)0x10, floatTo4byte(DTEMP1MIN));
+                    lw.appendLog(logTag, "send DTEMPMIN " + DTEMP1MIN, true);
+                    sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01), (byte)0x11, floatTo4byte(DTEMP1MAX));
+                    lw.appendLog(logTag, "send DTEMPMAX " + DTEMP1MAX, true);
+                    break;
+                }
+
+                case bSENDDCOND:{
+                    sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte)0x10, floatTo4byte(DCOND1MIN));
+                    lw.appendLog(logTag, "send DCONDMIN " + DCOND1MIN, true);
+                    sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte)0x11, floatTo4byte(DCOND1MAX));
+                    lw.appendLog(logTag, "send DCONDMAX " + DCOND1MAX, true);
+                    break;
+                }
+
+                case bSENDFPUMP1:{
+                    sendMessageBytes((byte)(bSENDFPUMP1+(byte)0x01), intTo4byte(FPUMP1FLOW));
+                    lw.appendLog(logTag, "send FPUMP1 " + FPUMP1FLOW, true);
+                    break;
+                }
+
+                case bSENDFPUMP2:{
+                    sendMessageBytes((byte)(bSENDFPUMP2+(byte)0x01), intTo4byte(FPUMP2FLOW));
+                    lw.appendLog(logTag, "send FPUMP2 " + FPUMP2FLOW, true);
+                    break;
+                }
+
+                case bSENDFPUMP3:{
+                    sendMessageBytes((byte)(bSENDFPUMP3+(byte)0x01), intTo4byte(FPUMP3FLOW));
+                    lw.appendLog(logTag, "send FPUMP3 " + FPUMP3FLOW, true);
+                    break;
+                }
+
+                case bSENDUFPUMP1:{
+                    sendMessageBytes((byte)(bSENDUFPUMP1+(byte)0x01), intTo4byte(UFPUMP1FLOW));
+                    lw.appendLog(logTag, "send UFPUMP1 " + UFPUMP1FLOW, true);
+                    break;
+                }
+
+                case bSENDUFPUMP2:{
+                    sendMessageBytes((byte)(bSENDUFPUMP2+(byte)0x01), intTo4byte(UFPUMP2FLOW));
+                    lw.appendLog(logTag, "send UFPUMP2 " + UFPUMP2FLOW, true);
+                    break;
+                }
+
+                case bSENDUFPUMP3:{
+                    sendMessageBytes((byte)(bSENDUFPUMP3+(byte)0x01), intTo4byte(UFPUMP3FLOW));
+                    lw.appendLog(logTag, "send UFPUMP3 " + UFPUMP3FLOW, true);
+                    break;
+                }
+
+                case PE_PRESS1:{
+
+                    lw.appendLog(logTag, "ERROR PE_PRESS1", true);
+                    break;
+                }
+
+                case PE_PRESS2:{
+
+                    lw.appendLog(logTag, "ERROR PE_PRESS2", true);
+                    break;
+                }
+
+                case PE_PRESS3:{
+
+                    lw.appendLog(logTag, "ERROR PE_PRESS1", true);
+                    break;
+                }
+
+                case PE_TEMP:{
+
+                    lw.appendLog(logTag, "ERROR PE_TEMP", true);
+                    break;
+                }
+
+                case PE_ELECTRO:{
+
+                    lw.appendLog(logTag, "ERROR PE_ELECTRO", true);
+                    break;
+                }
+
+                case PE_EDS1:{
+
+                    lw.appendLog(logTag, "ERROR PE_EDS1", true);
+                    break;
+                }
+
+                case PE_EDS2:{
+
+                    lw.appendLog(logTag, "ERROR PE_EDS2", true);
+                    break;
+                }
+
+                case PE_EDS3:{
+
+                    lw.appendLog(logTag, "ERROR PE_EDS3", true);
+                    break;
+                }
+
+                case PE_EDS4:{
+
+                    lw.appendLog(logTag, "ERROR PE_EDS4", true);
+                    break;
+                }
+
+
                 default:
                     break;
             }
@@ -521,7 +749,15 @@ public class ConnectionService extends Service {
         }
     }
 
-    void sendSettingsFromFile()
+    byte[] floatTo4byte(float fvalue){
+        return ByteBuffer.allocate(4).putFloat(fvalue).array();
+    }
+
+    byte[] intTo4byte(int ivalue){
+        return ByteBuffer.allocate(4).putInt(ivalue).array();
+    }
+
+    /*void sendSettingsFromFile()
     {
         try{
             FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+"/settings.txt");//Read from file
@@ -614,7 +850,7 @@ public class ConnectionService extends Service {
         {
             lw.appendLog(logTag, e.toString()+" while reading settings file"); // handle exception
         }
-    }
+    }*/
 
     /**
      * Handle messages received from main screen activity: setting status and pause/resume
@@ -803,6 +1039,18 @@ public class ConnectionService extends Service {
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR1);
             sendBroadcast(intentParams);
 
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DCUR2);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR2);
+            sendBroadcast(intentParams);
+
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DCUR3);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR3);
+            sendBroadcast(intentParams);
+
+            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DCUR4);
+            intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR4);
+            sendBroadcast(intentParams);
+
             SharedPreferences sPref =  getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE);
             if(sPref.getBoolean(PrefActivity.AUTOCONNECT, false))
                 if(DEVICE_ADDRESS.equals("00:00:00:00:00:00")){
@@ -829,6 +1077,8 @@ public class ConnectionService extends Service {
             }
         }
         RefreshHandler.post(timedTask);
+
+        readSettingsFromFile();
 
         //Register receiver with filter to receive messages from MainActivity
         IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
@@ -1148,8 +1398,116 @@ public class ConnectionService extends Service {
     public void sendMessage(String input){
         String temp="!$"+input+"*";
         temp+=crc7Check(temp.getBytes())+"\r\n";
-        lw.appendLog(logTag, "Sending: "+temp);
+        lw.appendLog(logTag, "Sending: " + temp);
         mChatService.write(temp.getBytes());
+    }
+
+    Boolean  isStringCorrect(String strLine){
+        strLine = strLine.toLowerCase();
+        if (!strLine.startsWith(";") && strLine.endsWith(";") &&
+                strLine.contains("=") && strLine.contains(":") &&
+                (strLine.contains("dpump") || strLine.contains("dpres") || strLine.contains("dcond") || strLine.contains("dtemp") ||
+                        strLine.contains("dcur")  || strLine.contains("fpump")  || strLine.contains("ufpump")))
+            return true;
+        else return false;
+    }
+
+    void readSettingsFromFile()
+    {
+        try{
+            FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath()+"/settings.txt");//Read from file
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine;
+            //Read File Line By Lined
+            while ((strLine = br.readLine()) != null) {//Reading file line by line
+                if (isStringCorrect(strLine)) {//If string is not a comment
+
+                    String snumber = strLine.substring(strLine.indexOf("=") + 1, strLine.indexOf(":"));//Get channel #
+                    int number = Integer.valueOf(snumber);
+                    byte bnumber = ((byte) number);
+
+                    String svalue = strLine.substring(strLine.indexOf(":") + 1, strLine.indexOf(";"));//Get value
+
+                    byte[] bvalue;
+                    int ivalue=0;
+                    float fvalue=0f;
+                    if(svalue.contains(".")){//if float - convert to float
+                        fvalue = Float.parseFloat(svalue);
+                        bvalue = ByteBuffer.allocate(4).putFloat(fvalue).array();
+                    }
+                    else//otherwise convert to int
+                    {
+                        ivalue = Integer.parseInt(svalue);
+                        bvalue = ByteBuffer.allocate(4).putInt(ivalue).array();
+                    }
+
+                    String setting = strLine.substring(0, strLine.indexOf("="));//Get command itself
+                    RequestTypeSettings reqSetting = RequestTypeSettings.getType(setting);//Get enum type
+
+                    switch (reqSetting) {
+                        case dPump://Send dialysis pump #number value
+                        {
+                            if(number==1)DPUMP1FLOW=ivalue;
+                            if(number==2)DPUMP2FLOW=ivalue;
+                            if(number==3)DPUMP3FLOW=ivalue;
+                            break;
+                        }
+                        case dPres://Send dialysis pressure #number value
+                        {
+                            if(number==1)DPRESS1MIN=fvalue;
+                            if(number==2)DPRESS1MAX=fvalue;
+                            if(number==3)DPRESS2MIN=fvalue;
+                            if(number==4)DPRESS2MAX=fvalue;
+                            if(number==5)DPRESS3MIN=fvalue;
+                            if(number==6)DPRESS3MAX=fvalue;
+                            break;
+                        }
+                        case dCond://Send dialysis conductivity #number value
+                        {
+                            if(number==1)DCOND1MIN=fvalue;
+                            if(number==2)DCOND1MAX=fvalue;
+                            break;
+                        }
+                        case dTemp://Send dialysis temperature #number value
+                        {
+                            if(number==1)DTEMP1MIN=fvalue;
+                            if(number==2)DTEMP1MAX=fvalue;
+                            break;
+                        }
+                        case dCur://Send dialysis current #number value
+                        {
+                            //sendMessageBytes(bSETDCUR, bnumber, bvalue);
+                            //lw.appendLog(logTag, "set dCur#" + number + " to " + svalue);
+                            break;
+                        }
+                        case fPump://Send filling pump #number value
+                        {
+                            if(number==1)FPUMP1FLOW=ivalue;
+                            if(number==2)FPUMP2FLOW=ivalue;
+                            if(number==3)FPUMP3FLOW=ivalue;
+                            break;
+                        }
+                        case ufPump://Send unfilling pump #number value
+                        {
+                            if(number==1)UFPUMP1FLOW=ivalue;
+                            if(number==2)UFPUMP2FLOW=ivalue;
+                            if(number==3)UFPUMP3FLOW=ivalue;
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            //Close the input stream
+            lw.appendLog(logTag, "Settings file read complete");
+            br.close();
+        }
+        catch (Exception e)
+        {
+            lw.appendLog(logTag, e.toString()+" while reading settings file"); // handle exception
+        }
     }
 
 

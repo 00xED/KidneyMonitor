@@ -13,7 +13,7 @@ public class ParamsActivity extends ActionBarActivity {
 
     private TextView tvDPumpFlow1, tvDPumpFlow2, tvDPumpFlow3, tvDUFVolume1;
     private TextView tvDPress1, tvDPress2, tvDPress3;
-    private TextView tvDTemp1, tvDCond1, tvDCur1;
+    private TextView tvDTemp1, tvDCond1, tvDCur1, tvDCur2, tvDCur3, tvDCur4;
 
     private BroadcastReceiver brParams;
     public final static String PARAM_TASK = "SetParams";
@@ -30,6 +30,12 @@ public class ParamsActivity extends ActionBarActivity {
     public final static int TASK_SET_DTEMP1 = 38;
     public final static int TASK_SET_DCOND1 = 39;
     public final static int TASK_SET_DCUR1  = 40;
+    public final static int TASK_SET_DCUR2  = 41;
+    public final static int TASK_SET_DCUR3  = 42;
+    public final static int TASK_SET_DCUR4  = 43;
+
+    private LogWriter lw;
+    private final String logTag = "ParamsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +52,13 @@ public class ParamsActivity extends ActionBarActivity {
         tvDTemp1 = (TextView) findViewById(R.id.tv_DTemp1);
         tvDCond1 = (TextView) findViewById(R.id.tv_DCond1);
         tvDCur1 = (TextView) findViewById(R.id.tv_DCur1);
+        tvDCur2 = (TextView) findViewById(R.id.tv_DCur2);
+        tvDCur3 = (TextView) findViewById(R.id.tv_DCur3);
+        tvDCur4 = (TextView) findViewById(R.id.tv_DCur4);
 
+        float dc=ConnectionService.DPUMP1FLOW;
+        tvDCur1.setText(String.valueOf(dc));
+       // lw.appendLog(logTag, "DCOND1MAX="+ConnectionService.DCOND1MAX);
         /**
          * Initialise broadcast receiver that listens for messages from ConnectionService
          * and sets params screen textviews values and images
@@ -113,10 +125,27 @@ public class ParamsActivity extends ActionBarActivity {
                             break;
                         }
 
-
                         case TASK_SET_DCUR1:
                         {
                             tvDCur1.setText(args);
+                            break;
+                        }
+
+                        case TASK_SET_DCUR2:
+                        {
+                            tvDCur2.setText(args);
+                            break;
+                        }
+
+                        case TASK_SET_DCUR3:
+                        {
+                            tvDCur3.setText(args);
+                            break;
+                        }
+
+                        case TASK_SET_DCUR4:
+                        {
+                            tvDCur4.setText(args);
                             break;
                         }
 

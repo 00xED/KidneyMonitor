@@ -50,6 +50,7 @@
         <activity
             android:name=".ParamsActivity"
             android:label="@string/title_activity_params"
+            android:screenOrientation="portrait" >
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

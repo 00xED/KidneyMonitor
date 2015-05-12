@@ -196,6 +196,7 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_filling).toString());
+                                ivStatus.setImageResource(R.drawable.filling_icon);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
@@ -205,6 +206,7 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_dialysis).toString());
+                                ivStatus.setImageResource(R.drawable.dialysis_icon);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
@@ -214,6 +216,7 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_shutdown).toString());
+                                ivStatus.setImageResource(R.drawable.shutdown_icon);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
@@ -223,6 +226,7 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_disinfection).toString());
+                                ivStatus.setImageResource(R.drawable.disinfection_icon);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
@@ -232,6 +236,7 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_ready).toString());
+                                ivStatus.setImageResource(R.drawable.ready_icon);
                                 break;
                             }
 
@@ -239,6 +244,8 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_flush).toString());
+
+                                ivStatus.setImageResource(R.drawable.flush_icon);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);

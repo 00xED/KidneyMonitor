@@ -195,15 +195,15 @@ public class ConnectionService extends Service {
     /**
     **ERROR codes
      */
-    final byte  PE_PRESS1 = (byte)  0xF0;    // Ошибка допустимого диапазона давления датчика 1
-    final byte  PE_PRESS2 = (byte)  0xF1;    // Ошибка допустимого диапазона давления датчика 2
-    final byte  PE_PRESS3 = (byte)  0xF2;    // Ошибка допустимого диапазона давления датчика 3
-    final byte  PE_TEMP   = (byte)  0xF3;    // Ошибка допустимого диапазона температуры
-    final byte  PE_ELECTRO= (byte)  0xF4;    // Ошибка допустимого диапазона электропроводности
-    final byte  PE_EDS1   = (byte)  0xF5;    // Ошибка допустимого диапазона тока банки 1
-    final byte  PE_EDS2   = (byte)  0xF6;    // Ошибка допустимого диапазона тока банки 2
-    final byte  PE_EDS3   = (byte)  0xF7;    // Ошибка допустимого диапазона тока банки 3
-    final byte  PE_EDS4   = (byte)  0xF8;    // Ошибка допустимого диапазона тока банки 4
+    final byte  PE_PRESS1 = (byte)  0xF0;    // Error on pressure sensor 1
+    final byte  PE_PRESS2 = (byte)  0xF1;    // Error on pressure sensor 2
+    final byte  PE_PRESS3 = (byte)  0xF2;    // Error on pressure sensor 3
+    final byte  PE_TEMP   = (byte)  0xF3;    // Error on temperature sensor
+    final byte  PE_ELECTRO= (byte)  0xF4;    // Error on conductivity sensor
+    final byte  PE_EDS1   = (byte)  0xF5;    // Error on electric cell 1
+    final byte  PE_EDS2   = (byte)  0xF6;    // Error on electric cell 2
+    final byte  PE_EDS3   = (byte)  0xF7;    // Error on electric cell 3
+    final byte  PE_EDS4   = (byte)  0xF8;    // Error on electric cell 4
 
 
     /**
@@ -1053,12 +1053,10 @@ public class ConnectionService extends Service {
 
     Boolean  isStringCorrect(String strLine){
         strLine = strLine.toLowerCase();
-        if (!strLine.startsWith(";") && strLine.endsWith(";") &&
+        return (!strLine.startsWith(";") && strLine.endsWith(";") &&
                 strLine.contains("=") && strLine.contains(":") &&
                 (strLine.contains("dpump") || strLine.contains("dpres") || strLine.contains("dcond") || strLine.contains("dtemp") ||
-                        strLine.contains("dcur")  || strLine.contains("fpump")  || strLine.contains("ufpump")))
-            return true;
-        else return false;
+                        strLine.contains("dcur")  || strLine.contains("fpump")  || strLine.contains("ufpump")));
     }
 
     void readSettingsFromFile()
@@ -1073,21 +1071,17 @@ public class ConnectionService extends Service {
 
                     String snumber = strLine.substring(strLine.indexOf("=") + 1, strLine.indexOf(":"));//Get channel #
                     int number = Integer.valueOf(snumber);
-                    byte bnumber = ((byte) number);
 
                     String svalue = strLine.substring(strLine.indexOf(":") + 1, strLine.indexOf(";"));//Get value
 
-                    byte[] bvalue;
                     int ivalue=0;
                     float fvalue=0f;
                     if(svalue.contains(".")){//if float - convert to float
                         fvalue = Float.parseFloat(svalue);
-                        bvalue = ByteBuffer.allocate(4).putFloat(fvalue).array();
                     }
                     else//otherwise convert to int
                     {
                         ivalue = Integer.parseInt(svalue);
-                        bvalue = ByteBuffer.allocate(4).putInt(ivalue).array();
                     }
 
                     String setting = strLine.substring(0, strLine.indexOf("="));//Get command itself

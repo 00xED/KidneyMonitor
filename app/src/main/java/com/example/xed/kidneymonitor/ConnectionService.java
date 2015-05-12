@@ -424,18 +424,18 @@ public class ConnectionService extends Service {
                     lw.appendLog(logTag, "got command PAUSE and " + currentArg);
                     switch (currentArg) {
                         case bRUNNING_YES: {
-                            lw.appendLog(logTag, "setting PAUSE to YES", true);
+                            lw.appendLog(logTag, "setting PAUSE to NO", true);
                             PAUSE = "0";
                             break;
                         }
                         case bRUNNING_NO: {
-                            lw.appendLog(logTag, "setting PAUSE to NO", true);
+                            lw.appendLog(logTag, "setting PAUSE to YES", true);
                             PAUSE = "1";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting PAUSE to UNKNOWN", true);
-                            PAUSE = "9";
+                            PAUSE = "-1";
                             break;
                         }
                     }

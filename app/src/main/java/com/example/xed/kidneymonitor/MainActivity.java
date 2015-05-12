@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
     public final static int TASK_SET_SETTINGSOK = 8;
 
     //Is procedure paused? 0-no, 1-yes, other-unknown
-    public int procedurePaused = 9;
+    public int procedurePaused = -1;
 
     public int selectedProcedure = -1;
 
@@ -340,14 +340,14 @@ public class MainActivity extends ActionBarActivity {
 
                     case TASK_SET_PAUSE:
                     {
-                        procedurePaused=Integer.parseInt(arg);
+
                         switch (arg) {
                             case "0":
                             {
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
-
+                                procedurePaused=0;
                                 break;
                             }
                             case "1":
@@ -355,6 +355,7 @@ public class MainActivity extends ActionBarActivity {
                                 btPause.
                                         setText(getResources().getText(R.string.title_continue_procedure).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_grey600_24dp, 0, 0, 0);
+                                procedurePaused=1;
                                 break;
                             }
                             default:
@@ -362,6 +363,7 @@ public class MainActivity extends ActionBarActivity {
                                 btPause.
                                         setText(getResources().getText(R.string.button_start).toString());
                                 btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_help_grey600_24dp, 0, 0, 0);
+                                procedurePaused=-1;
                                 break;
                             }
                         }
@@ -370,7 +372,6 @@ public class MainActivity extends ActionBarActivity {
 
                     case TASK_SET_SETTINGSOK:
                     {
-                        procedurePaused=Integer.parseInt(arg);
                         switch (arg) {
                             case "0":
                             {
@@ -452,7 +453,7 @@ public class MainActivity extends ActionBarActivity {
 
             case R.id.bt_Pause:// pause current procedure
             {
-                if(procedurePaused!=1) {
+                if(procedurePaused==0) {
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
                     sendBroadcast(intent);

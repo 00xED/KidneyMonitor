@@ -35,7 +35,7 @@ public class LogWriter extends Application {
         String strDate = sdf.format(c.getTime());
 
         tag = strDate + "@" + tag;
-        Log.d(tag, msg);
+        Log.i(tag, msg);
         msg = tag + "->" + msg;
 
         File logFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
@@ -43,9 +43,9 @@ public class LogWriter extends Application {
         if (!logFile.exists()) {
             try {
                 if(!logFile.createNewFile())
-                    Log.d("LogWriter", "can't create new file");
+                    Log.i("LogWriter", "can't create new file");
             } catch (IOException e) {
-                Log.d("LogWriter", e.toString());
+                Log.i("LogWriter", e.toString());
                 e.printStackTrace();
             }
         }
@@ -56,7 +56,7 @@ public class LogWriter extends Application {
             buf.newLine();
             buf.close();
         } catch (IOException e) {
-            Log.d("LogWriter", e.toString());
+            Log.i("LogWriter", e.toString());
             e.printStackTrace();
         }
 
@@ -72,7 +72,7 @@ public class LogWriter extends Application {
         String strDate = sdf.format(c.getTime());
 
         tag = strDate + "@" + tag;
-            Log.d(tag, msg);
+            Log.i(tag, msg);
         msg = tag + "->" + msg;
 
         File verboseLogFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
@@ -80,9 +80,9 @@ public class LogWriter extends Application {
         if (!verboseLogFile.exists()) {
             try {
                 if(!verboseLogFile.createNewFile())
-                    Log.d("LogWriter", "can't create new file");
+                    Log.i("LogWriter", "can't create new file");
             } catch (IOException e) {
-                Log.d("LogWriter", e.toString());
+                Log.i("LogWriter", e.toString());
                 e.printStackTrace();
             }
         }
@@ -93,7 +93,7 @@ public class LogWriter extends Application {
             buf.newLine();
             buf.close();
         } catch (IOException e) {
-            Log.d("LogWriter", e.toString());
+            Log.i("LogWriter", e.toString());
             e.printStackTrace();
         }
 
@@ -102,9 +102,9 @@ public class LogWriter extends Application {
         if (!logFile.exists()) {
             try {
                 if(!logFile.createNewFile())
-                    Log.d("LogWriter", "can't create new file");
+                    Log.i("LogWriter", "can't create new file");
             } catch (IOException e) {
-                Log.d("LogWriter", e.toString());
+                Log.i("LogWriter", e.toString());
                 e.printStackTrace();
             }
         }
@@ -115,7 +115,7 @@ public class LogWriter extends Application {
             buf.newLine();
             buf.close();
         } catch (IOException e) {
-            Log.d("LogWriter", e.toString());
+            Log.i("LogWriter", e.toString());
             e.printStackTrace();
         }
 

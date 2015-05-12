@@ -73,6 +73,7 @@ public class ConnectionService extends Service {
     public final static int TASK_ARG_DIALYSIS = 1;
     public final static int TASK_ARG_SHUTDOWN = 2;
     public final static int TASK_ARG_DISINFECTION = 3;
+    public final static int TASK_ARG_FLUSH = 5;
 
     //Initialisation of LogWriter
     final String logTag = "ConnectionService";
@@ -145,6 +146,7 @@ public class ConnectionService extends Service {
         final byte bDIALYSIS     = (byte) 0x5C;//Send to set procedure to DIALYSIS
         final byte bDISINFECTION = (byte) 0x5E;//Send to set procedure to DISINFECTION
         final byte bSHUTDOWN     = (byte) 0x73;//Send to set procedure to SHUTDOWN          TODO:flush
+        final byte bFLUSH        = (byte) 0x5D;//Send to set procedure to FLUSH
         final byte bPAUSE        = (byte) 0x74;//Send to pause current procedure
         final byte bRESUME       = (byte) 0x75;//Send to resume current procedure
 
@@ -160,6 +162,7 @@ public class ConnectionService extends Service {
             final byte bSTATUS_DISINFECTION = (byte) 0x12;
             final byte bSTATUS_SHUTDOWN =     (byte) 0x13;
             final byte bSTATUS_READY =        (byte) 0x14;
+            final byte bSTATUS_FLUSH =        (byte) 0x15;
 
         final byte bPARAMS = (byte) 0x84;//Receiving procedure params
             final byte bPARAMS_NORM   = (byte) 0x10;
@@ -381,6 +384,11 @@ public class ConnectionService extends Service {
                         case bSTATUS_READY: {
                             lw.appendLog(logTag, "setting STATUS to READY", true);
                             STATUS = "4";
+                            break;
+                        }
+                        case bSTATUS_FLUSH: {
+                            lw.appendLog(logTag, "setting STATUS to READY", true);
+                            STATUS = "5";
                             break;
                         }
                         default: {
@@ -608,42 +616,63 @@ public class ConnectionService extends Service {
                 }
 
                 case bSENDDPRESS1:{
-                    sendMessageBytes((byte)(bSENDDPRESS1+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS1MIN));
-                    lw.appendLog(logTag, "send DPRESS1MIN " + DPRESS1MIN, true);
-                    sendMessageBytes((byte)(bSENDDPRESS1+(byte)0x01), (byte)0x11, floatTo4byte(DPRESS1MAX));
-                    lw.appendLog(logTag, "send DPRESS1MAX " + DPRESS1MAX, true);
+                    if(com2==(byte)0x01) {
+                        sendMessageBytes((byte) (bSENDDPRESS1 + (byte) 0x01), (byte) 0x10, floatTo4byte(DPRESS1MIN));
+                        lw.appendLog(logTag, "send DPRESS1MIN " + DPRESS1MIN, true);
+                    }
+                    if(com2==(byte)0x02) {
+                        sendMessageBytes((byte) (bSENDDPRESS1 + (byte) 0x01), (byte) 0x11, floatTo4byte(DPRESS1MAX));
+                        lw.appendLog(logTag, "send DPRESS1MAX " + DPRESS1MAX, true);
+                    }
                     break;
                 }
 
                 case bSENDDPRESS2:{
-                    sendMessageBytes((byte)(bSENDDPRESS2+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS2MIN));
-                    lw.appendLog(logTag, "send DPRESS2MIN " + DPRESS2MIN, true);
-                    sendMessageBytes((byte)(bSENDDPRESS2+(byte)0x01), (byte)0x11, floatTo4byte(DPRESS1MAX));
-                    lw.appendLog(logTag, "send DPRESS2MAX " + DPRESS2MAX, true);
+
+                    if(com2==(byte)0x01) {
+                        sendMessageBytes((byte)(bSENDDPRESS2+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS2MIN));
+                        lw.appendLog(logTag, "send DPRESS2MIN " + DPRESS2MIN, true);
+                    }
+                    if(com2==(byte)0x02) {
+                        sendMessageBytes((byte) (bSENDDPRESS2 + (byte) 0x01), (byte) 0x11, floatTo4byte(DPRESS1MAX));
+                        lw.appendLog(logTag, "send DPRESS2MAX " + DPRESS2MAX, true);
+                    }
                     break;
                 }
 
                 case bSENDDPRESS3:{
-                    sendMessageBytes((byte)(bSENDDPRESS3+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS3MIN));
-                    lw.appendLog(logTag, "send DPRESS3MIN " + DPRESS3MIN, true);
-                    sendMessageBytes((byte)(bSENDDPRESS3+(byte)0x01), (byte)0x11, floatTo4byte(DPRESS3MAX));
-                    lw.appendLog(logTag, "send DPRESS3MAX " + DPRESS3MAX, true);
+                    if(com2==(byte)0x01) {
+                        sendMessageBytes((byte)(bSENDDPRESS3+(byte)0x01), (byte)0x10, floatTo4byte(DPRESS3MIN));
+                        lw.appendLog(logTag, "send DPRESS3MIN " + DPRESS3MIN, true);
+                    }
+                    if(com2==(byte)0x02) {
+                        sendMessageBytes((byte) (bSENDDPRESS3 + (byte) 0x01), (byte) 0x11, floatTo4byte(DPRESS3MAX));
+                        lw.appendLog(logTag, "send DPRESS3MAX " + DPRESS3MAX, true);
+                    }
                     break;
                 }
 
                 case bSENDDTEMP:{
-                    sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01), (byte)0x10, floatTo4byte(DTEMP1MIN));
-                    lw.appendLog(logTag, "send DTEMPMIN " + DTEMP1MIN, true);
-                    sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01), (byte)0x11, floatTo4byte(DTEMP1MAX));
-                    lw.appendLog(logTag, "send DTEMPMAX " + DTEMP1MAX, true);
+                    if(com2==(byte)0x01) {
+                        sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01), (byte)0x10, floatTo4byte(DTEMP1MIN));
+                        lw.appendLog(logTag, "send DTEMPMIN " + DTEMP1MIN, true);
+                    }
+                    if(com2==(byte)0x02) {
+                        sendMessageBytes((byte) (bSENDDTEMP + (byte) 0x01), (byte) 0x11, floatTo4byte(DTEMP1MAX));
+                        lw.appendLog(logTag, "send DTEMPMAX " + DTEMP1MAX, true);
+                    }
                     break;
                 }
 
                 case bSENDDCOND:{
-                    sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte)0x10, floatTo4byte(DCOND1MIN));
-                    lw.appendLog(logTag, "send DCONDMIN " + DCOND1MIN, true);
-                    sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte)0x11, floatTo4byte(DCOND1MAX));
-                    lw.appendLog(logTag, "send DCONDMAX " + DCOND1MAX, true);
+                    if(com2==(byte)0x01) {
+                        sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte)0x10, floatTo4byte(DCOND1MIN));
+                        lw.appendLog(logTag, "send DCONDMIN " + DCOND1MIN, true);
+                    }
+                    if(com2==(byte)0x02) {
+                        sendMessageBytes((byte) (bSENDDCOND + (byte) 0x01), (byte) 0x11, floatTo4byte(DCOND1MAX));
+                        lw.appendLog(logTag, "send DCONDMAX " + DCOND1MAX, true);
+                    }
                     break;
                 }
 
@@ -783,6 +812,11 @@ public class ConnectionService extends Service {
                         case TASK_ARG_DISINFECTION: {
                             sendMessageBytes(bDISINFECTION);
                             lw.appendLog(logTag, "User switching to DISINFECTION", true);
+                            break;
+                        }
+                        case TASK_ARG_FLUSH: {
+                            sendMessageBytes(bFLUSH);
+                            lw.appendLog(logTag, "User switching to FLUSH", true);
                             break;
                         }
                         default:

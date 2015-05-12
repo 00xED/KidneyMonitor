@@ -14,6 +14,7 @@
     <string name="value_status_shutdown">Shutdown</string>
     <string name="value_status_disinfection">Disinfection</string>
     <string name="value_status_ready">Ready</string>
+    <string name="value_status_flush">Flush</string>
     <string name="value_status_unknown">Unknown</string>
 
     <string name="value_sorbtime_hours"> h. </string>
@@ -121,6 +122,13 @@
                                         Confirmation is provided by "OK" and "Cancel" buttons.
     </string>
 
+    <string name="instruction_flush">There we have an instruction, which appears\n
+                                     when user selects "Flush" option.\n
+                                     As you can see, we can make it in long strings\n
+                                     and built-in images!\n
+                                     Confirmation is provided by "OK" and "Cancel" buttons.
+    </string>
+
     <string name="title_settings_ok">Device settings are OK</string>
 
     <string name="lh">\ l/hr.</string>
@@ -139,6 +147,7 @@
         <item>Filling</item>
         <item>Shutdown</item>
         <item>Disinfection</item>
+        <item>Flush</item>
     </string-array>
     <string name="title_activity_params">Procedure parameters</string>
 

@@ -71,6 +71,7 @@
         <item>Диализ</item>
         <item>Выключение</item>
         <item>Дезинфекция</item>
+        <item>Слив</item>
     </string-array>
 
     <string name="title_pause_procedure">Приостановить процедуру</string>

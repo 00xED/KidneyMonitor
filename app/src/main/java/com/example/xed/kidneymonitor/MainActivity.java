@@ -225,6 +225,13 @@ public class MainActivity extends ActionBarActivity {
                                         setText(getResources().getText(R.string.value_status_ready).toString());
                                 break;
                             }
+
+                            case "5":
+                            {
+                                tvStatus.
+                                        setText(getResources().getText(R.string.value_status_flush).toString());
+                                break;
+                            }
                             default:
                             {
                                 tvStatus.
@@ -684,6 +691,44 @@ public class MainActivity extends ActionBarActivity {
                                         Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                                         intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
+                                        sendBroadcast(intent);
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        instructionDialog.dismiss();
+                                    }
+                                });
+
+                                instructionDialog.show();
+
+                                break;
+                            }
+
+                            case 4:{
+                                final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                instructionDialog.setContentView(R.layout.shutdowndialog);
+                                instructionDialog.setTitle(getResources().getText(R.string.value_status_flush).toString());
+
+                                // set the custom dialog components - text, image and button
+                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                text.setText(getResources().getText(R.string.instruction_flush).toString());
+                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                image.setImageResource(R.drawable.flush);
+
+                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                // if button is clicked, close the custom dialog
+                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
                                         sendBroadcast(intent);
                                         instructionDialog.dismiss();
                                     }

@@ -294,34 +294,15 @@ public class ConnectionService extends Service {
 
             //int full_data_int = java.nio.ByteBuffer.wrap(databytes).getInt();
             LASTCONNECTED = "0";
+
+
+
             switch (com1){
 
                 case bBATT:{
                     lw.appendLog(logTag, "setting BATT to " + full_data_int, true);
                     lw.appendLog(logTag, "setting battery to " + full_data_int + "%");
                     BATT = String.valueOf(full_data_int);
-                    break;
-                }
-
-                case bSTATE: {
-                    lw.appendLog(logTag, "got command STATE and " + currentArg);
-                    switch (currentArg) {
-                        case bSTATE_ON: {
-                            lw.appendLog(logTag, "setting STATE to ON", true);
-                            STATE = "0";
-                            break;
-                        }
-                        case bSTATE_OFF: {
-                            lw.appendLog(logTag, "setting STATE to OFF", true);
-                            STATE = "1";
-                            break;
-                        }
-                        default: {
-                            lw.appendLog(logTag, "setting STATE to UNKNOWN", true);
-                            STATE = "9";
-                            break;
-                        }
-                    }
                     break;
                 }
 
@@ -355,19 +336,20 @@ public class ConnectionService extends Service {
                             break;
                         }
                         case bSTATUS_FLUSH: {
-                            lw.appendLog(logTag, "setting STATUS to READY", true);
+                            lw.appendLog(logTag, "setting STATUS to FLUSH", true);
                             STATUS = "5";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting STATUS to UNKNOWN", true);
-                            STATUS = "9";
+                            STATUS = "-1";
                             break;
                         }
                     }
                     break;
                 }
 
+                //TODO:when PARAMS is NORMAL?
                 case bPARAMS: {
                     lw.appendLog(logTag, "got command PARAMS and " + currentArg);
                     switch (currentArg) {
@@ -383,19 +365,21 @@ public class ConnectionService extends Service {
                         }
                         default: {
                             lw.appendLog(logTag, "setting PARAMS to UNKNOWN", true);
-                            PARAMS = "9";
+                            PARAMS = "-1";
                             break;
                         }
                     }
                     break;
                 }
 
+                //TODO: sorbtime calculation
                 case bSORBTIME: {
                     lw.appendLog(logTag, "setting SORBTIME to " + currentArg, true);
                     SORBTIME = String.valueOf(full_data_int);
                     break;
                 }
 
+                //TODO:when FUNCT is NORMAL?
                 case bFUNCT: {
                     lw.appendLog(logTag, "got command FUNCT and " + currentArg);
                     switch (currentArg) {
@@ -411,13 +395,14 @@ public class ConnectionService extends Service {
                         }
                         default: {
                             lw.appendLog(logTag, "setting FUNCT to UNKNOWN", true);
-                            FUNCT = "9";
+                            FUNCT = "-1";
                             break;
                         }
                     }
                     break;
                 }
 
+                //TODO: is needed?
                 case bSETTINGSOK:{
                     SETTINGSOK = "0";
                     lw.appendLog(logTag, "Settings OK", true);
@@ -576,60 +561,80 @@ public class ConnectionService extends Service {
                 case PE_PRESS1:{
                     sendNotification("ERROR PE_PRESS1");
                     lw.appendLog(logTag, "ERROR PE_PRESS1", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_PRESS2:{
                     sendNotification("ERROR PE_PRESS2");
                     lw.appendLog(logTag, "ERROR PE_PRESS2", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_PRESS3:{
                     sendNotification("ERROR PE_PRESS3");
                     lw.appendLog(logTag, "ERROR PE_PRESS3", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_TEMP:{
                     sendNotification("ERROR PE_TEMP");
                     lw.appendLog(logTag, "ERROR PE_TEMP", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_ELECTRO:{
                     sendNotification("ERROR PE_ELECTRO");
                     lw.appendLog(logTag, "ERROR PE_ELECTRO", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_EDS1:{
                     sendNotification("ERROR PE_EDS1");
                     lw.appendLog(logTag, "ERROR PE_EDS1", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_EDS2:{
                     sendNotification("ERROR PE_EDS2");
                     lw.appendLog(logTag, "ERROR PE_EDS2", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_EDS3:{
                     sendNotification("ERROR PE_EDS3");
                     lw.appendLog(logTag, "ERROR PE_EDS3", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_EDS4:{
                     sendNotification("ERROR PE_EDS4");
                     lw.appendLog(logTag, "ERROR PE_EDS4", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
                 case PE_BATT:{
                     sendNotification("ERROR PE_BATT");
                     lw.appendLog(logTag, "ERROR PE_BATT", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
                     break;
                 }
 
@@ -637,6 +642,12 @@ public class ConnectionService extends Service {
                     break;
             }
 
+            if(!STATUS.equals("2"))//If status is not SHUTDOWN, then STATE is ON
+                STATE = "0";
+            else{
+                STATE = "1";//Otherwise, STATE is OFF
+                lw.appendLog(logTag, "setting STATE to OFF", true);
+            }
         }
     }
 

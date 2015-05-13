@@ -35,9 +35,6 @@ public class ParamsActivity extends ActionBarActivity {
     public final static String PARAM_ARG = "arg";
     public final static String BROADCAST_ACTION = "SetParams";
 
-    public final static int TASK_SET_DPUMPFLOW1 = 31;
-    public final static int TASK_SET_DPUMPFLOW2 = 32;
-    public final static int TASK_SET_DPUMPFLOW3 = 33;
     public final static int TASK_SET_DUFVOLUME1 = 34;
     public final static int TASK_SET_DPRESS1 = 35;
     public final static int TASK_SET_DPRESS2 = 36;
@@ -60,19 +57,19 @@ public class ParamsActivity extends ActionBarActivity {
         pbDPumpFlow1 = (ProgressBar) findViewById(R.id.pb_DPumpFlow1);
         tvDPumpFlow1Min = (TextView) findViewById(R.id.tv_DPumpFlow1Min);
         tvDPumpFlow1 = (TextView) findViewById(R.id.tv_DPumpFlow1);
-            tvDPumpFlow1.setText(Math.round(ConnectionService.DPUMP1FLOW));
+            tvDPumpFlow1.setText(String.valueOf(Math.round(ConnectionService.DPUMP1FLOW)));
         tvDPumpFlow1Max = (TextView) findViewById(R.id.tv_DPumpFlow1Max);
 
         pbDPumpFlow2 = (ProgressBar) findViewById(R.id.pb_DPumpFlow2);
         tvDPumpFlow1Min = (TextView) findViewById(R.id.tv_DPumpFlow1Min);
         tvDPumpFlow2 = (TextView) findViewById(R.id.tv_DPumpFlow2);
-            tvDPumpFlow2.setText(Math.round(ConnectionService.DPUMP2FLOW));
+            tvDPumpFlow2.setText(String.valueOf(Math.round(ConnectionService.DPUMP2FLOW)));
         tvDPumpFlow1Max = (TextView) findViewById(R.id.tv_DPumpFlow1Max);
 
         pbDPumpFlow3 = (ProgressBar) findViewById(R.id.pb_DPumpFlow3);
         tvDPumpFlow1Min = (TextView) findViewById(R.id.tv_DPumpFlow1Min);
         tvDPumpFlow3 = (TextView) findViewById(R.id.tv_DPumpFlow3);
-         tvDPumpFlow3.setText(Math.round(ConnectionService.DPUMP3FLOW));
+         tvDPumpFlow3.setText(String.valueOf(Math.round(ConnectionService.DPUMP3FLOW)));
         tvDPumpFlow1Max = (TextView) findViewById(R.id.tv_DPumpFlow1Max);
 
         pbDUFVolume = (ProgressBar) findViewById(R.id.pb_DUFVolume);
@@ -81,15 +78,15 @@ public class ParamsActivity extends ActionBarActivity {
         tvDUFVolumeMax = (TextView) findViewById(R.id.tv_DUFVolumeMax);
 
         pbDPress1 = (ProgressBar) findViewById(R.id.pb_DPress1);
-            pbDPress1.setMax(Math.round(ConnectionService.DPRESS1MAX));
+            //pbDPress1.setMax(Math.round(ConnectionService.DPRESS1MAX));
         tvDPress1Min = (TextView) findViewById(R.id.tv_DPress1Min);
-            tvDPress1Min.setText(String.valueOf(ConnectionService.DPRESS1MIN));
+            tvDPress1Min.setText(String.valueOf(String.valueOf(ConnectionService.DPRESS1MIN)));
         tvDPress1 = (TextView) findViewById(R.id.tv_DPress1);
         tvDPress1Max = (TextView) findViewById(R.id.tv_DPress1Max);
             tvDPress1Max.setText(String.valueOf(ConnectionService.DPRESS1MAX));
 
         pbDPress2 = (ProgressBar) findViewById(R.id.pb_DPress2);
-            pbDPress2.setMax(Math.round(ConnectionService.DPRESS2MAX));
+            //pbDPress2.setMax(Math.round(ConnectionService.DPRESS2MAX));
         tvDPress2Min = (TextView) findViewById(R.id.tv_DPress2Min);
             tvDPress2Min.setText(String.valueOf(ConnectionService.DPRESS2MIN));
         tvDPress2 = (TextView) findViewById(R.id.tv_DPress2);
@@ -97,7 +94,7 @@ public class ParamsActivity extends ActionBarActivity {
             tvDPress2Max.setText(String.valueOf(ConnectionService.DPRESS2MAX));
 
         pbDPress3 = (ProgressBar) findViewById(R.id.pb_DPress3);
-            pbDPress3.setMax(Math.round(ConnectionService.DPRESS3MAX));
+            //pbDPress3.setMax(Math.round(ConnectionService.DPRESS3MAX));
         tvDPress3Min = (TextView) findViewById(R.id.tv_DPress3Min);
             tvDPress3Min.setText(String.valueOf(ConnectionService.DPRESS3MIN));
         tvDPress3 = (TextView) findViewById(R.id.tv_DPress3);
@@ -105,20 +102,20 @@ public class ParamsActivity extends ActionBarActivity {
             tvDPress3Max.setText(String.valueOf(ConnectionService.DPRESS3MAX));
 
         pbDTemp = (ProgressBar) findViewById(R.id.pb_DTemp);
-            pbDTemp.setMax(Math.round(ConnectionService.DTEMP1MAX));
+            //pbDTemp.setMax(Math.round(ConnectionService.DTEMP1MAX));
         tvDTempMin = (TextView) findViewById(R.id.tv_DTempMin);
-            tvDTempMin.setText(Math.round(ConnectionService.DTEMP1MIN));
+            tvDTempMin.setText(String.valueOf(Math.round(ConnectionService.DTEMP1MIN)));
         tvDTemp = (TextView) findViewById(R.id.tv_DTemp);
         tvDTempMax = (TextView) findViewById(R.id.tv_DTempMax);
-            tvDTempMax.setText(Math.round(ConnectionService.DTEMP1MAX));
+            tvDTempMax.setText(String.valueOf(Math.round(ConnectionService.DTEMP1MAX)));
 
         pbDCond = (ProgressBar) findViewById(R.id.pb_DCond);
-            pbDCond.setMax(Math.round(ConnectionService.DCOND1MAX));
+            //pbDCond.setMax(Math.round(ConnectionService.DCOND1MAX));
         tvDCondMin = (TextView) findViewById(R.id.tv_DCondMin);
-            tvDCondMin.setText(Math.round(ConnectionService.DCOND1MIN));
+            tvDCondMin.setText(String.valueOf(Math.round(ConnectionService.DCOND1MIN)));
         tvDCond = (TextView) findViewById(R.id.tv_DCond);
         tvDCondMax = (TextView) findViewById(R.id.tv_DCondMax);
-            tvDCondMax.setText(Math.round(ConnectionService.DCOND1MAX));
+            tvDCondMax.setText(String.valueOf(Math.round(ConnectionService.DCOND1MAX)));
 
         pbDCur1 = (ProgressBar) findViewById(R.id.pb_DCur1);
             pbDCur1.setMax(500);
@@ -149,23 +146,6 @@ public class ParamsActivity extends ActionBarActivity {
                 // switch tasks for setting main screen values
                 if(ConnectionService.isServiceRunning)
                     switch (task) {
-                        case TASK_SET_DPUMPFLOW1:
-                        {
-                            tvDPumpFlow1.setText(args);
-                            break;
-                        }
-
-                        case TASK_SET_DPUMPFLOW2:
-                        {
-                            tvDPumpFlow2.setText(args);
-                            break;
-                        }
-
-                        case TASK_SET_DPUMPFLOW3:
-                        {
-                            tvDPumpFlow3.setText(args);
-                            break;
-                        }
 
                         case TASK_SET_DUFVOLUME1:
                         {
@@ -175,7 +155,10 @@ public class ParamsActivity extends ActionBarActivity {
 
                         case TASK_SET_DPRESS1:
                         {
+                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS1MIN)/(ConnectionService.DPRESS1MAX));
+                            int progress = Math.round(percent);
                             tvDPress1.setText(args);
+                            pbDPress1.setProgress(progress);
                             break;
                         }
 

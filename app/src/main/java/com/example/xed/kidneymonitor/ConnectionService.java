@@ -799,18 +799,6 @@ public class ConnectionService extends Service {
             sendBroadcast(intentValues);
             LASTCONNECTED="-1";//Set default state to fix value on main screen
 
-            intentParams.putExtra(ParamsActivity.PARAM_TASK,ParamsActivity.TASK_SET_DPUMPFLOW1);
-            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW1);
-            sendBroadcast(intentParams);
-
-            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DPUMPFLOW2);
-            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW2);
-            sendBroadcast(intentParams);
-
-            intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DPUMPFLOW3);
-            intentParams.putExtra(ParamsActivity.PARAM_ARG, DPUMPFLOW3);
-            sendBroadcast(intentParams);
-
             intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DUFVOLUME1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);
             sendBroadcast(intentParams);

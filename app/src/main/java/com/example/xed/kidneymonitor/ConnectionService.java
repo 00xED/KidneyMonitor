@@ -231,7 +231,6 @@ public class ConnectionService extends Service {
 
                         case BluetoothChatService.STATE_CONNECTED:
                             lw.appendLog(logTag, "\nConnected to: " + mConnectedDeviceName);
-                            sendMessageBytes((byte)0x00);
                             break;
 
                         case BluetoothChatService.STATE_CONNECTING:
@@ -493,28 +492,28 @@ public class ConnectionService extends Service {
                         lw.appendLog(logTag, "send UFPUMP1 " + UFPUMP1FLOW, true);
                     }
 
-                    if(com2==(byte)0x21) {
+                    if(com2==(byte)0x11) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(FPUMP2FLOW));
                         lw.appendLog(logTag, "send FPUMP2 " + FPUMP2FLOW, true);
                     }
-                    if(com2==(byte)0x22) {
+                    if(com2==(byte)0x12) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(DPUMP2FLOW));
                         lw.appendLog(logTag, "send DPUMP2 " + DPUMP2FLOW, true);
                     }
-                    if(com2==(byte)0x23) {
+                    if(com2==(byte)0x13) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(UFPUMP2FLOW));
                         lw.appendLog(logTag, "send UFPUMP2 " + UFPUMP2FLOW, true);
                     }
 
-                    if(com2==(byte)0x31) {
+                    if(com2==(byte)0x21) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(FPUMP3FLOW));
                         lw.appendLog(logTag, "send FPUMP3 " + FPUMP3FLOW, true);
                     }
-                    if(com2==(byte)0x32) {
+                    if(com2==(byte)0x22) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(DPUMP3FLOW));
                         lw.appendLog(logTag, "send DPUMP3 " + DPUMP3FLOW, true);
                     }
-                    if(com2==(byte)0x33) {
+                    if(com2==(byte)0x23) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(UFPUMP3FLOW));
                         lw.appendLog(logTag, "send UFPUMP3 " + UFPUMP3FLOW, true);
                     }
@@ -532,18 +531,18 @@ public class ConnectionService extends Service {
                     }
                     if(com2==(byte)0x11) {
                         sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS2MIN));
-                        lw.appendLog(logTag, "send DPRESS2MIN " + DPRESS1MIN, true);
+                        lw.appendLog(logTag, "send DPRESS2MIN " + DPRESS2MIN, true);
                     }
                     if(com2==(byte)0x12) {
                         sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS2MAX));
-                        lw.appendLog(logTag, "send DPRESS2MAX " + DPRESS1MAX, true);
+                        lw.appendLog(logTag, "send DPRESS2MAX " + DPRESS2MAX, true);
                     }if(com2==(byte)0x21) {
                         sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS3MIN));
-                        lw.appendLog(logTag, "send DPRESS3MIN " + DPRESS1MIN, true);
+                        lw.appendLog(logTag, "send DPRESS3MIN " + DPRESS3MIN, true);
                     }
                     if(com2==(byte)0x22) {
                         sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS3MAX));
-                        lw.appendLog(logTag, "send DPRESS3MAX " + DPRESS1MAX, true);
+                        lw.appendLog(logTag, "send DPRESS3MAX " + DPRESS3MAX, true);
                     }
                     break;
                 }

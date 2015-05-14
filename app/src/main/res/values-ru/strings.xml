@@ -32,7 +32,7 @@
     <string name="button_settings">Настройки</string>
     <string name="title_activity_pref">Настройки</string>
     <string name="button_log">Журнал</string>
-    <string name="button_scan">Найти устройства</string>
+    <string name="button_scan">Найти</string>
     <string name="none_found">Устройства не найдены</string>
     <string name="none_paired">Нет сопряженных устройств</string>
     <string name="scanning">Поиск устройств...</string>
@@ -47,14 +47,14 @@
     <string name="last_connected_unknown">Последнее подключение: неизвестно</string>
     <string name="title_activity_log">Журнал</string>
     <string name="title_cancel">Отмена</string>
-    <string name="title_clear_log">Очистить журнал</string>
+    <string name="title_clear_log">Очистить</string>
     <string name="title_log_autoscroll">Автолистание</string>
     <string name="title_prefs_cleared">Настройки сброшены</string>
     <string name="title_prefs_loaded">Настройки загружены</string>
     <string name="title_prefs_new">Выберите устройство для подлючения</string>
     <string name="title_prefs_saved">Настройки сохранены</string>
-    <string name="title_service_start">Запустить сервис</string>
-    <string name="title_service_stop">Остановить сервис</string>
+    <string name="title_service_start">Старт</string>
+    <string name="title_service_stop">Стоп</string>
     <string name="title_set_defaults">Сбросить настройки</string>
     <string name="title_status_select">Выбрать статус</string>
     <string name="value_sorbtime_hours">ч.</string>

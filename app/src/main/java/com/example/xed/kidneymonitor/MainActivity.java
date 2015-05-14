@@ -488,8 +488,9 @@ public class MainActivity extends ActionBarActivity {
      */
     public void alertSingleChooseStatus(){
         int defaultSelection = selectedProcedure;
-        if(selectedProcedure == 4)//if state=ready
+        //if(selectedProcedure == 4)//if state=ready
             defaultSelection = -1;
+
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         // Set the dialog title
         builder.setTitle(getResources().getText(R.string.title_status_select).toString())

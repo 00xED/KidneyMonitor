@@ -210,5 +210,6 @@
         android:onClick="OnClick"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView26"
-        android:layout_alignLeft="@+id/textView4" />
+        android:layout_alignLeft="@+id/textView4"
+        android:enabled="false" />
 </RelativeLayout>

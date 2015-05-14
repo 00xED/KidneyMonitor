@@ -487,6 +487,46 @@ public class BluetoothChatService extends Activity {
             mmOutStream = tmpOut;
         }
 
+       /* public void run() {
+            lw.appendLog(TAG, "BEGIN mConnectedThread");
+
+
+            // Keep listening to the InputStream while connected
+            while (true) {
+
+                try {
+                    byte[] buffer = new byte[128];
+                    String readMessage;
+                    int bytes;
+                    if (mmInStream.available()>2) {
+                        try {
+                            // Read from the InputStream
+                            bytes = mmInStream.read(buffer);
+                            readMessage = new String(buffer, 0, bytes);
+                            Log.d("mmInStream.read(buff);", new String(buffer));
+                        }catch (IOException e) {
+                            Log.e(TAG, "disconnected", e);
+                            break;
+                        }
+                        // Send the obtained bytes to the UI Activity
+                        mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
+                                .sendToTarget();
+                    }
+                    else {
+                        SystemClock.sleep(100);
+                    }
+                } catch (IOException e) {
+                    lw.appendLog(TAG, "disconnected"+e);
+                    connectionLost();
+                    // Start the service over to restart listening mode
+                    BluetoothChatService.this.start();
+                    e.printStackTrace();
+                }
+
+            }
+
+        }*/
+
 		public void run() {
             lw.appendLog(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
@@ -511,7 +551,7 @@ public class BluetoothChatService extends Activity {
             }
         }
 
-       /* public void run() {
+        /*public void run() {
             int bytes; // bytes returned from read()
             int availableBytes;
             // Keep listening to the InputStream until an exception occurs

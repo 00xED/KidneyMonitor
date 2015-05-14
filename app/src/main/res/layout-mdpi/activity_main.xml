@@ -62,8 +62,8 @@
             android:layout_height="fill_parent">
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="5dp"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
                 android:layout_column="0" />
         </TableRow>
 
@@ -108,8 +108,8 @@
             android:layout_height="fill_parent">
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="5dp"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
                 android:layout_column="0" />
         </TableRow>
 
@@ -154,8 +154,8 @@
             android:layout_height="fill_parent">
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="5dp"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
                 android:layout_column="0" />
         </TableRow>
 
@@ -195,8 +195,8 @@
             android:layout_height="fill_parent">
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="5dp"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
                 android:layout_column="0" />
         </TableRow>
 
@@ -236,8 +236,8 @@
             android:layout_height="fill_parent">
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="5dp"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
                 android:layout_column="0" />
         </TableRow>
 

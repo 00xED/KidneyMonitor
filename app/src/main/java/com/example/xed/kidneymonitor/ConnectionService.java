@@ -282,7 +282,7 @@ public class ConnectionService extends Service {
     };
 
     void parseInBytes(byte[] inp){
-        if(inp.length==10)
+        if(inp.length>7)
         if(inp[0]==CM_SYNC_S && inp[7]==CM_SYNC_E)
         {
             byte com1 = inp[1];

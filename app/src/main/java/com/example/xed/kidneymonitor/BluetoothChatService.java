@@ -65,7 +65,7 @@ public class BluetoothChatService extends Activity {
     private static final String NAME_INSECURE = "BluetoothChatInsecure";
 
     // Unique UUID for this application
-    private static final UUID MY_UUID_SECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final UUID MY_UUID_SECURE   = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // Member fields
@@ -311,13 +311,15 @@ public class BluetoothChatService extends Activity {
 
             // Create a new listening server socket
             try {
-                if (secure) {
+                tmp = mAdapter.listenUsingInsecureRfcommWithServiceRecord(
+                        NAME_INSECURE, MY_UUID_INSECURE);
+                /*if (secure) {
                     tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE,
                             MY_UUID_SECURE);
                 } else {
                     tmp = mAdapter.listenUsingInsecureRfcommWithServiceRecord(
                             NAME_INSECURE, MY_UUID_INSECURE);
-                }
+                }*/
             } catch (IOException e) {
                 lw.appendLog(TAG, "Socket Type: " + mSocketType + "listen() failed" + e);
             }
@@ -398,13 +400,15 @@ public class BluetoothChatService extends Activity {
             // Get a BluetoothSocket for a connection with the
             // given BluetoothDevice
             try {
-                if (secure) {
+                tmp = device.createInsecureRfcommSocketToServiceRecord(
+                        MY_UUID_INSECURE);
+                /*if (secure) {
                     tmp = device.createRfcommSocketToServiceRecord(
                             MY_UUID_SECURE);
                 } else {
                     tmp = device.createInsecureRfcommSocketToServiceRecord(
                             MY_UUID_INSECURE);
-                }
+                }*/
             } catch (IOException e) {
                 lw.appendLog(TAG, "Socket Type: " + mSocketType + "create() failed" + e);
             }
@@ -483,7 +487,7 @@ public class BluetoothChatService extends Activity {
             mmOutStream = tmpOut;
         }
 
-		/*public void run() {
+		public void run() {
             lw.appendLog(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
             int bytes;
@@ -505,9 +509,9 @@ public class BluetoothChatService extends Activity {
                     break;
                 }
             }
-        }*/
+        }
 
-        public void run() {
+       /* public void run() {
             int bytes; // bytes returned from read()
             int availableBytes;
             // Keep listening to the InputStream until an exception occurs
@@ -536,7 +540,7 @@ public class BluetoothChatService extends Activity {
                     break;
                 }
             }
-        }
+        }*/
 
         /**
          * Write to the connected OutStream.

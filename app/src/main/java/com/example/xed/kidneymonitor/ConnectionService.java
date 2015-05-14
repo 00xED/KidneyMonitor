@@ -240,9 +240,9 @@ public class ConnectionService extends Service {
                             lw.appendLog(logTag, "\nConnecting to: " + mConnectedDeviceName);
                             break;
 
-                        case BluetoothChatService.STATE_LISTEN:{
+                        case BluetoothChatService.STATE_LISTEN:
                             break;
-                        }
+
 
                         case BluetoothChatService.STATE_NONE:
                             lw.appendLog(logTag, "\nNot connected");

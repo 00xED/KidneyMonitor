@@ -364,33 +364,6 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     }
 
-                    case TASK_SET_SETTINGSOK:
-                    {
-                        switch (arg) {
-                            case "0":
-                            {
-                                btPause.setEnabled(true);
-                                btState.setEnabled(true);
-                                tvStatus.setEnabled(true);
-                                ivStatus.setEnabled(true);
-                                trStatusRow.setEnabled(true);
-                                tvCaptionStatus.setEnabled(true);
-                                break;
-                            }
-                            default:
-                            {
-                                btPause.setEnabled(false);
-                                btState.setEnabled(false);
-                                tvStatus.setEnabled(false);
-                                ivStatus.setEnabled(false);
-                                trStatusRow.setEnabled(false);
-                                tvCaptionStatus.setEnabled(false);
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
                     default:
                         break;
                 }

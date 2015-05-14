@@ -186,6 +186,9 @@ public class ConnectionService extends Service {
     final byte  PE_EDS3   = (byte)  0xF7;    // Error on electric cell 3
     final byte  PE_EDS4   = (byte)  0xF8;    // Error on electric cell 4
     final byte  PE_BATT   = (byte)  0xF9;    // Error on low battery
+    final byte  PE_PUMP1  = (byte)  0xFA;    // Pump 1 error, rpm low
+    final byte  PE_PUMP2  = (byte)  0xFB;    // Pump 2 error, rpm low
+    final byte  PE_PUMP3  = (byte)  0xFC;    // Pump 3 error, rpm low
 
 
     /**
@@ -633,6 +636,30 @@ public class ConnectionService extends Service {
                 case PE_BATT:{
                     sendNotification("ERROR PE_BATT");
                     lw.appendLog(logTag, "ERROR PE_BATT", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
+                    break;
+                }
+
+                case PE_PUMP1:{
+                    sendNotification("ERROR PE_PUMP1");
+                    lw.appendLog(logTag, "ERROR PE_PUMP1", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
+                    break;
+                }
+
+                case PE_PUMP2:{
+                    sendNotification("ERROR PE_PUMP2");
+                    lw.appendLog(logTag, "ERROR PE_PUMP2", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
+                    break;
+                }
+
+                case PE_PUMP3:{
+                    sendNotification("ERROR PE_PUMP3");
+                    lw.appendLog(logTag, "ERROR PE_PUMP3", true);
                     FUNCT = "1";
                     PARAMS = "1";
                     break;

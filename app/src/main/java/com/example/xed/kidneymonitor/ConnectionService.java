@@ -415,30 +415,80 @@ public class ConnectionService extends Service {
                 case bDPRESS1:{
                     DPRESS1 = String.valueOf(full_data_float);
                     lw.appendLog(logTag, "setting DPRESS1 to " + DPRESS1, true);
+                    if((Float.valueOf(DPRESS1)>DPRESS1MIN) && (Float.valueOf(DPRESS1)<DPRESS1MAX))
+                    {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    }
+                    else
+                    {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
                     break;
                 }
 
                 case bDPRESS2:{
                     DPRESS2 = String.valueOf(full_data_float);
                     lw.appendLog(logTag, "setting DPRESS2 to " + DPRESS2, true);
+                    if((Float.valueOf(DPRESS2)>DPRESS2MIN) && (Float.valueOf(DPRESS2)<DPRESS2MAX))
+                    {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    }
+                    else
+                    {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
                     break;
                 }
 
                 case bDPRESS3:{
                     DPRESS3 = String.valueOf(full_data_float);
                     lw.appendLog(logTag, "setting DPRESS3 to " + DPRESS3, true);
+                    if((Float.valueOf(DPRESS3)>DPRESS3MIN) && (Float.valueOf(DPRESS3)<DPRESS3MAX))
+                    {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    }
+                    else
+                    {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
                     break;
                 }
 
                 case bDTEMP1:{
                     DTEMP1 = String.valueOf(full_data_float);
                     lw.appendLog(logTag, "setting DTEMP1 to " + DTEMP1, true);
+                    if((Float.valueOf(DTEMP1)>DTEMP1MIN) && (Float.valueOf(DTEMP1)<DTEMP1MAX))
+                    {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    }
+                    else
+                    {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
                     break;
                 }
 
                 case bDCOND1:{
                     DCOND1 = String.valueOf(full_data_float);
                     lw.appendLog(logTag, "setting DCOND1 to " + DCOND1, true);
+                    if((Float.valueOf(DCOND1)>DCOND1MIN) && (Float.valueOf(DCOND1)<DCOND1MAX))
+                    {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    }
+                    else
+                    {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
                     break;
                 }
 

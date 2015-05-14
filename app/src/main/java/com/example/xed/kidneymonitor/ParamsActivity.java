@@ -155,58 +155,105 @@ public class ParamsActivity extends ActionBarActivity {
 
                         case TASK_SET_DPRESS1:
                         {
-                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS1MIN)/(ConnectionService.DPRESS1MAX));
+                            pbDPress1.setMax(0);
+                            pbDPress1.setProgress(0);
+                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS1MIN));
                             int progress = Math.round(percent);
                             tvDPress1.setText(args);
+                            pbDPress1.setMax(Math.round(ConnectionService.DPRESS1MAX-ConnectionService.DPRESS1MIN));
                             pbDPress1.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DPRESS2:
                         {
+                            pbDPress2.setMax(0);
+                            pbDPress2.setProgress(0);
+                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS2MIN));
+                            int progress = Math.round(percent);
                             tvDPress2.setText(args);
+                            pbDPress2.setMax(Math.round(ConnectionService.DPRESS2MAX-ConnectionService.DPRESS2MIN));
+                            pbDPress2.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DPRESS3:
                         {
+                            pbDPress3.setMax(0);
+                            pbDPress3.setProgress(0);
+                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS3MIN));
+                            int progress = Math.round(percent);
                             tvDPress3.setText(args);
+                            pbDPress3.setMax(Math.round(ConnectionService.DPRESS3MAX-ConnectionService.DPRESS3MIN));
+                            pbDPress3.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DTEMP1:
                         {
+                            pbDTemp.setMax(0);
+                            pbDTemp.setProgress(0);
+                            float percent = ((Float.valueOf(args)-ConnectionService.DTEMP1MIN));
+                            int progress = Math.round(percent);
                             tvDTemp.setText(args);
+                            pbDTemp.setMax(Math.round(ConnectionService.DTEMP1MAX-ConnectionService.DTEMP1MIN));
+                            pbDTemp.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DCOND1:
                         {
+                            pbDCond.setMax(0);
+                            pbDCond.setProgress(0);
+                            float percent = ((Float.valueOf(args)-ConnectionService.DCOND1MIN));
+                            int progress = Math.round(percent);
                             tvDCond.setText(args);
+                            pbDCond.setMax(Math.round(ConnectionService.DCOND1MAX-ConnectionService.DCOND1MIN));
+                            pbDCond.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DCUR1:
                         {
+                            pbDCur1.setMax(0);
+                            pbDCur1.setProgress(0);
+                            int progress = Math.round(Float.valueOf(args));
                             tvDCur1.setText(args);
+                            pbDCur1.setMax(500);
+                            pbDCur1.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DCUR2:
                         {
+                            pbDCur2.setMax(0);
+                            pbDCur2.setProgress(0);
+                            int progress = Math.round(Float.valueOf(args));
                             tvDCur2.setText(args);
+                            pbDCur2.setMax(500);
+                            pbDCur2.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DCUR3:
                         {
+                            pbDCur3.setMax(0);
+                            pbDCur3.setProgress(0);
+                            int progress = Math.round(Float.valueOf(args));
                             tvDCur3.setText(args);
+                            pbDCur3.setMax(500);
+                            pbDCur3.setProgress(progress);
                             break;
                         }
 
                         case TASK_SET_DCUR4:
                         {
+                            pbDCur4.setMax(0);
+                            pbDCur4.setProgress(0);
+                            int progress = Math.round(Float.valueOf(args));
                             tvDCur4.setText(args);
+                            pbDCur4.setMax(500);
+                            pbDCur4.setProgress(progress);
                             break;
                         }
 

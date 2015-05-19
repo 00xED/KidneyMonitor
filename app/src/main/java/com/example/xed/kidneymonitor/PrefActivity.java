@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 /**
  * Writing and reading preferences, device choosing and pairing,
@@ -100,6 +103,13 @@ public class PrefActivity extends ActionBarActivity {
                 cbAutoconnect.setChecked(false);
 
         btStopService = (Button) findViewById(R.id.bt_StopService);
+        if(ConnectionService.isServiceRunning)
+            btStopService.setText(
+                    getResources().getText(R.string.title_service_stop).toString());
+        else
+            btStopService.setText(
+                    getResources().getText(R.string.title_service_start).toString());
+
     }
 
     /**
@@ -165,7 +175,20 @@ public class PrefActivity extends ActionBarActivity {
                 Toast.makeText(this,
                         getResources().getText(R.string.title_prefs_cleared).toString(),
                         Toast.LENGTH_SHORT).show();
-                lw.appendLog(logTag, "Deleting settings");
+                lw.appendLog(logTag, "Deleting settings and logs");
+                File logFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
+                if (logFile.exists()) if (logFile.delete()) {
+                    lw.appendLog(logTag, "Log file deleted");
+                } else {
+                    lw.appendLog(logTag, "Log file NOT deleted");
+                }
+
+                File verboseLogFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
+                if (verboseLogFile.exists()) if (verboseLogFile.delete()) {
+                    lw.appendLog(logTag, "Debug log file deleted");
+                } else {
+                    lw.appendLog(logTag, "Debug log file NOT deleted");
+                }
                 break;
             }
 

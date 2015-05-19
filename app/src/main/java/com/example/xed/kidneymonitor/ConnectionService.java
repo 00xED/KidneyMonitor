@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 
 /**
@@ -249,7 +250,8 @@ public class ConnectionService extends Service {
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    lw.appendLog(logTag, "\nMe:  " + writeMessage);
+                    //lw.appendLog(logTag, "\nMe:  " + writeMessage);
+                    lw.appendLog(logTag, "\nMe:  " + toHexString(writeBuf));
                     break;
 
                 case MESSAGE_READ:
@@ -257,8 +259,8 @@ public class ConnectionService extends Service {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    lw.appendLog(logTag, "\n" + mConnectedDeviceName + ":  " + readMessage);
-                    //parseandexecute(readMessage);//start parser with received string
+                    //lw.appendLog(logTag, "\n" + mConnectedDeviceName + ":  " + readMessage);
+                    lw.appendLog(logTag, "\nMe:  " + toHexString(readBuf));
                     parseInBytes(readBuf);
                     break;
 
@@ -275,15 +277,26 @@ public class ConnectionService extends Service {
         }
     };
 
-    void parseInBytes(byte[] inp){
-        if(inp.length>7)
-        if(inp[0]==CM_SYNC_S && inp[7]==CM_SYNC_E)
-        {
-            byte com1 = inp[1];
-            byte com2 = inp[2];
+    int arrayIndexOf(byte[] inp, byte what){
+        for(int i=0;i<inp.length;i++)
+        if(inp[i]==what)
+            return i;
+        return -1;
+    }
 
-            byte currentArg = inp[6];
-            byte[] databytes = new byte[] {inp[3],inp[4],inp[5],inp[6]};
+    void parseInBytes(byte[] inp){
+        int end = arrayIndexOf(inp, CM_SYNC_E);
+        int start = end-7;
+        int com1Index = start+1;
+        int com2Index = start+2;
+        if(inp.length>7)
+        if(inp[start]==CM_SYNC_S && inp[end]==CM_SYNC_E)
+        {
+            byte com1 = inp[com1Index];
+            byte com2 = inp[com2Index];
+
+            byte currentArg = inp[start+6];
+            byte[] databytes = new byte[] {inp[start+3],inp[start+4],inp[start+5],inp[start+6]};
             //int full_data_int = byteArrayToInt(databytes);
 
             int full_data_int = ByteBuffer.wrap(databytes).getInt();
@@ -457,7 +470,17 @@ public class ConnectionService extends Service {
                 }
 
                 case bSENDDPUMPS:{
-                    if(com2==(byte)0x01) {
+                    lw.appendLog(logTag, "send PUMPS FLOWS", true);
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x01, intTo4byte(FPUMP1FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x02, intTo4byte(DPUMP1FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x03, intTo4byte(UFPUMP1FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x11, intTo4byte(FPUMP2FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x12, intTo4byte(DPUMP2FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x13, intTo4byte(UFPUMP2FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x21, intTo4byte(FPUMP3FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x22, intTo4byte(DPUMP3FLOW));
+                    sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x23, intTo4byte(UFPUMP3FLOW));
+                    /*if(com2==(byte)0x01) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(FPUMP1FLOW));
                         lw.appendLog(logTag, "send FPUMP1 " + FPUMP1FLOW, true);
                     }
@@ -494,12 +517,19 @@ public class ConnectionService extends Service {
                     if(com2==(byte)0x23) {
                         sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(UFPUMP3FLOW));
                         lw.appendLog(logTag, "send UFPUMP3 " + UFPUMP3FLOW, true);
-                    }
+                    }*/
                     break;
                 }
 
                 case bSENDDPRESS:{
-                    if(com2==(byte)0x01) {
+                    lw.appendLog(logTag, "send PRESSURES", true);
+                    sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x01, floatTo4byte(DPRESS1MIN));
+                    sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x02, floatTo4byte(DPRESS1MAX));
+                    sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x11, floatTo4byte(DPRESS2MIN));
+                    sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x12, floatTo4byte(DPRESS2MAX));
+                    sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x21, floatTo4byte(DPRESS3MIN));
+                    sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x22, floatTo4byte(DPRESS3MAX));
+                    /*if(com2==(byte)0x01) {
                         sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS1MIN));
                         lw.appendLog(logTag, "send DPRESS1MIN " + DPRESS1MIN, true);
                     }
@@ -521,31 +551,37 @@ public class ConnectionService extends Service {
                     if(com2==(byte)0x22) {
                         sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS3MAX));
                         lw.appendLog(logTag, "send DPRESS3MAX " + DPRESS3MAX, true);
-                    }
+                    }*/
                     break;
                 }
 
                 case bSENDDTEMP:{
-                    if(com2==(byte)0x01) {
+                    lw.appendLog(logTag, "send TEMPERATURES ", true);
+                    sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01),  (byte) 0x01, floatTo4byte(DTEMP1MIN));
+                    sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01),  (byte) 0x02, floatTo4byte(DTEMP1MAX));
+                    /*if(com2==(byte)0x01) {
                         sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01), com2, floatTo4byte(DTEMP1MIN));
                         lw.appendLog(logTag, "send DTEMPMIN " + DTEMP1MIN, true);
                     }
                     if(com2==(byte)0x02) {
                         sendMessageBytes((byte) (bSENDDTEMP + (byte) 0x01), com2, floatTo4byte(DTEMP1MAX));
                         lw.appendLog(logTag, "send DTEMPMAX " + DTEMP1MAX, true);
-                    }
+                    }*/
                     break;
                 }
 
                 case bSENDDCOND:{
-                    if(com2==(byte)0x01) {
+                    lw.appendLog(logTag, "send CONDUCTIVITIES ", true);
+                    sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte) 0x01, floatTo4byte(DCOND1MIN));
+                    sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte) 0x02, floatTo4byte(DCOND1MAX));
+                    /*if(com2==(byte)0x01) {
                         sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), com2, floatTo4byte(DCOND1MIN));
                         lw.appendLog(logTag, "send DCONDMIN " + DCOND1MIN, true);
                     }
                     if(com2==(byte)0x02) {
                         sendMessageBytes((byte) (bSENDDCOND + (byte) 0x01), com2, floatTo4byte(DCOND1MAX));
                         lw.appendLog(logTag, "send DCONDMAX " + DCOND1MAX, true);
-                    }
+                    }*/
                     break;
                 }
 
@@ -1156,6 +1192,18 @@ public class ConnectionService extends Service {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFY_ID, notification);
         NOTIFY_ID++;
+    }
+
+    public static String toHexString(byte[] bytes) {
+        char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        char[] hexChars = new char[bytes.length * 2];
+        int v;
+        for ( int j = 0; j < bytes.length; j++ ) {
+            v = bytes[j] & 0xFF;
+            hexChars[j*2] = hexArray[v/16];
+            hexChars[j*2 + 1] = hexArray[v%16];
+        }
+        return new String(hexChars);
     }
 
     enum RequestType {

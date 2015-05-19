@@ -570,7 +570,7 @@ public class BluetoothChatService extends Activity {
 
 
                         bytes = mmInStream.read(buffer);
-                        Log.d("mmInStream.read(buff);", new String(buffer));
+                        //Log.d("mmInStream.read(buff);", new String(buffer));
                         if (bytes > 0) {
                             // Send the obtained bytes to the UI activity
                             mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();

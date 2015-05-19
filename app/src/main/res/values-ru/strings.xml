@@ -114,7 +114,7 @@
     <string name="value_status_ready">Готов</string>
     <string name="cells">Ячейки: </string>
     <string name="l">\ л</string>
-    <string name="lh">\ л/час</string>
+    <string name="mlm">\ мл/мин</string>
     <string name="macm2">\ мА/см2</string>
     <string name="mmHg">\ мм.рт.ст.</string>
     <string name="title_activity_params">Параметры процедуры</string>

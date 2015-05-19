@@ -131,7 +131,7 @@
 
     <string name="title_settings_ok">Device settings are OK</string>
 
-    <string name="lh">\ l/hr.</string>
+    <string name="mlm">\ ml/min.</string>
     <string name="l">\ l</string>
     <string name="macm2">\ mA/cm2</string>
     <string name="mmHg">\ mm Hg</string>

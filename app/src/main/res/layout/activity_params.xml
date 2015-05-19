@@ -272,7 +272,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/lh"
+                        android:text="@string/mlm"
                         android:id="@+id/textView41"
                         android:layout_column="7" />
                 </TableRow>
@@ -337,7 +337,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/lh"
+                        android:text="@string/mlm"
                         android:id="@+id/textView41"
                         android:layout_column="7" />
                 </TableRow>
@@ -402,7 +402,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/lh"
+                        android:text="@string/mlm"
                         android:id="@+id/textView42"
                         android:layout_column="7" />
                 </TableRow>
@@ -423,7 +423,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="min"
+                        android:text="0"
                         android:id="@+id/tv_DUFVolumeMin"
                         android:layout_column="1" />
 
@@ -438,7 +438,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="max"
+                        android:text="4"
                         android:id="@+id/tv_DUFVolumeMax"
                         android:layout_column="3" />
 

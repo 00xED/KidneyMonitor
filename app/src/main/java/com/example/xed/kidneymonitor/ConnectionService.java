@@ -122,8 +122,6 @@ public class ConnectionService extends Service {
         final byte CM_SYNC_S = (byte) 0x55;//Start of package
         final byte CM_SYNC_E = (byte) 0xAA;//End of package
 
-        final byte bSETTINGSOK = (byte) 0x99;//Send if received settings OK
-
         final byte bSENDDPRESS     = (byte) 0x10;//Send to set dialysis pressures
         final byte bSENDDCOND      = (byte) 0x12;//Send to set dialysis conductivity
         final byte bSENDDTEMP      = (byte) 0x14;//Send to set dialysis temperaturecurrent
@@ -137,10 +135,6 @@ public class ConnectionService extends Service {
         final byte bSHUTDOWN     = (byte) 0x5F;//Send to set procedure to SHUTDOWN
 
         final byte bBATT = (byte) 0xE9;//Receiving battery stats
-
-        final byte bSTATE = (byte) 0x82;//Receiving state
-            final byte bSTATE_ON =(byte) 0x10;
-            final byte bSTATE_OFF =(byte) 0x11;
 
         final byte bSTATUS = (byte) 0xEF;//Receiving current procedure
             final byte bSTATUS_FILLING =      (byte) 0x5B;
@@ -352,7 +346,6 @@ public class ConnectionService extends Service {
                     break;
                 }
 
-                //TODO:when PARAMS is NORMAL?
                 case bPARAMS: {
                     lw.appendLog(logTag, "got command PARAMS and " + currentArg);
                     switch (currentArg) {
@@ -382,7 +375,6 @@ public class ConnectionService extends Service {
                     break;
                 }
 
-                //TODO:when FUNCT is NORMAL?
                 case bFUNCT: {
                     lw.appendLog(logTag, "got command FUNCT and " + currentArg);
                     switch (currentArg) {
@@ -402,13 +394,6 @@ public class ConnectionService extends Service {
                             break;
                         }
                     }
-                    break;
-                }
-
-                //TODO: is needed?
-                case bSETTINGSOK:{
-                    SETTINGSOK = "0";
-                    lw.appendLog(logTag, "Settings OK", true);
                     break;
                 }
 

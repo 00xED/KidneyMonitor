@@ -28,6 +28,10 @@
             android:name=".PrefActivity"
             android:label="@string/title_activity_pref"
             android:screenOrientation="portrait" >
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.xed.kidneymonitor.MainActivity" />
         </activity>
         <activity
             android:name=".DeviceListActivity"
@@ -38,7 +42,12 @@
         <activity
             android:name=".LogActivity"
             android:label="@string/title_activity_log"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            >
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.xed.kidneymonitor.MainActivity" />
         </activity>
 
         <service

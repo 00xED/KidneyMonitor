@@ -227,9 +227,11 @@ public class ConnectionService extends Service {
                     Log.d(logTag, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                     switch (msg.arg1) {
 
-                        case BluetoothChatService.STATE_CONNECTED:
-                            lw.appendLog(logTag, "\nConnected to: " + mConnectedDeviceName);
+                        case BluetoothChatService.STATE_CONNECTED: {
+                            lw.appendLog(logTag, "\nConnected to: " + mConnectedDeviceName, true);
+                            sendsomeMessage("CONNECT");
                             break;
+                        }
 
                         case BluetoothChatService.STATE_CONNECTING:
                             lw.appendLog(logTag, "\nConnecting to: " + mConnectedDeviceName);
@@ -296,7 +298,7 @@ public class ConnectionService extends Service {
             byte com2 = inp[com2Index];
 
             byte currentArg = inp[start+6];
-            byte[] databytes = new byte[] {inp[start+3],inp[start+4],inp[start+5],inp[start+6]};
+            byte[] databytes = new byte[] {inp[start+6],inp[start+5],inp[start+4],inp[start+3]};
             //int full_data_int = byteArrayToInt(databytes);
 
             int full_data_int = ByteBuffer.wrap(databytes).getInt();
@@ -805,7 +807,7 @@ public class ConnectionService extends Service {
 
     void sendMessageBytes(byte com1, byte[] data)
     {
-        byte[] outp = new byte[] {CM_SYNC_S, com1, (byte)0x00, data[0], data[1], data[2], data[3], CM_SYNC_E};
+        byte[] outp = new byte[] {CM_SYNC_S, com1, (byte)0x00, data[3], data[2], data[1], data[0], CM_SYNC_E};
         mChatService.write(outp);
     }
 
@@ -817,7 +819,7 @@ public class ConnectionService extends Service {
 
     void sendMessageBytes(byte com1, byte com2, byte[] data)
     {
-        byte[] outp = new byte[] {CM_SYNC_S, com1, com2, data[0], data[1], data[2], data[3], CM_SYNC_E};
+        byte[] outp = new byte[] {CM_SYNC_S, com1, com2, data[3], data[2], data[1], data[0], CM_SYNC_E};
         mChatService.write(outp);
     }
 
@@ -1045,11 +1047,9 @@ public class ConnectionService extends Service {
     }
 
     //Send message to connected device
-    public void sendMessage(String input){
-        String temp="!$"+input+"*";
-        temp+="\r\n";
-        lw.appendLog(logTag, "Sending: " + temp);
-        mChatService.write(temp.getBytes());
+    public void sendsomeMessage(String input){
+        lw.appendLog(logTag, "Sending: " + input);
+        mChatService.write(input.getBytes());
     }
 
     Boolean  isStringCorrect(String strLine){

@@ -55,18 +55,24 @@ public class ParamsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_params);
 
         pbDPumpFlow1 = (ProgressBar) findViewById(R.id.pb_DPumpFlow1);
+            pbDPumpFlow1.setMax(200);
+            pbDPumpFlow1.setProgress(ConnectionService.DPUMP1FLOW);
         tvDPumpFlow1Min = (TextView) findViewById(R.id.tv_DPumpFlow1Min);
         tvDPumpFlow1 = (TextView) findViewById(R.id.tv_DPumpFlow1);
             tvDPumpFlow1.setText(String.valueOf(Math.round(ConnectionService.DPUMP1FLOW)));
         tvDPumpFlow1Max = (TextView) findViewById(R.id.tv_DPumpFlow1Max);
 
         pbDPumpFlow2 = (ProgressBar) findViewById(R.id.pb_DPumpFlow2);
+            pbDPumpFlow2.setMax(200);
+            pbDPumpFlow2.setProgress(ConnectionService.DPUMP2FLOW);
         tvDPumpFlow1Min = (TextView) findViewById(R.id.tv_DPumpFlow1Min);
         tvDPumpFlow2 = (TextView) findViewById(R.id.tv_DPumpFlow2);
             tvDPumpFlow2.setText(String.valueOf(Math.round(ConnectionService.DPUMP2FLOW)));
         tvDPumpFlow1Max = (TextView) findViewById(R.id.tv_DPumpFlow1Max);
 
         pbDPumpFlow3 = (ProgressBar) findViewById(R.id.pb_DPumpFlow3);
+            pbDPumpFlow3.setMax(200);
+            pbDPumpFlow3.setProgress(ConnectionService.DPUMP3FLOW);
         tvDPumpFlow1Min = (TextView) findViewById(R.id.tv_DPumpFlow1Min);
         tvDPumpFlow3 = (TextView) findViewById(R.id.tv_DPumpFlow3);
          tvDPumpFlow3.setText(String.valueOf(Math.round(ConnectionService.DPUMP3FLOW)));

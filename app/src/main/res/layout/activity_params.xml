@@ -23,7 +23,7 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/textView9"
+                android:layout_alignStart="@+id/textView21"
                 android:id="@+id/TableLayout3"
                 android:layout_below="@+id/textView21">
 
@@ -228,7 +228,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="min"
+                        android:text="20"
                         android:id="@+id/tv_DPumpFlow1Min"
                         android:layout_column="1" />
 
@@ -243,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="max"
+                        android:text="200"
                         android:id="@+id/tv_DPumpFlow1Max"
                         android:layout_column="3" />
 
@@ -293,7 +293,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="min"
+                        android:text="20"
                         android:id="@+id/tv_DPumpFlow2Min"
                         android:layout_column="1" />
 
@@ -308,7 +308,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="max"
+                        android:text="200"
                         android:id="@+id/tv_DPumpFlow2Max"
                         android:layout_column="3" />
 
@@ -358,7 +358,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="min"
+                        android:text="20"
                         android:id="@+id/tv_DPumpFlow3Min"
                         android:layout_column="1" />
 
@@ -373,7 +373,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="max"
+                        android:text="200"
                         android:id="@+id/tv_DPumpFlow3Max"
                         android:layout_column="3" />
 

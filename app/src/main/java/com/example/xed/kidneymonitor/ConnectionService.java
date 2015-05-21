@@ -23,11 +23,8 @@ import android.os.Message;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 
 /**
@@ -299,15 +296,11 @@ public class ConnectionService extends Service {
 
             byte currentArg = inp[start+6];
             byte[] databytes = new byte[] {inp[start+6],inp[start+5],inp[start+4],inp[start+3]};
-            //int full_data_int = byteArrayToInt(databytes);
 
             int full_data_int = ByteBuffer.wrap(databytes).getInt();
             float full_data_float = ByteBuffer.wrap(databytes).getFloat();
 
-            //int full_data_int = java.nio.ByteBuffer.wrap(databytes).getInt();
             LASTCONNECTED = "0";
-
-
 
             switch (com1){
 
@@ -482,44 +475,7 @@ public class ConnectionService extends Service {
                     sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x21, intTo4byte(FPUMP3FLOW));
                     sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x22, intTo4byte(DPUMP3FLOW));
                     sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x23, intTo4byte(UFPUMP3FLOW));
-                    /*if(com2==(byte)0x01) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(FPUMP1FLOW));
-                        lw.appendLog(logTag, "send FPUMP1 " + FPUMP1FLOW, true);
-                    }
-                    if(com2==(byte)0x02) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(DPUMP1FLOW));
-                        lw.appendLog(logTag, "send DPUMP1 " + DPUMP1FLOW, true);
-                    }
-                    if(com2==(byte)0x03) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(UFPUMP1FLOW));
-                        lw.appendLog(logTag, "send UFPUMP1 " + UFPUMP1FLOW, true);
-                    }
 
-                    if(com2==(byte)0x11) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(FPUMP2FLOW));
-                        lw.appendLog(logTag, "send FPUMP2 " + FPUMP2FLOW, true);
-                    }
-                    if(com2==(byte)0x12) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(DPUMP2FLOW));
-                        lw.appendLog(logTag, "send DPUMP2 " + DPUMP2FLOW, true);
-                    }
-                    if(com2==(byte)0x13) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(UFPUMP2FLOW));
-                        lw.appendLog(logTag, "send UFPUMP2 " + UFPUMP2FLOW, true);
-                    }
-
-                    if(com2==(byte)0x21) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(FPUMP3FLOW));
-                        lw.appendLog(logTag, "send FPUMP3 " + FPUMP3FLOW, true);
-                    }
-                    if(com2==(byte)0x22) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(DPUMP3FLOW));
-                        lw.appendLog(logTag, "send DPUMP3 " + DPUMP3FLOW, true);
-                    }
-                    if(com2==(byte)0x23) {
-                        sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), com2, intTo4byte(UFPUMP3FLOW));
-                        lw.appendLog(logTag, "send UFPUMP3 " + UFPUMP3FLOW, true);
-                    }*/
                     break;
                 }
 
@@ -531,29 +487,7 @@ public class ConnectionService extends Service {
                     sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x12, floatTo4byte(DPRESS2MAX));
                     sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x21, floatTo4byte(DPRESS3MIN));
                     sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x22, floatTo4byte(DPRESS3MAX));
-                    /*if(com2==(byte)0x01) {
-                        sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS1MIN));
-                        lw.appendLog(logTag, "send DPRESS1MIN " + DPRESS1MIN, true);
-                    }
-                    if(com2==(byte)0x02) {
-                        sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS1MAX));
-                        lw.appendLog(logTag, "send DPRESS1MAX " + DPRESS1MAX, true);
-                    }
-                    if(com2==(byte)0x11) {
-                        sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS2MIN));
-                        lw.appendLog(logTag, "send DPRESS2MIN " + DPRESS2MIN, true);
-                    }
-                    if(com2==(byte)0x12) {
-                        sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS2MAX));
-                        lw.appendLog(logTag, "send DPRESS2MAX " + DPRESS2MAX, true);
-                    }if(com2==(byte)0x21) {
-                        sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS3MIN));
-                        lw.appendLog(logTag, "send DPRESS3MIN " + DPRESS3MIN, true);
-                    }
-                    if(com2==(byte)0x22) {
-                        sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), com2, floatTo4byte(DPRESS3MAX));
-                        lw.appendLog(logTag, "send DPRESS3MAX " + DPRESS3MAX, true);
-                    }*/
+
                     break;
                 }
 
@@ -561,14 +495,7 @@ public class ConnectionService extends Service {
                     lw.appendLog(logTag, "send TEMPERATURES ", true);
                     sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01),  (byte) 0x01, floatTo4byte(DTEMP1MIN));
                     sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01),  (byte) 0x02, floatTo4byte(DTEMP1MAX));
-                    /*if(com2==(byte)0x01) {
-                        sendMessageBytes((byte)(bSENDDTEMP+(byte)0x01), com2, floatTo4byte(DTEMP1MIN));
-                        lw.appendLog(logTag, "send DTEMPMIN " + DTEMP1MIN, true);
-                    }
-                    if(com2==(byte)0x02) {
-                        sendMessageBytes((byte) (bSENDDTEMP + (byte) 0x01), com2, floatTo4byte(DTEMP1MAX));
-                        lw.appendLog(logTag, "send DTEMPMAX " + DTEMP1MAX, true);
-                    }*/
+
                     break;
                 }
 
@@ -576,14 +503,7 @@ public class ConnectionService extends Service {
                     lw.appendLog(logTag, "send CONDUCTIVITIES ", true);
                     sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte) 0x01, floatTo4byte(DCOND1MIN));
                     sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), (byte) 0x02, floatTo4byte(DCOND1MAX));
-                    /*if(com2==(byte)0x01) {
-                        sendMessageBytes((byte)(bSENDDCOND+(byte)0x01), com2, floatTo4byte(DCOND1MIN));
-                        lw.appendLog(logTag, "send DCONDMIN " + DCOND1MIN, true);
-                    }
-                    if(com2==(byte)0x02) {
-                        sendMessageBytes((byte) (bSENDDCOND + (byte) 0x01), com2, floatTo4byte(DCOND1MAX));
-                        lw.appendLog(logTag, "send DCONDMAX " + DCOND1MAX, true);
-                    }*/
+
                     break;
                 }
 
@@ -1204,38 +1124,6 @@ public class ConnectionService extends Service {
             hexChars[j*2 + 1] = hexArray[v%16];
         }
         return new String(hexChars);
-    }
-
-    enum RequestType {
-
-        STATE("STATE"),
-        BATT("BATT"),
-        STATUS("STATUS"),
-        PARAMS("PARAMS"),
-        SORBTIME("SORBTIME"),
-        FUNCT("FUNCT"),
-        NOTIF("NOTIF"),
-        PAUSE("PAUSE"),
-        A0("0"), A1("1"), A2("2"), A3("3"), A4("4"), A5("5"), A6("6"), A7("7"), A8("8"), A9("9");
-
-        private String typeValue;
-
-        RequestType(String type) {
-            typeValue = type;
-        }
-
-        static public RequestType getType(String pType) {
-            for (RequestType type : RequestType.values()) {
-                if (type.getTypeValue().equals(pType)) {
-                    return type;
-                }
-            }
-            throw new RuntimeException("unknown type");
-        }
-
-        public String getTypeValue() {
-            return typeValue;
-        }
     }
 
     enum RequestTypeSettings {

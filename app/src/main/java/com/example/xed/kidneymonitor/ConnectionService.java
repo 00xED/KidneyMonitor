@@ -120,10 +120,10 @@ public class ConnectionService extends Service {
         final byte CM_SYNC_S = (byte) 0x55;//Start of package
         final byte CM_SYNC_E = (byte) 0xAA;//End of package
 
-        final byte bSENDDPRESS     = (byte) 0x10;//Send to set dialysis pressures
-        final byte bSENDDCOND      = (byte) 0x12;//Send to set dialysis conductivity
-        final byte bSENDDTEMP      = (byte) 0x14;//Send to set dialysis temperaturecurrent
-        final byte bSENDDPUMPS     = (byte) 0x16;//Send to set pumps flows
+        final byte bSENDDPRESS     = (byte) 0x10;//Receiving command to set dialysis pressures
+        final byte bSENDDCOND      = (byte) 0x12;//Receiving command to set dialysis conductivity
+        final byte bSENDDTEMP      = (byte) 0x14;//Receiving command to set dialysis temperaturecurrent
+        final byte bSENDDPUMPS     = (byte) 0x16;//Receiving command to set pumps flows
 
         final byte bPAUSE        = (byte) 0x5A;//Send to pause current procedure
         final byte bFILLING      = (byte) 0x5B;//Send to set procedure to FILLING
@@ -289,12 +289,12 @@ public class ConnectionService extends Service {
         int com1Index = start+1;
         int com2Index = start+2;
         if(inp.length>7)
-        if(inp[start]==CM_SYNC_S && inp[end]==CM_SYNC_E)
+        if(arrayIndexOf(inp,CM_SYNC_S)!=-1 && arrayIndexOf(inp,CM_SYNC_E)!=-1)
         {
             byte com1 = inp[com1Index];
             byte com2 = inp[com2Index];
 
-            byte currentArg = inp[start+6];
+            byte currentArg = inp[start+2];
             byte[] databytes = new byte[] {inp[start+6],inp[start+5],inp[start+4],inp[start+3]};
 
             int full_data_int = ByteBuffer.wrap(databytes).getInt();

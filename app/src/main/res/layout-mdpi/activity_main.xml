@@ -218,7 +218,7 @@
                 android:layout_column="2" />
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/iv_SorbentTime"
                 android:layout_column="3"
                 android:src="@drawable/ic_access_time_grey600_24dp" />
 

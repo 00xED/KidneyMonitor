@@ -227,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/value_time_sorbent_unknown"
-                android:id="@+id/tv_ValueSorbentTime"
+                android:id="@+id/iv_SorbentTime"
                 android:layout_column="4" />
         </TableRow>
 

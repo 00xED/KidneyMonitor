@@ -71,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
      * TextViews for main screen
      */
     private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected, tvCaptionStatus, tvCaptionProcedureParams;
-    private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt;
+    private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt, ivSorbtime;
     private Button btPause, btState;
     private TableRow trStatusRow;
 
@@ -108,7 +108,7 @@ public class MainActivity extends ActionBarActivity {
         ivState = (ImageView) findViewById(R.id.iv_State);
         ivStatus = (ImageView) findViewById(R.id.iv_Status);
         ivParams = (ImageView) findViewById(R.id.iv_Params);
-
+        ivSorbtime = (ImageView) findViewById(R.id.iv_SorbentTime);
         btPause = (Button) findViewById(R.id.bt_Pause);
         btState = (Button) findViewById(R.id.bt_State);
 
@@ -324,6 +324,7 @@ public class MainActivity extends ActionBarActivity {
                         if (dialysisStart==-1)//If received value is default then set to unknown
                         {
                             tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
+                            ivSorbtime.setImageResource(R.drawable.ic_access_time_grey600_24dp);
                         }
                         else    //Convert received time in seconds to hours and minutes
                         {
@@ -337,6 +338,8 @@ public class MainActivity extends ActionBarActivity {
                                                getResources().getText(R.string.value_sorbtime_hours).toString() +
                                                mins +
                                                getResources().getText(R.string.value_sorbtime_mins).toString() + sec);
+
+                            ivSorbtime.setImageResource(R.drawable.ic_access_time_green);
                         }
                         break;
                     }

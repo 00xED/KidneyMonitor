@@ -521,7 +521,7 @@ public class BluetoothChatService extends Activity {
         public void run() {
             int bytes=0; // bytes returned from read()
             int availableBytes;
-            byte[] buffer = new byte[128];
+            byte[] buffer = new byte[64];
             // Keep listening to the InputStream until an exception occurs
             while (!stopThread) {
                 try {
@@ -534,13 +534,13 @@ public class BluetoothChatService extends Activity {
                             // Send the obtained bytes to the UI activity
                             mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                             bytes=0;
-                            buffer = new byte[128];
+                            buffer = new byte[64];
                         }
                     }
                     else SystemClock.sleep(100);
                 } catch (IOException e) {
-                    Log.d("Error reading", e.getMessage());
-                    e.printStackTrace();
+                    lw.appendLog("Error reading", e.getMessage());
+                    //e.printStackTrace();
                     lw.appendLog(TAG, "disconnected"+e);
                     connectionLost();
                     // Start the service over to restart listening mode

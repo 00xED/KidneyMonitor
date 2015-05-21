@@ -257,7 +257,7 @@ public class ConnectionService extends Service {
                     lw.appendLog(logTag, "READING");
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf, 0, msg.arg1);
+                    //String readMessage = new String(readBuf, 0, msg.arg1);
                     //lw.appendLog(logTag, "\n" + mConnectedDeviceName + ":  " + readMessage);
                     lw.appendLog(logTag, "\nMe:  " + toHexString(readBuf));
                     parseInBytes(readBuf);

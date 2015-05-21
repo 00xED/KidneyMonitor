@@ -38,6 +38,7 @@ public class PrefActivity extends ActionBarActivity {
     public static final String SOUND = "SOUND";
     public static final String DEBUG = "DEBUG";
     public static final String AUTOCONNECT = "AUTOCONNECT";
+    public static final String DIAL_START_TIME = "DIAL_START_TIME";
 
     public static String CHOSEN_ADDRESS = "00:00:00:00:00:00";
     public static String CHOSEN_NAME = "NONE";

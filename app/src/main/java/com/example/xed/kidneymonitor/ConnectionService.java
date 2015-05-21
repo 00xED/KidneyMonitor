@@ -780,10 +780,6 @@ public class ConnectionService extends Service {
             intentValues.putExtra(MainActivity.PARAM_ARG, PAUSE);
             sendBroadcast(intentValues);
 
-            intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_SETTINGSOK);
-            intentValues.putExtra(MainActivity.PARAM_ARG, SETTINGSOK);
-            sendBroadcast(intentValues);
-
             intentValues.putExtra(MainActivity.PARAM_TASK, MainActivity.TASK_SET_LASTCONNECTED);
             intentValues.putExtra(MainActivity.PARAM_ARG, LASTCONNECTED);
             sendBroadcast(intentValues);

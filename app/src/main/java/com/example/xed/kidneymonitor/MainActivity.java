@@ -168,21 +168,21 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvState.
                                         setText(getResources().getText(R.string.value_state_on).toString());
-                                ivState.setImageResource(R.drawable.ic_flash_on_grey600_24dp);
+                                ivState.setImageResource(R.drawable.ic_on);
                                 break;
                             }
                             case "1":
                             {
                                 tvState.
                                         setText(getResources().getText(R.string.value_state_off).toString());
-                                ivState.setImageResource(R.drawable.ic_flash_off_grey600_24dp);
+                                ivState.setImageResource(R.drawable.ic_off);
                                 break;
                             }
                             default:
                             {
                                 tvState.
                                         setText(getResources().getText(R.string.value_state_unknown).toString());
-                                ivState.setImageResource(R.drawable.ic_help_grey600_24dp);
+                                ivState.setImageResource(R.drawable.ic_help);
                                 break;
                             }
                         }
@@ -196,47 +196,47 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_filling).toString());
-                                ivStatus.setImageResource(R.drawable.filling_icon);
+                                ivStatus.setImageResource(R.drawable.ic_filling);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                 break;
                             }
                             case "1":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_dialysis).toString());
-                                ivStatus.setImageResource(R.drawable.dialysis_icon);
+                                ivStatus.setImageResource(R.drawable.ic_dialysis);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                 break;
                             }
                             case "2":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_shutdown).toString());
-                                ivStatus.setImageResource(R.drawable.shutdown_icon);
+                                ivStatus.setImageResource(R.drawable.ic_shutdown);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                 break;
                             }
                             case "3":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_disinfection).toString());
-                                ivStatus.setImageResource(R.drawable.disinfection_icon);
+                                ivStatus.setImageResource(R.drawable.ic_disinfection);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                 break;
                             }
                             case "4":
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_ready).toString());
-                                ivStatus.setImageResource(R.drawable.ready_icon);
+                                ivStatus.setImageResource(R.drawable.ic_ready);
                                 break;
                             }
 
@@ -245,17 +245,17 @@ public class MainActivity extends ActionBarActivity {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_flush).toString());
 
-                                ivStatus.setImageResource(R.drawable.flush_icon);
+                                ivStatus.setImageResource(R.drawable.ic_flush);
                                 btPause.
                                         setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause_grey600_24dp, 0, 0, 0);
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                 break;
                             }
                             default:
                             {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_unknown).toString());
-                                ivStatus.setImageResource(R.drawable.ic_help_grey600_24dp);
+                                ivStatus.setImageResource(R.drawable.ic_help);
                                 break;
                             }
                         }
@@ -268,21 +268,21 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvParams.
                                         setText(getResources().getText(R.string.value_procedure_params_normal).toString());
-                                ivParams.setImageResource(R.drawable.ic_check_circle_grey600_24dp);
+                                ivParams.setImageResource(R.drawable.ic_check_circle);
                                 break;
                             }
                             case "1":
                             {
                                 tvParams.
                                         setText(getResources().getText(R.string.value_procedure_params_danger).toString());
-                                ivParams.setImageResource(R.drawable.ic_highlight_remove_grey600_24dp);
+                                ivParams.setImageResource(R.drawable.ic_cross);
                                 break;
                             }
                             default:
                             {
                                 tvParams.
                                         setText(getResources().getText(R.string.value_procedure_params_unknown).toString());
-                                ivParams.setImageResource(R.drawable.ic_help_grey600_24dp);
+                                ivParams.setImageResource(R.drawable.ic_help);
                                 break;
                             }
                         }
@@ -295,21 +295,21 @@ public class MainActivity extends ActionBarActivity {
                             {
                                 tvFunct.
                                         setText(getResources().getText(R.string.value_device_functioning_correct).toString());
-                                ivFunct.setImageResource(R.drawable.ic_check_circle_grey600_24dp);
+                                ivFunct.setImageResource(R.drawable.ic_check_circle);
                                 break;
                             }
                             case "1":
                             {
                                 tvFunct.
                                         setText(getResources().getText(R.string.value_device_functioning_fault).toString());
-                                ivFunct.setImageResource(R.drawable.ic_highlight_remove_grey600_24dp);
+                                ivFunct.setImageResource(R.drawable.ic_cross);
                                 break;
                             }
                             default:
                             {
                                 tvFunct.
                                         setText(getResources().getText(R.string.value_device_functioning_unknown).toString());
-                                ivFunct.setImageResource(R.drawable.ic_help_grey600_24dp);
+                                ivFunct.setImageResource(R.drawable.ic_help);
                                 break;
                             }
                         }
@@ -324,7 +324,7 @@ public class MainActivity extends ActionBarActivity {
                         if (dialysisStart==-1)//If received value is default then set to unknown
                         {
                             tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
-                            ivSorbtime.setImageResource(R.drawable.ic_access_time_grey600_24dp);
+                            ivSorbtime.setImageResource(R.drawable.ic_time_grey);
                         }
                         else    //Convert received time in seconds to hours and minutes
                         {
@@ -339,7 +339,7 @@ public class MainActivity extends ActionBarActivity {
                                                mins +
                                                getResources().getText(R.string.value_sorbtime_mins).toString() + sec);
 
-                            ivSorbtime.setImageResource(R.drawable.ic_access_time_green);
+                            ivSorbtime.setImageResource(R.drawable.ic_time_green);
                         }
                         break;
                     }
@@ -348,18 +348,18 @@ public class MainActivity extends ActionBarActivity {
                         if (arg.equals("-1"))//If received value is default then set battery to unknown
                         {
                             tvBatt.setText(getResources().getText(R.string.value_battery_charge_unknown).toString());
-                            ivBatt.setImageResource(R.drawable.ic_battery_unknown_grey600_24dp);
+                            ivBatt.setImageResource(R.drawable.ic_battery_unknown);
                         }
                         else{//Otherwise set value and image
                             tvBatt.setText(arg + "%");
                             int batts = Integer.parseInt(arg);
-                            if(batts>=95)ivBatt.setImageResource(R.drawable.ic_battery_full_grey600_24dp);
-                            else if(batts>=90)ivBatt.setImageResource(R.drawable.ic_battery_90_grey600_24dp);
-                            else if(batts>=80)ivBatt.setImageResource(R.drawable.ic_battery_80_grey600_24dp);
-                            else if(batts>=60)ivBatt.setImageResource(R.drawable.ic_battery_60_grey600_24dp);
-                            else if(batts>=50)ivBatt.setImageResource(R.drawable.ic_battery_50_grey600_24dp);
-                            else if(batts>=30)ivBatt.setImageResource(R.drawable.ic_battery_30_grey600_24dp);
-                            else ivBatt.setImageResource(R.drawable.ic_battery_20_grey600_24dp);
+                            if(batts>=95)ivBatt.setImageResource(R.drawable.ic_battery_full);
+                            else if(batts>=90)ivBatt.setImageResource(R.drawable.ic_battery_90);
+                            else if(batts>=80)ivBatt.setImageResource(R.drawable.ic_battery_80);
+                            else if(batts>=60)ivBatt.setImageResource(R.drawable.ic_battery_60);
+                            else if(batts>=50)ivBatt.setImageResource(R.drawable.ic_battery_50);
+                            else if(batts>=30)ivBatt.setImageResource(R.drawable.ic_battery_30);
+                            else ivBatt.setImageResource(R.drawable.ic_battery_20);
                         }
                         break;
                     }
@@ -530,7 +530,7 @@ public class MainActivity extends ActionBarActivity {
                                 TextView text = (TextView) instructionDialog.findViewById(R.id.text);
                                 text.setText(getResources().getText(R.string.instruction_filling).toString());
                                 ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.filling);
+                                image.setImageResource(R.drawable.instruct_filling);
 
                                 Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
                                 // if button is clicked, close the custom dialog
@@ -573,7 +573,7 @@ public class MainActivity extends ActionBarActivity {
                                 TextView text = (TextView) instructionDialog.findViewById(R.id.text);
                                 text.setText(getResources().getText(R.string.instruction_dialysis).toString());
                                 ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.dialysis);
+                                image.setImageResource(R.drawable.instruct_dialysis);
 
                                 Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
                                 // if button is clicked, close the custom dialog
@@ -617,7 +617,7 @@ public class MainActivity extends ActionBarActivity {
                                 TextView text = (TextView) instructionDialog.findViewById(R.id.text);
                                 text.setText(getResources().getText(R.string.instruction_shutdown).toString());
                                 ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.shutdown);
+                                image.setImageResource(R.drawable.instruct_shutdown);
 
                                 Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
                                 // if button is clicked, close the custom dialog
@@ -661,7 +661,7 @@ public class MainActivity extends ActionBarActivity {
                                 TextView text = (TextView) instructionDialog.findViewById(R.id.text);
                                 text.setText(getResources().getText(R.string.instruction_disinfection).toString());
                                 ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.disinfection);
+                                image.setImageResource(R.drawable.instruct_disinfection);
 
                                 Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
                                 // if button is clicked, close the custom dialog
@@ -705,7 +705,7 @@ public class MainActivity extends ActionBarActivity {
                                 TextView text = (TextView) instructionDialog.findViewById(R.id.text);
                                 text.setText(getResources().getText(R.string.instruction_flush).toString());
                                 ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.flush);
+                                image.setImageResource(R.drawable.instruct_flush);
 
                                 Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
                                 // if button is clicked, close the custom dialog

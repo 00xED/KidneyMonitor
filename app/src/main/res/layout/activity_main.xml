@@ -46,7 +46,7 @@
 
                 android:id="@+id/iv_State"
                 android:layout_column="3"
-                android:src="@drawable/ic_help_grey600_24dp" />
+                android:src="@drawable/ic_help" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
             <ImageView
                 android:id="@+id/iv_Status"
                 android:layout_column="3"
-                android:src="@drawable/ic_help_grey600_24dp"
+                android:src="@drawable/ic_help"
                 android:onClick="OnClick" />
 
             <TextView
@@ -136,7 +136,7 @@
             <ImageView
                 android:id="@+id/iv_Params"
                 android:layout_column="3"
-                android:src="@drawable/ic_help_grey600_24dp"
+                android:src="@drawable/ic_help"
                 android:onClick="OnClick" />
 
             <TextView
@@ -179,7 +179,7 @@
             <ImageView
                 android:id="@+id/iv_Functioning"
                 android:layout_column="3"
-                android:src="@drawable/ic_help_grey600_24dp" />
+                android:src="@drawable/ic_help" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -220,7 +220,7 @@
             <ImageView
                 android:id="@+id/imageView10"
                 android:layout_column="3"
-                android:src="@drawable/ic_access_time_grey600_24dp" />
+                android:src="@drawable/ic_time_grey" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -256,7 +256,7 @@
             <ImageView
                 android:id="@+id/iv_Battery"
                 android:layout_column="3"
-                android:src="@drawable/ic_battery_unknown_grey600_24dp" />
+                android:src="@drawable/ic_battery_unknown" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -275,8 +275,8 @@
         android:layout_height="wrap_content"
         android:text="@string/button_start"
         android:layout_below="@+id/tableLayout"
-        android:drawableLeft="@drawable/ic_pause_grey600_24dp"
-        android:drawableStart="@drawable/ic_pause_grey600_24dp"
+        android:drawableLeft="@drawable/ic_pause"
+        android:drawableStart="@drawable/ic_pause"
         android:id="@+id/bt_Pause"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -299,8 +299,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_change_state"
-                android:drawableLeft="@drawable/ic_refresh_grey600_24dp"
-                android:drawableStart="@drawable/ic_refresh_grey600_24dp"
+                android:drawableLeft="@drawable/ic_refresh"
+                android:drawableStart="@drawable/ic_refresh"
                 android:id="@+id/bt_State"
                 android:layout_column="0"
                 android:onClick="OnClick" />
@@ -314,8 +314,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/button_notification"
-                android:drawableLeft="@drawable/ic_local_post_office_grey600_24dp"
-                android:drawableStart="@drawable/ic_local_post_office_grey600_24dp"
+                android:drawableLeft="@drawable/ic_post"
+                android:drawableStart="@drawable/ic_post"
                 android:id="@+id/bt_Notification"
                 android:layout_column="2" />
 
@@ -340,8 +340,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_log"
-                android:drawableLeft="@drawable/ic_format_list_bulleted_grey600_24dp"
-                android:drawableStart="@drawable/ic_format_list_bulleted_grey600_24dp"
+                android:drawableLeft="@drawable/ic_list"
+                android:drawableStart="@drawable/ic_list"
                 android:id="@+id/bt_Log"
                 android:onClick="OnClick"
                 android:layout_column="0" />
@@ -356,8 +356,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/button_settings"
-                android:drawableLeft="@drawable/ic_settings_grey600_24dp"
-                android:drawableStart="@drawable/ic_settings_grey600_24dp"
+                android:drawableLeft="@drawable/ic_settings"
+                android:drawableStart="@drawable/ic_settings"
                 android:id="@+id/bt_Settings"
                 android:layout_column="2"
                 android:onClick="OnClick" />

@@ -935,7 +935,7 @@ public class ConnectionService extends Service {
     public void startInForeground(){
 
         Bitmap icon = BitmapFactory.decodeResource(ConnectionService.this.getResources(),
-                R.drawable.ic_refresh_grey600_24dp);
+                R.drawable.ic_refresh);
 
         //start MainActivity on notification click
         Intent notificationIntent = new Intent(ConnectionService.this, MainActivity.class);
@@ -947,7 +947,7 @@ public class ConnectionService extends Service {
                 .setContentIntent(contentIntent)
                 .setContentTitle(getResources().getText(R.string.app_name))
                 .setContentText(getResources().getText(R.string.title_click_to_open))
-                .setSmallIcon(R.drawable.ic_refresh_grey600_24dp)
+                .setSmallIcon(R.drawable.ic_refresh)
                 .setLargeIcon(icon)
                 .build();
 
@@ -1075,7 +1075,7 @@ public class ConnectionService extends Service {
         Context context = ConnectionService.this;
 
         Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.ic_refresh_grey600_24dp);
+                R.drawable.ic_refresh);
 
         //start MainActivity on click
         Intent notificationIntent = new Intent(context, MainActivity.class);
@@ -1087,7 +1087,7 @@ public class ConnectionService extends Service {
                 .setContentIntent(contentIntent)
                 .setContentTitle(getResources().getText(R.string.app_name))
                 .setContentText(currentArg)
-                .setSmallIcon(R.drawable.ic_help_grey600_24dp)
+                .setSmallIcon(R.drawable.ic_help)
                 .setLargeIcon(icon)
                 .setAutoCancel(true)
                 .setLights(Color.WHITE, 0, 1)

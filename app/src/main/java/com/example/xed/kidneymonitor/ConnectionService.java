@@ -294,7 +294,7 @@ public class ConnectionService extends Service {
             byte com1 = inp[com1Index];
             byte com2 = inp[com2Index];
 
-            byte currentArg = inp[start+2];
+            byte currentArg = inp[start+3];
             byte[] databytes = new byte[] {inp[start+6],inp[start+5],inp[start+4],inp[start+3]};
 
             int full_data_int = ByteBuffer.wrap(databytes).getInt();

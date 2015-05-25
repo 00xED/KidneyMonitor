@@ -662,27 +662,27 @@ public class ConnectionService extends Service {
                 case TASK_SET_STATUS: {
                     switch (arg) {
                         case TASK_ARG_DIALYSIS: {
-                            sendMessageBytes(bDIALYSIS);
+                            sendMessageBytes(bSTATUS, new byte[] {(byte)0x00, (byte)0x00, (byte)0x00, bDIALYSIS});
                             lw.appendLog(logTag, "User switching to DIALYSIS", true);
                             break;
                         }
                         case TASK_ARG_FILLING: {
-                            sendMessageBytes(bFILLING);
+                            sendMessageBytes(bSTATUS, new byte[] {(byte)0x00, (byte)0x00, (byte)0x00, bFILLING});
                             lw.appendLog(logTag, "User switching to FILLING", true);
                             break;
                         }
                         case TASK_ARG_SHUTDOWN: {
-                            sendMessageBytes(bSHUTDOWN);
+                            sendMessageBytes(bSTATUS, new byte[] {(byte)0x00, (byte)0x00, (byte)0x00, bSHUTDOWN});
                             lw.appendLog(logTag, "User switching to SHUTDOWN", true);
                             break;
                         }
                         case TASK_ARG_DISINFECTION: {
-                            sendMessageBytes(bDISINFECTION);
+                            sendMessageBytes(bSTATUS, new byte[] {(byte)0x00, (byte)0x00, (byte)0x00, bDISINFECTION});
                             lw.appendLog(logTag, "User switching to DISINFECTION", true);
                             break;
                         }
                         case TASK_ARG_FLUSH: {
-                            sendMessageBytes(bFLUSH);
+                            sendMessageBytes(bSTATUS, new byte[] {(byte)0x00, (byte)0x00, (byte)0x00, bFLUSH});
                             lw.appendLog(logTag, "User switching to FLUSH", true);
                             break;
                         }
@@ -693,7 +693,7 @@ public class ConnectionService extends Service {
                 }
 
                 case TASK_SET_PAUSE: {
-                    sendMessageBytes(bPAUSE);
+                    sendMessageBytes(bSTATUS, new byte[] {(byte)0x00, (byte)0x00, (byte)0x00, bPAUSE});
                     lw.appendLog(logTag, "User set PAUSE", true);
                     break;
                 }

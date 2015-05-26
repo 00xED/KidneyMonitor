@@ -31,6 +31,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -521,7 +522,7 @@ public class BluetoothChatService extends Activity {
         public void run() {
             int bytes=0; // bytes returned from read()
             int availableBytes;
-            byte[] buffer = new byte[64];
+            byte[] buffer = new byte[128];
             // Keep listening to the InputStream until an exception occurs
             while (!stopThread) {
                 try {
@@ -530,12 +531,24 @@ public class BluetoothChatService extends Activity {
                         // Read from the InputStream
                         bytes = mmInStream.read(buffer, bytes, availableBytes);
                         bytes+=availableBytes;
-                        if (arrayIndexOf(buffer, (byte)0x55)!=-1 &&arrayIndexOf(buffer, (byte)0xAA)!=-1) {
+                        while(arrayIndexOf(buffer, (byte)0x55)!=-1){
+                            int start = arrayIndexOf(buffer, (byte)0x55);
+                            int end = arrayIndexOf(buffer, (byte)0xAA)+1;
+                            if (start!=-1 && end!=-1){
+                                byte[] send = Arrays.copyOfRange(buffer, start, end);
+                                mHandler.obtainMessage(MESSAGE_READ, bytes, -1, send).sendToTarget();
+                                Arrays.fill(buffer, start, end, (byte)0x00);
+                            }
+
+                        }
+                        bytes=0;
+                        buffer = new byte[128];
+                        /*if (arrayIndexOf(buffer, (byte)0x55)!=-1 && arrayIndexOf(buffer, (byte)0xAA)!=-1) {
                             // Send the obtained bytes to the UI activity
                             mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                             bytes=0;
                             buffer = new byte[64];
-                        }
+                        }*/
                     }
                     else SystemClock.sleep(100);
                 } catch (IOException e) {

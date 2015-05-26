@@ -626,20 +626,54 @@ public class ConnectionService extends Service {
                     break;
             }
 
-            if((Float.valueOf(DPRESS1)>DPRESS1MIN) && (Float.valueOf(DPRESS1)<DPRESS1MAX) &&
-               (Float.valueOf(DPRESS2)>DPRESS2MIN) && (Float.valueOf(DPRESS2)<DPRESS2MAX) &&
-               (Float.valueOf(DPRESS3)>DPRESS3MIN) && (Float.valueOf(DPRESS3)<DPRESS3MAX) &&
-               (Float.valueOf(DTEMP1)>DTEMP1MIN)   && (Float.valueOf(DTEMP1)<DTEMP1MAX)   &&
-               (Float.valueOf(DCOND1)>DCOND1MIN)   && (Float.valueOf(DCOND1)<DCOND1MAX))
-            {
-                FUNCT = "0";
-                PARAMS = "0";
+
+            switch (STATUS){
+                case "1": {
+                    if ((Float.valueOf(DPRESS1) > DPRESS1MIN) && (Float.valueOf(DPRESS1) < DPRESS1MAX) &&
+                            (Float.valueOf(DPRESS2) > DPRESS2MIN) && (Float.valueOf(DPRESS2) < DPRESS2MAX) &&
+                            (Float.valueOf(DPRESS3) > DPRESS3MIN) && (Float.valueOf(DPRESS3) < DPRESS3MAX) &&
+                            (Float.valueOf(DTEMP1) > DTEMP1MIN) && (Float.valueOf(DTEMP1) < DTEMP1MAX) &&
+                            (Float.valueOf(DCOND1) > DCOND1MIN) && (Float.valueOf(DCOND1) < DCOND1MAX)) {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    } else {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
+                    break;
+                }
+                case "0":{
+                    if ((Float.valueOf(DPRESS1) > DPRESS1MIN) && (Float.valueOf(DPRESS1) < DPRESS1MAX) &&
+                            (Float.valueOf(DPRESS2) > DPRESS2MIN) && (Float.valueOf(DPRESS2) < DPRESS2MAX) &&
+                            (Float.valueOf(DPRESS3) > DPRESS3MIN) && (Float.valueOf(DPRESS3) < DPRESS3MAX)) {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    } else {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
+                    break;
+                }
+                case "5":{
+                    if ((Float.valueOf(DPRESS1) > DPRESS1MIN) && (Float.valueOf(DPRESS1) < DPRESS1MAX) &&
+                            (Float.valueOf(DPRESS2) > DPRESS2MIN) && (Float.valueOf(DPRESS2) < DPRESS2MAX) &&
+                            (Float.valueOf(DPRESS3) > DPRESS3MIN) && (Float.valueOf(DPRESS3) < DPRESS3MAX)) {
+                        FUNCT = "0";
+                        PARAMS = "0";
+                    } else {
+                        FUNCT = "1";
+                        PARAMS = "1";
+                    }
+                    break;
+                }
+                default:{
+                    FUNCT = "0";
+                    PARAMS = "0";
+
+                    break;
+                }
             }
-            else
-            {
-                FUNCT = "1";
-                PARAMS = "1";
-            }
+
 
             if(!STATUS.equals("2"))//If status is not SHUTDOWN, then STATE is ON
                 STATE = "0";

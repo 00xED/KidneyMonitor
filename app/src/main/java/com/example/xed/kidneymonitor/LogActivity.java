@@ -1,6 +1,7 @@
 package com.example.xed.kidneymonitor;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 public class LogActivity extends ActionBarActivity {
@@ -29,6 +31,7 @@ public class LogActivity extends ActionBarActivity {
     public CheckBox mCbAutoscroll;
 
     Handler handler = new Handler();//refreshing handler
+    MyTask mt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,59 +52,18 @@ public class LogActivity extends ActionBarActivity {
 
         @Override
         public void run() {
-            readLog();
+            //mTvLog.setText("");
+            //readLog();
+            mt = new MyTask();
+            mt.execute();
+
             final ScrollView scrollview = ((ScrollView) findViewById(R.id.scrollView));
             if (mCbAutoscroll.isChecked()) scrollview.fullScroll(ScrollView.FOCUS_DOWN);
-            handler.postDelayed(timedTask, 1000);//refresh after one second
+            handler.postDelayed(timedTask, 2000);//refresh after one second
         }
     };
 
-    /**
-     * Reads log file kidneymonitor.log and updates textview
-     */
-    public void readLog() {
-        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
-        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-        File file;
-        if(sPref.getBoolean(DEBUG, false)) {
-            //Get the text file
-            file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
-        }
-        else
-        {
-            //Get the text file
-            file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
-        }
-        if (!file.exists()) {
-            try {
-                if(!file.createNewFile())
-                    Log.d("LogWriter", "can't create new file");
-            } catch (IOException e) {
-                Log.d("LogWriter", e.toString());
-                e.printStackTrace();
-            }
-        }
 
-        //Read text from file
-        StringBuilder text = new StringBuilder();
-        if (isExternalStorageReadable()) {
-
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                String line;
-
-                while ((line = br.readLine()) != null) {
-                    text.append(line);
-                    text.append('\n');
-                }
-
-                br.close();
-            } catch (IOException e) {
-                lw.appendLog(logTag, e.toString());
-            }
-        }
-        mTvLog.setText(text);
-    }
 
 
     /**
@@ -137,6 +99,79 @@ public class LogActivity extends ActionBarActivity {
             }
 
         }
+    }
+
+    class MyTask extends AsyncTask<Void, Void, Void> {
+
+        StringBuilder text;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+                text = readLog();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            mTvLog.setText(text);
+        }
+
+        /**
+         * Reads log file kidneymonitor.log and updates textview
+         */
+        public StringBuilder readLog() {
+            SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+            File file;
+            if(sPref.getBoolean(DEBUG, false)) {
+                //Get the text file
+                file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
+            }
+            else
+            {
+                //Get the text file
+                file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
+            }
+            if (!file.exists()) {
+                try {
+                    if(!file.createNewFile())
+                        Log.d("LogWriter", "can't create new file");
+                } catch (IOException e) {
+                    Log.d("LogWriter", e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            //Read text from file
+            StringBuilder text = new StringBuilder();
+            if (isExternalStorageReadable()) {
+
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        text.append(line);
+                        //mTvLog.append(line);
+                        text.append('\n');
+                        //mTvLog.append("\n");
+                    }
+
+                    br.close();
+                } catch (IOException e) {
+                    lw.appendLog(logTag, e.toString());
+                }
+            }
+            return text;
+            //mTvLog.append(text);
+        }
+
     }
 
 

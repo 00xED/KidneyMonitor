@@ -181,6 +181,7 @@ public class ConnectionService extends Service {
     final byte  PE_PUMP1  = (byte)  0xFA;    // Pump 1 error, rpm low
     final byte  PE_PUMP2  = (byte)  0xFB;    // Pump 2 error, rpm low
     final byte  PE_PUMP3  = (byte)  0xFC;    // Pump 3 error, rpm low
+    final byte  PE_ERROR  = (byte)  0xFF;    // Pump 3 error, rpm low
 
 
     /**
@@ -608,6 +609,14 @@ public class ConnectionService extends Service {
                 case PE_PUMP3:{
                     sendNotification("ERROR PE_PUMP3");
                     lw.appendLog(logTag, "ERROR PE_PUMP3", true);
+                    FUNCT = "1";
+                    PARAMS = "1";
+                    break;
+                }
+
+                case PE_ERROR:{
+                    sendNotification("ERROR PE_ERROR");
+                    lw.appendLog(logTag, "ERROR PE_ERROR", true);
                     FUNCT = "1";
                     PARAMS = "1";
                     break;

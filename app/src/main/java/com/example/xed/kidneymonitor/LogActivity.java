@@ -78,7 +78,7 @@ public class LogActivity extends ActionBarActivity {
         switch (v.getId()) {
             case R.id.bt_ClearLog:
             {
-                File logFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
+                File logFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor.log");
                 if (logFile.exists()) if (logFile.delete()) {
                     lw.appendLog(logTag, "Log file deleted");
                     mTvLog.setText("Log file deleted");
@@ -87,7 +87,7 @@ public class LogActivity extends ActionBarActivity {
                     mTvLog.append("Log file NOT deleted");
                 }
 
-                File verboseLogFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
+                File verboseLogFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor_debug.log");
                 if (verboseLogFile.exists()) if (verboseLogFile.delete()) {
                     lw.appendLog(logTag, "Debug log file deleted");
                     mTvLog.setText("Debug log file deleted");
@@ -131,12 +131,12 @@ public class LogActivity extends ActionBarActivity {
             File file;
             if(sPref.getBoolean(DEBUG, false)) {
                 //Get the text file
-                file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor_debug.log");
+                file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor_debug.log");
             }
             else
             {
                 //Get the text file
-                file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor.log");
+                file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor.log");
             }
             if (!file.exists()) {
                 try {

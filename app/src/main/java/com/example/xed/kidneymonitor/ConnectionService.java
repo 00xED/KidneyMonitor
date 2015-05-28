@@ -1017,7 +1017,7 @@ public class ConnectionService extends Service {
     void readSettingsFromFile()
     {
         try {
-            FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath() + "/settings.txt");//Read from file
+            FileInputStream fstream = new FileInputStream(Environment.getExternalStorageDirectory().getPath() + "kidneymonitor/settings.txt");//Read from file
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             //Read File Line By Lined

@@ -226,13 +226,13 @@ public class ConnectionService extends Service {
                     switch (msg.arg1) {
 
                         case BluetoothChatService.STATE_CONNECTED: {
-                            lw.appendLog(logTag, "\nConnected to: " + mConnectedDeviceName, true);
+                            lw.appendLog(logTag, "Connected to: " + mConnectedDeviceName, true);
                             sendsomeMessage("CONNECT");
                             break;
                         }
 
                         case BluetoothChatService.STATE_CONNECTING:
-                            lw.appendLog(logTag, "\nConnecting to: " + mConnectedDeviceName);
+                            lw.appendLog(logTag, "Connecting to: " + mConnectedDeviceName);
                             break;
 
                         case BluetoothChatService.STATE_LISTEN:
@@ -240,27 +240,22 @@ public class ConnectionService extends Service {
 
 
                         case BluetoothChatService.STATE_NONE:
-                            lw.appendLog(logTag, "\nNot connected");
+                            lw.appendLog(logTag, "Not connected");
                             break;
                     }
                     break;
 
                 case MESSAGE_WRITE:
-                    lw.appendLog(logTag, "WRITING!");
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    //lw.appendLog(logTag, "\nMe:  " + writeMessage);
-                    lw.appendLog(logTag, "\nMe:  " + toHexString(writeBuf));
+                    lw.appendLog(logTag, "WRITING:  " + toHexString(writeBuf));
                     break;
 
                 case MESSAGE_READ:
-                    lw.appendLog(logTag, "READING");
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
-                    //String readMessage = new String(readBuf, 0, msg.arg1);
-                    //lw.appendLog(logTag, "\n" + mConnectedDeviceName + ":  " + readMessage);
-                    lw.appendLog(logTag, "\nMe:  " + toHexString(readBuf));
+                    lw.appendLog(logTag, "READING:  " + toHexString(readBuf));
                     parseInBytes(readBuf);
                     break;
 
@@ -629,11 +624,11 @@ public class ConnectionService extends Service {
 
             switch (STATUS){
                 case "1": {
-                    if ((Float.valueOf(DPRESS1) > DPRESS1MIN) && (Float.valueOf(DPRESS1) < DPRESS1MAX) &&
-                            (Float.valueOf(DPRESS2) > DPRESS2MIN) && (Float.valueOf(DPRESS2) < DPRESS2MAX) &&
-                            (Float.valueOf(DPRESS3) > DPRESS3MIN) && (Float.valueOf(DPRESS3) < DPRESS3MAX) &&
-                            (Float.valueOf(DTEMP1) > DTEMP1MIN) && (Float.valueOf(DTEMP1) < DTEMP1MAX) &&
-                            (Float.valueOf(DCOND1) > DCOND1MIN) && (Float.valueOf(DCOND1) < DCOND1MAX)) {
+                    if ((Float.valueOf(DPRESS1) >= DPRESS1MIN) && (Float.valueOf(DPRESS1) <= DPRESS1MAX) &&
+                            (Float.valueOf(DPRESS2) >= DPRESS2MIN) && (Float.valueOf(DPRESS2) <= DPRESS2MAX) &&
+                            (Float.valueOf(DPRESS3) >= DPRESS3MIN) && (Float.valueOf(DPRESS3) <= DPRESS3MAX) &&
+                            (Float.valueOf(DTEMP1) >= DTEMP1MIN) && (Float.valueOf(DTEMP1) <= DTEMP1MAX) &&
+                            (Float.valueOf(DCOND1) >= DCOND1MIN) && (Float.valueOf(DCOND1) <= DCOND1MAX)) {
                         FUNCT = "0";
                         PARAMS = "0";
                     } else {
@@ -643,9 +638,9 @@ public class ConnectionService extends Service {
                     break;
                 }
                 case "0":{
-                    if ((Float.valueOf(DPRESS1) > DPRESS1MIN) && (Float.valueOf(DPRESS1) < DPRESS1MAX) &&
-                            (Float.valueOf(DPRESS2) > DPRESS2MIN) && (Float.valueOf(DPRESS2) < DPRESS2MAX) &&
-                            (Float.valueOf(DPRESS3) > DPRESS3MIN) && (Float.valueOf(DPRESS3) < DPRESS3MAX)) {
+                    if ((Float.valueOf(DPRESS1) >= DPRESS1MIN) && (Float.valueOf(DPRESS1) <= DPRESS1MAX) &&
+                            (Float.valueOf(DPRESS2) >= DPRESS2MIN) && (Float.valueOf(DPRESS2) <= DPRESS2MAX) &&
+                            (Float.valueOf(DPRESS3) >= DPRESS3MIN) && (Float.valueOf(DPRESS3) <= DPRESS3MAX)) {
                         FUNCT = "0";
                         PARAMS = "0";
                     } else {
@@ -655,9 +650,9 @@ public class ConnectionService extends Service {
                     break;
                 }
                 case "5":{
-                    if ((Float.valueOf(DPRESS1) > DPRESS1MIN) && (Float.valueOf(DPRESS1) < DPRESS1MAX) &&
-                            (Float.valueOf(DPRESS2) > DPRESS2MIN) && (Float.valueOf(DPRESS2) < DPRESS2MAX) &&
-                            (Float.valueOf(DPRESS3) > DPRESS3MIN) && (Float.valueOf(DPRESS3) < DPRESS3MAX)) {
+                    if ((Float.valueOf(DPRESS1) >= DPRESS1MIN) && (Float.valueOf(DPRESS1) <= DPRESS1MAX) &&
+                            (Float.valueOf(DPRESS2) >= DPRESS2MIN) && (Float.valueOf(DPRESS2) <= DPRESS2MAX) &&
+                            (Float.valueOf(DPRESS3) >= DPRESS3MIN) && (Float.valueOf(DPRESS3) <= DPRESS3MAX)) {
                         FUNCT = "0";
                         PARAMS = "0";
                     } else {

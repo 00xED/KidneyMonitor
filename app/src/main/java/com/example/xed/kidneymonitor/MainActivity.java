@@ -499,7 +499,36 @@ public class MainActivity extends ActionBarActivity {
         int defaultSelection = selectedProcedure;
         //if(selectedProcedure == 4)//if state=ready
             defaultSelection = -1;
-
+        CharSequence[] procedures={};
+        switch (selectedProcedure){
+            case 4:{//if state=ready
+                procedures=new CharSequence[]{"Dialysis","Filling","Shutdown","Disinfection","Flush"};
+                break;
+            }
+            case 0:{//if state=filling
+                procedures=new CharSequence[]{"Flush"};
+                break;
+            }
+            case 1:{//if state=dialysis
+                procedures=new CharSequence[]{"Flush"};
+                break;
+            }
+            case 2:{//if state=shutdown
+                //procedures=new CharSequence[]{"Dialysis","Filling","Shutdown","Disinfection","Flush"};
+                break;
+            }
+            case 3:{//if state=disinfection
+                procedures=new CharSequence[]{"Shutdown"};
+                break;
+            }
+            case 5:{//if state=flush
+                procedures=new CharSequence[]{"Filling","Shutdown","Disinfection","Flush"};
+                break;
+            }
+            default:
+                break;
+        }
+        final CharSequence[] procedures1=procedures;
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         // Set the dialog title
         builder.setTitle(getResources().getText(R.string.title_status_select).toString())
@@ -507,7 +536,7 @@ public class MainActivity extends ActionBarActivity {
                 // specify the list array, the items to be selected by default (null for none),
                 // and the listener through which to receive call backs when items are selected
                 // again, R.array.choices were set in the resources res/values/strings.xml
-                .setSingleChoiceItems(R.array.status_selection, defaultSelection, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(procedures, defaultSelection, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                     }
@@ -518,232 +547,235 @@ public class MainActivity extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         // user clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
-                        int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
-                        switch (selectedPosition){
-                            case 0://If user chooses "Filling" show confirmation to check if patient is connected
-                            {
-                                final Dialog instructionDialog = new Dialog(MainActivity.this);
-                                instructionDialog.setContentView(R.layout.shutdowndialog);
-                                instructionDialog.setTitle(getResources().getText(R.string.value_status_filling).toString());
+                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if (selectedPosition != -1) {
 
-                                // set the custom dialog components - text, image and button
-                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
-                                text.setText(getResources().getText(R.string.instruction_filling).toString());
-                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.instruct_filling);
+                            if (procedures1[selectedPosition] == "Filling") {
+                                //switch (selectedPosition){
+                                //case 0://If user chooses "Filling" show confirmation to check if patient is connected
 
-                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
-                                        sendBroadcast(intent);
+                                    final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                    instructionDialog.setContentView(R.layout.shutdowndialog);
+                                    instructionDialog.setTitle(getResources().getText(R.string.value_status_filling).toString());
 
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
+                                    // set the custom dialog components - text, image and button
+                                    TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                    text.setText(getResources().getText(R.string.instruction_filling).toString());
+                                    ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                    image.setImageResource(R.drawable.instruct_filling);
 
-                                        instructionDialog.dismiss();
-                                    }
-                                });
+                                    Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
+                                            sendBroadcast(intent);
 
-                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        instructionDialog.dismiss();
-                                    }
-                                });
+                                            SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                                            SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+                                            ed.remove(PrefActivity.DIAL_START_TIME);
+                                            ed.commit();
 
-                                instructionDialog.show();
-                                break;
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    instructionDialog.show();
+                                    //break;
+                                }
+                                if (procedures1[selectedPosition] == "Dialysis") {
+                                    //case 1:{
+                                    final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                    instructionDialog.setContentView(R.layout.shutdowndialog);
+                                    instructionDialog.setTitle(getResources().getText(R.string.value_status_dialysis).toString());
+
+                                    // set the custom dialog components - text, image and button
+                                    TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                    text.setText(getResources().getText(R.string.instruction_dialysis).toString());
+                                    ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                    image.setImageResource(R.drawable.instruct_dialysis);
+
+                                    Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
+                                            sendBroadcast(intent);
+
+                                            SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                                            SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+                                            ed.putLong(PrefActivity.DIAL_START_TIME, System.currentTimeMillis());
+                                            ed.commit();
+
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    instructionDialog.show();
+
+                                    // break;
+                                }
+                                if (procedures1[selectedPosition] == "Shutdown") {
+                                    //case 2:{
+                                    final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                    instructionDialog.setContentView(R.layout.shutdowndialog);
+                                    instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
+
+                                    // set the custom dialog components - text, image and button
+                                    TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                    text.setText(getResources().getText(R.string.instruction_shutdown).toString());
+                                    ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                    image.setImageResource(R.drawable.instruct_shutdown);
+
+                                    Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
+                                            sendBroadcast(intent);
+
+                                            SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                                            SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+                                            ed.remove(PrefActivity.DIAL_START_TIME);
+                                            ed.commit();
+
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    instructionDialog.show();
+
+                                    //break;
+                                }
+                                if (procedures1[selectedPosition] == "Disinfection") {
+                                    //case 3:{
+                                    final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                    instructionDialog.setContentView(R.layout.shutdowndialog);
+                                    instructionDialog.setTitle(getResources().getText(R.string.value_status_disinfection).toString());
+
+                                    // set the custom dialog components - text, image and button
+                                    TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                    text.setText(getResources().getText(R.string.instruction_disinfection).toString());
+                                    ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                    image.setImageResource(R.drawable.instruct_disinfection);
+
+                                    Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
+                                            sendBroadcast(intent);
+
+                                            SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                                            SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+                                            ed.remove(PrefActivity.DIAL_START_TIME);
+                                            ed.commit();
+
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    instructionDialog.show();
+
+                                    //break;
+                                }
+                                if (procedures1[selectedPosition] == "Flush") {
+                                    //case 4:{
+                                    final Dialog instructionDialog = new Dialog(MainActivity.this);
+                                    instructionDialog.setContentView(R.layout.shutdowndialog);
+                                    instructionDialog.setTitle(getResources().getText(R.string.value_status_flush).toString());
+
+                                    // set the custom dialog components - text, image and button
+                                    TextView text = (TextView) instructionDialog.findViewById(R.id.text);
+                                    text.setText(getResources().getText(R.string.instruction_flush).toString());
+                                    ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
+                                    image.setImageResource(R.drawable.instruct_flush);
+
+                                    Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonOK.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
+                                            sendBroadcast(intent);
+
+                                            SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                                            SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+                                            ed.remove(PrefActivity.DIAL_START_TIME);
+                                            ed.commit();
+
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
+                                    // if button is clicked, close the custom dialog
+                                    dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            instructionDialog.dismiss();
+                                        }
+                                    });
+
+                                    instructionDialog.show();
+
+                                    //break;
+                                }
                             }
-
-                            case 1:{
-                                final Dialog instructionDialog = new Dialog(MainActivity.this);
-                                instructionDialog.setContentView(R.layout.shutdowndialog);
-                                instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
-
-                                // set the custom dialog components - text, image and button
-                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
-                                text.setText(getResources().getText(R.string.instruction_dialysis).toString());
-                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.instruct_dialysis);
-
-                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
-                                        sendBroadcast(intent);
-
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.putLong(PrefActivity.DIAL_START_TIME, System.currentTimeMillis());
-                                        ed.commit();
-
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                instructionDialog.show();
-
-                                break;
-                            }
-
-                            case 2:{
-                                final Dialog instructionDialog = new Dialog(MainActivity.this);
-                                instructionDialog.setContentView(R.layout.shutdowndialog);
-                                instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
-
-                                // set the custom dialog components - text, image and button
-                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
-                                text.setText(getResources().getText(R.string.instruction_shutdown).toString());
-                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.instruct_shutdown);
-
-                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
-                                        sendBroadcast(intent);
-
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
-
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                instructionDialog.show();
-
-                                break;
-                            }
-
-                            case 3:{
-                                final Dialog instructionDialog = new Dialog(MainActivity.this);
-                                instructionDialog.setContentView(R.layout.shutdowndialog);
-                                instructionDialog.setTitle(getResources().getText(R.string.value_status_disinfection).toString());
-
-                                // set the custom dialog components - text, image and button
-                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
-                                text.setText(getResources().getText(R.string.instruction_disinfection).toString());
-                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.instruct_disinfection);
-
-                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
-                                        sendBroadcast(intent);
-
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
-
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                instructionDialog.show();
-
-                                break;
-                            }
-
-                            case 4:{
-                                final Dialog instructionDialog = new Dialog(MainActivity.this);
-                                instructionDialog.setContentView(R.layout.shutdowndialog);
-                                instructionDialog.setTitle(getResources().getText(R.string.value_status_flush).toString());
-
-                                // set the custom dialog components - text, image and button
-                                TextView text = (TextView) instructionDialog.findViewById(R.id.text);
-                                text.setText(getResources().getText(R.string.instruction_flush).toString());
-                                ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-                                image.setImageResource(R.drawable.instruct_flush);
-
-                                Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
-                                        sendBroadcast(intent);
-
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
-
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
-                                // if button is clicked, close the custom dialog
-                                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        instructionDialog.dismiss();
-                                    }
-                                });
-
-                                instructionDialog.show();
-
-                                break;
-                            }
-
-                            default:
-                                break;
+                            //default:
+                            //break;
                         }
-                    }
+
                 })
                 .show();
     }

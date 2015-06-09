@@ -190,7 +190,8 @@
         android:layout_above="@+id/bt_SetDefaults"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="OnClick" />
+        android:onClick="OnClick"
+        android:enabled="false" />
 
     <TextView
         android:layout_width="wrap_content"

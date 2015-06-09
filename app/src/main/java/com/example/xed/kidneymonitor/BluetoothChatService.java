@@ -531,7 +531,7 @@ public class BluetoothChatService extends Activity {
                         // Read from the InputStream
                         bytes = mmInStream.read(buffer, bytes, availableBytes);
                         bytes+=availableBytes;
-                        while(arrayIndexOf(buffer, (byte)0x55)!=-1){
+                        while(arrayIndexOf(buffer, (byte)0x55)!=-1 && arrayIndexOf(buffer, (byte)0xAA)!=-1){
                             int start = arrayIndexOf(buffer, (byte)0x55);
                             int end = arrayIndexOf(buffer, (byte)0xAA)+1;
                             if (start!=-1 && end!=-1){

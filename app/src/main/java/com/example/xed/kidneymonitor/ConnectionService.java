@@ -97,7 +97,7 @@ public class ConnectionService extends Service {
     public String DPRESS2     = "0.0";
     public String DPRESS3     = "0.0";
     public String DTEMP1      = "0.0";
-    public String DCOND1      = "0.0";
+    public String DCOND1      = "0";
     public String DCUR1       = "0.0";
     public String DCUR2       = "0.0";
     public String DCUR3       = "0.0";
@@ -227,7 +227,7 @@ public class ConnectionService extends Service {
 
                         case BluetoothChatService.STATE_CONNECTED: {
                             lw.appendLog(logTag, "Connected to: " + mConnectedDeviceName, true);
-                            sendsomeMessage("CONNECT");
+                            sendsomeMessage("CONNECT \r\n");
                             break;
                         }
 
@@ -254,8 +254,10 @@ public class ConnectionService extends Service {
 
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
+
                     // construct a string from the valid bytes in the buffer
-                    lw.appendLog(logTag, "READING:  " + toHexString(readBuf));
+                    //lw.appendLog(logTag, "READING:  " + toHexString(readBuf));
+                    Log.i(logTag, "READING:  " + toHexString(readBuf));//readBuf = new byte[]{};
                     parseInBytes(readBuf);
                     break;
 
@@ -402,60 +404,61 @@ public class ConnectionService extends Service {
                 }
 
                 case bDPRESS1:{
-                    DPRESS1 = String.valueOf(full_data_float);
+                    DPRESS1 = String.valueOf(full_data_float*51.715f);
                     lw.appendLog(logTag, "setting DPRESS1 to " + DPRESS1, true);
 
                     break;
                 }
 
                 case bDPRESS2:{
-                    DPRESS2 = String.valueOf(full_data_float);
+                    DPRESS2 = String.valueOf(full_data_float*51.715f);
                     lw.appendLog(logTag, "setting DPRESS2 to " + DPRESS2, true);
 
                     break;
                 }
 
                 case bDPRESS3:{
-                    DPRESS3 = String.valueOf(full_data_float);
+                    DPRESS3 = String.valueOf(full_data_float*51.715f);
                     lw.appendLog(logTag, "setting DPRESS3 to " + DPRESS3, true);
 
                     break;
                 }
 
                 case bDTEMP1:{
-                    DTEMP1 = String.valueOf(full_data_float);
+                    float value = full_data_int/10.0f;
+                    DTEMP1 = String.valueOf(value);
                     lw.appendLog(logTag, "setting DTEMP1 to " + DTEMP1, true);
 
                     break;
                 }
 
                 case bDCOND1:{
-                    DCOND1 = String.valueOf(full_data_float);
+                    DCOND1 = String.valueOf(full_data_int);
                     lw.appendLog(logTag, "setting DCOND1 to " + DCOND1, true);
 
                     break;
                 }
 
                 case bDCUR1:{
-                    DCUR1 = String.valueOf(full_data_float);
+                    DCUR1 = String.valueOf(full_data_float*1000);
                     lw.appendLog(logTag, "setting DCUR1 to " + DCUR1, true);
                     break;
                 }
 
                 case bDCUR2:{
-                    DCUR2 = String.valueOf(full_data_float);
+                    DCUR2 = String.valueOf(full_data_float*1000);
                     lw.appendLog(logTag, "setting DCUR2 to " + DCUR2, true);
                     break;
                 }
 
                 case bDCUR3:{
-                    DCUR3 = String.valueOf(full_data_float);
+                    DCUR3 = String.valueOf(full_data_float*1000);
                     lw.appendLog(logTag, "setting DCUR3 to " + DCUR3, true);
                     break;
                 }
 
                 case bDCUR4:{
-                    DCUR4 = String.valueOf(full_data_float);
+                    DCUR4 = String.valueOf(full_data_float*1000);
                     lw.appendLog(logTag, "setting DCUR4 to " + DCUR4, true);
                     break;
                 }

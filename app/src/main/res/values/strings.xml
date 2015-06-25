@@ -36,7 +36,7 @@
     <string name="caption_battery_charge">Battery\ncharge:</string>
     <string name="value_battery_charge_unknown">Unknown</string>
 
-    <string name="button_start">Pause/resume</string>
+    <string name="button_start">Stop</string>
     <string name="button_change_state">Change\nstate</string>
     <string name="button_notification">Notification</string>
     <string name="button_log">Log</string>
@@ -89,7 +89,7 @@
 
     <string name="starting_filling">Starting to fill...</string>
 
-    <string name="title_pause_procedure">Pause procedure</string>
+    <string name="title_pause_procedure">Stop procedure</string>
     <string name="title_continue_procedure">Continue procedure</string>
 
     <string name="title_debug">Debug</string>

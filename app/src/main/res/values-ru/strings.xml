@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="button_change_state">Сменить\nсостояние</string>
     <string name="button_notification">Уведомление</string>
-    <string name="button_start">Приостановить/возобновить процедуру</string>
+    <string name="button_start">Остановить процедуру</string>
     <string name="caption_battery_charge">Заряд\nбатареи:</string>
     <string name="caption_device_functioning">Устройство\nработает:</string>
     <string name="caption_procedure_params">Параметры\nпроцедуры:</string>
@@ -74,7 +74,7 @@
         <item>Слив</item>
     </string-array>
 
-    <string name="title_pause_procedure">Приостановить процедуру</string>
+    <string name="title_pause_procedure">Остановить процедуру</string>
     <string name="title_continue_procedure">Возобновить процедуру</string>
     <string name="title_choose_device">Выберите устройство</string>
     <string name="title_filling_confirmation">Подтверждение</string>
@@ -124,5 +124,11 @@
     <string name="title_autoconnect_options">Автоподключение</string>
     <string name="title_connect_auto">Подключаться автоматически</string>
     <string name="title_electrolyzer">Электролизер</string>
+    <string name="instruction_flush">Тут инструкция, которая появляется\n
+когда пользователь выбирает пункт "Слив".\n
+Как вы видите, инструкция может быть многострочной\n
+и со встроенными картинками!\n
+Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".</string>
+    <string name="value_status_flush">Слив</string>
 
 </resources>

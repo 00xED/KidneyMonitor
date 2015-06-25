@@ -311,37 +311,43 @@ public class ConnectionService extends Service {
                     switch (currentArg) {
                         case bSTATUS_FILLING: {
                             lw.appendLog(logTag, "setting STATUS to FILLING", true);
+
                             STATUS = "0";
                             break;
                         }
                         case bSTATUS_DIALYSIS: {
-
                             lw.appendLog(logTag, "setting STATUS to DIALYSIS", true);
+
                             STATUS = "1";
                             break;
                         }
                         case bSTATUS_SHUTDOWN: {
                             lw.appendLog(logTag, "setting STATUS to SHUTDOWN", true);
+
                             STATUS = "2";
                             break;
                         }
                         case bSTATUS_DISINFECTION: {
                             lw.appendLog(logTag, "setting STATUS to DISINFECTION", true);
+
                             STATUS = "3";
                             break;
                         }
                         case bSTATUS_READY: {
                             lw.appendLog(logTag, "setting STATUS to READY", true);
+
                             STATUS = "4";
                             break;
                         }
                         case bSTATUS_FLUSH: {
                             lw.appendLog(logTag, "setting STATUS to FLUSH", true);
+
                             STATUS = "5";
                             break;
                         }
                         default: {
                             lw.appendLog(logTag, "setting STATUS to UNKNOWN", true);
+
                             STATUS = "-1";
                             break;
                         }

@@ -129,7 +129,7 @@ public class MainActivity extends ActionBarActivity {
                     getResources().getText(R.string.title_prefs_loaded).toString(),
                     Toast.LENGTH_SHORT).show();
 
-        long dialysisStart = sPref.getLong(PrefActivity.DIAL_START_TIME, -1);
+
         /**
          * Initialising Bluetooth adapter; If there's none - show toast and exit
          */
@@ -318,9 +318,7 @@ public class MainActivity extends ActionBarActivity {
                     case TASK_SET_SORBTIME:
                     {
 
-                        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                        long dialysisStart = sPref.getLong(PrefActivity.DIAL_START_TIME, -1);
-
+                        /*
                         if (dialysisStart==-1)//If received value is default then set to unknown
                         {
                             tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
@@ -328,19 +326,19 @@ public class MainActivity extends ActionBarActivity {
                         }
                         else    //Convert received time in seconds to hours and minutes
                         {
-                            long times = TimeUnit.HOURS.toMillis(12)-(System.currentTimeMillis()-dialysisStart);
+                            long times = TimeUnit.HOURS.toMillis(12) - (System.currentTimeMillis() - dialysisStart);
                             int hours = (int) TimeUnit.MILLISECONDS.toHours(times);
                             times -= TimeUnit.HOURS.toMillis(hours);
                             int mins = (int) TimeUnit.MILLISECONDS.toMinutes(times);
                             times -= TimeUnit.MINUTES.toMillis(mins);
                             int sec = (int) TimeUnit.MILLISECONDS.toSeconds(times);
                             tvSorbtime.setText(hours +
-                                               getResources().getText(R.string.value_sorbtime_hours).toString() +
-                                               mins +
-                                               getResources().getText(R.string.value_sorbtime_mins).toString() + sec);
+                                    getResources().getText(R.string.value_sorbtime_hours).toString() +
+                                    mins +
+                                    getResources().getText(R.string.value_sorbtime_mins).toString() + sec);
 
                             ivSorbtime.setImageResource(R.drawable.ic_time_green);
-                        }
+                        }*/
                         break;
                     }
                     case TASK_SET_BATT:
@@ -542,11 +540,6 @@ public class MainActivity extends ActionBarActivity {
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
                                         sendBroadcast(intent);
 
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
-
                                         instructionDialog.dismiss();
                                     }
                                 });
@@ -567,7 +560,7 @@ public class MainActivity extends ActionBarActivity {
                             case 1:{
                                 final Dialog instructionDialog = new Dialog(MainActivity.this);
                                 instructionDialog.setContentView(R.layout.shutdowndialog);
-                                instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
+                                instructionDialog.setTitle(getResources().getText(R.string.value_status_dialysis).toString());
 
                                 // set the custom dialog components - text, image and button
                                 TextView text = (TextView) instructionDialog.findViewById(R.id.text);
@@ -584,11 +577,6 @@ public class MainActivity extends ActionBarActivity {
                                         intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
                                         sendBroadcast(intent);
-
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.putLong(PrefActivity.DIAL_START_TIME, System.currentTimeMillis());
-                                        ed.commit();
 
                                         instructionDialog.dismiss();
                                     }
@@ -629,11 +617,6 @@ public class MainActivity extends ActionBarActivity {
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
                                         sendBroadcast(intent);
 
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
-
                                         instructionDialog.dismiss();
                                     }
                                 });
@@ -673,11 +656,6 @@ public class MainActivity extends ActionBarActivity {
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
                                         sendBroadcast(intent);
 
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
-
                                         instructionDialog.dismiss();
                                     }
                                 });
@@ -716,11 +694,6 @@ public class MainActivity extends ActionBarActivity {
                                         intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                                         intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
                                         sendBroadcast(intent);
-
-                                        SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                                        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
-                                        ed.remove(PrefActivity.DIAL_START_TIME);
-                                        ed.commit();
 
                                         instructionDialog.dismiss();
                                     }

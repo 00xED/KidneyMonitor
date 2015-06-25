@@ -520,7 +520,7 @@ public class BluetoothChatService extends Activity {
         }*/
 
         public void run() {
-            int bytes=0; // bytes returned from read()
+            int bytes = 0; // bytes returned from read()
             int availableBytes;
             byte[] buffer = new byte[128];
             // Keep listening to the InputStream until an exception occurs
@@ -530,25 +530,18 @@ public class BluetoothChatService extends Activity {
                     if (availableBytes > 0) {
                         // Read from the InputStream
                         bytes = mmInStream.read(buffer, bytes, availableBytes);
-                        bytes+=availableBytes;
-                        while(arrayIndexOf(buffer, (byte)0x55)!=-1 && arrayIndexOf(buffer, (byte)0xAA)!=-1){
+                        bytes += availableBytes;
+
+                        while(arrayIndexOf(buffer, (byte)0x55)!=-1 && arrayIndexOf(buffer, (byte)0xAA)!=-1 &&
+                              arrayIndexOf(buffer, (byte)0x55)<arrayIndexOf(buffer, (byte)0xAA)){
                             int start = arrayIndexOf(buffer, (byte)0x55);
                             int end = arrayIndexOf(buffer, (byte)0xAA)+1;
-                            if (start!=-1 && end!=-1){
-                                byte[] send = Arrays.copyOfRange(buffer, start, end);
-                                mHandler.obtainMessage(MESSAGE_READ, bytes, -1, send).sendToTarget();
-                                Arrays.fill(buffer, start, end, (byte)0x00);
-                            }
-
+                            byte[] send = Arrays.copyOfRange(buffer, start, end);
+                            mHandler.obtainMessage(MESSAGE_READ, bytes, -1, send).sendToTarget();
+                            Arrays.fill(buffer, start, end+1, (byte)0x00);
                         }
                         bytes=0;
                         buffer = new byte[128];
-                        /*if (arrayIndexOf(buffer, (byte)0x55)!=-1 && arrayIndexOf(buffer, (byte)0xAA)!=-1) {
-                            // Send the obtained bytes to the UI activity
-                            mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
-                            bytes=0;
-                            buffer = new byte[64];
-                        }*/
                     }
                     else SystemClock.sleep(100);
                 } catch (IOException e) {

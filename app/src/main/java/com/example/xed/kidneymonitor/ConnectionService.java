@@ -122,7 +122,7 @@ public class ConnectionService extends Service {
 
         final byte bSENDDPRESS     = (byte) 0x10;//Receiving command to set dialysis pressures
         final byte bSENDDCOND      = (byte) 0x12;//Receiving command to set dialysis conductivity
-        final byte bSENDDTEMP      = (byte) 0x14;//Receiving command to set dialysis temperaturecurrent
+        final byte bSENDDTEMP      = (byte) 0x14;//Receiving command to set dialysis temperature
         final byte bSENDDPUMPS     = (byte) 0x16;//Receiving command to set pumps flows
 
         final byte bPAUSE        = (byte) 0x5A;//Send to pause current procedure
@@ -254,10 +254,7 @@ public class ConnectionService extends Service {
 
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-
-                    // construct a string from the valid bytes in the buffer
-                    //lw.appendLog(logTag, "READING:  " + toHexString(readBuf));
-                    Log.i(logTag, "READING:  " + toHexString(readBuf));//readBuf = new byte[]{};
+                    Log.i(logTag, "READING:  " + toHexString(readBuf));
                     parseInBytes(readBuf);
                     break;
 

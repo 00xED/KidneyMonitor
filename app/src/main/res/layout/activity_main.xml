@@ -255,6 +255,15 @@
                     android:text="@string/value_time_sorbent_unknown"
                     android:id="@+id/tv_ValueSorbentTime"
                     android:layout_column="4" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_TimerReset"
+                    android:layout_column="5"
+                    android:src="@drawable/clock_reset"
+                    android:layout_marginTop="10dp"
+                    android:onClick="OnClick" />
             </TableRow>
 
             <TableRow

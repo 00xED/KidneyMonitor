@@ -317,28 +317,28 @@ public class MainActivity extends ActionBarActivity {
                     }
                     case TASK_SET_SORBTIME:
                     {
+                        SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+                        long remaining_time = sPref.getLong(PrefActivity.TIME_REMAINING, -1);
 
-                        /*
-                        if (dialysisStart==-1)//If received value is default then set to unknown
+                        if (remaining_time==-1)//If received value is default then set to unknown
                         {
                             tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
                             ivSorbtime.setImageResource(R.drawable.ic_time_grey);
                         }
                         else    //Convert received time in seconds to hours and minutes
                         {
-                            long times = TimeUnit.HOURS.toMillis(12) - (System.currentTimeMillis() - dialysisStart);
-                            int hours = (int) TimeUnit.MILLISECONDS.toHours(times);
-                            times -= TimeUnit.HOURS.toMillis(hours);
-                            int mins = (int) TimeUnit.MILLISECONDS.toMinutes(times);
-                            times -= TimeUnit.MINUTES.toMillis(mins);
-                            int sec = (int) TimeUnit.MILLISECONDS.toSeconds(times);
+                            int hours = (int) TimeUnit.MILLISECONDS.toHours(remaining_time);
+                            remaining_time -= TimeUnit.HOURS.toMillis(hours);
+                            int mins = (int) TimeUnit.MILLISECONDS.toMinutes(remaining_time);
+                            remaining_time -= TimeUnit.MINUTES.toMillis(mins);
+                            int sec = (int) TimeUnit.MILLISECONDS.toSeconds(remaining_time);
                             tvSorbtime.setText(hours +
                                     getResources().getText(R.string.value_sorbtime_hours).toString() +
                                     mins +
                                     getResources().getText(R.string.value_sorbtime_mins).toString() + sec);
 
                             ivSorbtime.setImageResource(R.drawable.ic_time_green);
-                        }*/
+                        }
                         break;
                     }
                     case TASK_SET_BATT:
@@ -483,6 +483,15 @@ public class MainActivity extends ActionBarActivity {
                 Intent intent = new Intent(this, ParamsActivity.class);
                 startActivity(intent);
                 break;
+            }
+
+            case R.id.iv_TimerReset:
+            {
+                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+                SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+                ed.remove(PrefActivity.TIME_REMAINING);
+                ed.remove(PrefActivity.LAST_TICK);
+                ed.commit();
             }
 
             default:

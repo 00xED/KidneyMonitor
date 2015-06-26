@@ -869,6 +869,18 @@ public class ConnectionService extends Service {
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR4);
             sendBroadcast(intentParams);
 
+            if(!STATE.equals("-1")){
+                SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+                SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+                long remaining_time = sPref.getLong(PrefActivity.TIME_REMAINING, 12 * 60 * 60 * 1000);
+                long tick = sPref.getLong(PrefActivity.LAST_TICK, System.currentTimeMillis());
+                if(STATE.equals("1"))
+                    tick = System.currentTimeMillis();
+                ed.putLong(PrefActivity.TIME_REMAINING, remaining_time - (System.currentTimeMillis() - tick));
+                ed.putLong(PrefActivity.LAST_TICK, System.currentTimeMillis());
+                ed.commit();
+            }
+
             RefreshHandler.postDelayed(timedTask, 1000);//refresh after one second
         }
     };

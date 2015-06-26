@@ -36,6 +36,8 @@ public class PrefActivity extends ActionBarActivity {
     public static final String IS_FOREGROUND = "FOREGROUND_SERVICE";
     public static final String VIBRATION = "VIBRATION";
     public static final String SOUND = "SOUND";
+    public static final String TIME_REMAINING = "TIME_REMAINING";
+    public static final String LAST_TICK = "LAST_TICK";
 
     public static String CHOSEN_ADDRESS = "00:00:00:00:00:00";
     public static String CHOSEN_NAME = "NONE";

@@ -4,8 +4,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="button_change_state">Сменить\nсостояние</string>
-    <string name="button_notification">Уведомление</string>
+    <string name="button_change_state">Процедура</string>
+    <string name="button_notification">Сообщение</string>
     <string name="button_start">Остановить процедуру</string>
     <string name="caption_battery_charge">Заряд\nбатареи:</string>
     <string name="caption_device_functioning">Устройство\nработает:</string>

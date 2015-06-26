@@ -66,7 +66,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/value_state_unknown"
                     android:id="@+id/tv_ValueState"
-                    android:layout_column="4" />
+                    android:layout_column="4"
+                    android:layout_marginTop="7dp" />
             </TableRow>
 
             <TableRow
@@ -112,7 +113,8 @@
                     android:text="@string/value_status_unknown"
                     android:id="@+id/tv_ValueStatus"
                     android:layout_column="4"
-                    android:onClick="OnClick" />
+                    android:onClick="OnClick"
+                    android:layout_marginTop="7dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -165,7 +167,8 @@
                     android:text="@string/value_procedure_params_unknown"
                     android:id="@+id/tv_ValueProcedureParams"
                     android:layout_column="4"
-                    android:onClick="OnClick" />
+                    android:onClick="OnClick"
+                    android:layout_marginTop="7dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -213,7 +216,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/value_device_functioning_unknown"
                     android:id="@+id/tv_ValueDeviceFunctioning"
-                    android:layout_column="4" />
+                    android:layout_column="4"
+                    android:layout_marginTop="7dp" />
             </TableRow>
 
             <TableRow
@@ -254,7 +258,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/value_time_sorbent_unknown"
                     android:id="@+id/tv_ValueSorbentTime"
-                    android:layout_column="4" />
+                    android:layout_column="4"
+                    android:layout_marginTop="7dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -299,7 +304,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/value_battery_charge_unknown"
                     android:id="@+id/tv_ValueBatteryCharge"
-                    android:layout_column="4" />
+                    android:layout_column="4"
+                    android:layout_marginTop="7dp" />
             </TableRow>
 
         </TableLayout>

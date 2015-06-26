@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
@@ -159,13 +161,24 @@ public class ParamsActivity extends ActionBarActivity {
                             break;
                         }
 
-                        case TASK_SET_DPRESS1:
-                        {
+                        case TASK_SET_DPRESS1: {
                             pbDPress1.setMax(0);
                             pbDPress1.setProgress(0);
-                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS1MIN));
+                            float value = Float.valueOf(args);
+                            float percent = value - ConnectionService.DPRESS1MIN;
                             int progress = Math.round(percent);
-                            tvDPress1.setText(args);
+                            tvDPress1.setText(String.format("%.2f", value) + " ");
+                            if (value > ConnectionService.DPRESS1MAX || value < ConnectionService.DPRESS1MIN)
+                            {
+                                tvDPress1.setTextColor(Color.RED);
+                                pbDPress1.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                            }
+                            else
+                            {
+                                tvDPress1.setTextColor(tvDPress1Min.getCurrentTextColor());
+                                pbDPress1.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+
+                            }
                             pbDPress1.setMax(Math.round(ConnectionService.DPRESS1MAX-ConnectionService.DPRESS1MIN));
                             pbDPress1.setProgress(progress);
                             break;
@@ -175,9 +188,21 @@ public class ParamsActivity extends ActionBarActivity {
                         {
                             pbDPress2.setMax(0);
                             pbDPress2.setProgress(0);
-                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS2MIN));
+                            float value = Float.valueOf(args);
+                            float percent = value-ConnectionService.DPRESS2MIN;
                             int progress = Math.round(percent);
-                            tvDPress2.setText(args);
+                            tvDPress2.setText(String.format("%.2f", value) + " ");
+                            if(value>ConnectionService.DPRESS2MAX || value<ConnectionService.DPRESS2MIN)
+                            {
+                                tvDPress2.setTextColor(Color.RED);
+                                pbDPress2.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                            }
+                            else
+                            {
+                                tvDPress2.setTextColor(tvDPress1Min.getCurrentTextColor());
+                                pbDPress2.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+
+                            }
                             pbDPress2.setMax(Math.round(ConnectionService.DPRESS2MAX-ConnectionService.DPRESS2MIN));
                             pbDPress2.setProgress(progress);
                             break;
@@ -187,9 +212,21 @@ public class ParamsActivity extends ActionBarActivity {
                         {
                             pbDPress3.setMax(0);
                             pbDPress3.setProgress(0);
-                            float percent = ((Float.valueOf(args)-ConnectionService.DPRESS3MIN));
+                            float value = Float.valueOf(args);
+                            float percent = value-ConnectionService.DPRESS3MIN;
                             int progress = Math.round(percent);
-                            tvDPress3.setText(args);
+                            tvDPress3.setText(String.format("%.2f", value) + " ");
+                            if(value>ConnectionService.DPRESS3MAX || value<ConnectionService.DPRESS3MIN)
+                            {
+                                tvDPress3.setTextColor(Color.RED);
+                                pbDPress3.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                            }
+                            else
+                            {
+                                tvDPress3.setTextColor(tvDPress1Min.getCurrentTextColor());
+                                pbDPress3.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+
+                            }
                             pbDPress3.setMax(Math.round(ConnectionService.DPRESS3MAX-ConnectionService.DPRESS3MIN));
                             pbDPress3.setProgress(progress);
                             break;
@@ -199,9 +236,21 @@ public class ParamsActivity extends ActionBarActivity {
                         {
                             pbDTemp.setMax(0);
                             pbDTemp.setProgress(0);
-                            float percent = ((Float.valueOf(args)-ConnectionService.DTEMP1MIN));
+                            float value = Float.valueOf(args);
+                            float percent = value - ConnectionService.DTEMP1MIN;
                             int progress = Math.round(percent);
-                            tvDTemp.setText(args);
+                            tvDTemp.setText(String.format("%.2f", value) + " ");
+                            if(value>ConnectionService.DTEMP1MAX || value<ConnectionService.DTEMP1MIN)
+                            {
+                                tvDTemp.setTextColor(Color.RED);
+                                pbDTemp.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                            }
+                            else
+                            {
+                                tvDTemp.setTextColor(tvDPress1Min.getCurrentTextColor());
+                                pbDTemp.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+
+                            }
                             pbDTemp.setMax(Math.round(ConnectionService.DTEMP1MAX-ConnectionService.DTEMP1MIN));
                             pbDTemp.setProgress(progress);
                             break;
@@ -211,9 +260,21 @@ public class ParamsActivity extends ActionBarActivity {
                         {
                             pbDCond.setMax(0);
                             pbDCond.setProgress(0);
-                            float percent = ((Float.valueOf(args)-ConnectionService.DCOND1MIN));
+                            float value = Float.valueOf(args);
+                            float percent = value - ConnectionService.DCOND1MIN;
                             int progress = Math.round(percent);
-                            tvDCond.setText(args);
+                            tvDCond.setText(String.format("%.2f", value) + " ");
+                            if(value>ConnectionService.DCOND1MAX || value<ConnectionService.DCOND1MIN)
+                            {
+                                tvDCond.setTextColor(Color.RED);
+                                pbDCond.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                            }
+                            else
+                            {
+                                tvDCond.setTextColor(tvDPress1Min.getCurrentTextColor());
+                                pbDCond.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+
+                            }
                             pbDCond.setMax(Math.round(ConnectionService.DCOND1MAX-ConnectionService.DCOND1MIN));
                             pbDCond.setProgress(progress);
                             break;

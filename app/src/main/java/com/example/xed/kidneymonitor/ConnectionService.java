@@ -1156,6 +1156,7 @@ public class ConnectionService extends Service {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFY_ID, notification);
         NOTIFY_ID++;
+        notificationManager.cancel(NOTIFY_ID--);
     }
 
     public static String toHexString(byte[] bytes) {

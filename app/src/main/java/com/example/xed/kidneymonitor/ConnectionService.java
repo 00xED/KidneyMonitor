@@ -869,14 +869,6 @@ public class ConnectionService extends Service {
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR4);
             sendBroadcast(intentParams);
 
-            SharedPreferences sPref =  getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE);
-            if(sPref.getBoolean(PrefActivity.AUTOCONNECT, false))
-                if(DEVICE_ADDRESS.equals("00:00:00:00:00:00")){
-                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_DO_PAIRING);
-                    sendBroadcast(intent);
-                }
-
             RefreshHandler.postDelayed(timedTask, 1000);//refresh after one second
         }
     };

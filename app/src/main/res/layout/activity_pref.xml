@@ -77,7 +77,7 @@
         android:id="@+id/space" />
 
     <Space
-        android:layout_width="20dp"
+        android:layout_width="30dp"
         android:layout_height="20dp"
         android:layout_alignBottom="@+id/tv_ValueCurrentDeviceAddress"
         android:layout_alignTop="@+id/tv_CaptionCurrentDevice"
@@ -111,8 +111,9 @@
         android:onClick="OnClick"
         android:layout_alignTop="@+id/cb_ForegroundService"
         android:layout_toRightOf="@+id/space2"
-        android:layout_toEndOf="@+id/space2"
-        android:layout_marginLeft="30dp" />
+        android:layout_marginLeft="30dp"
+        android:layout_alignRight="@+id/bt_Scan"
+        android:layout_alignEnd="@+id/bt_Scan" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -182,35 +183,4 @@
         android:layout_toEndOf="@+id/cb_Vibtation"
         android:onClick="OnClick" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_debug"
-        android:id="@+id/cb_Debug"
-        android:layout_above="@+id/bt_SetDefaults"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="OnClick"
-        android:enabled="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/title_autoconnect_options"
-        android:id="@+id/textView26"
-        android:layout_below="@+id/cb_Sound"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_connect_auto"
-        android:id="@+id/cb_Autoconnect"
-        android:onClick="OnClick"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView26"
-        android:layout_alignLeft="@+id/textView4"
-        android:enabled="false" />
 </RelativeLayout>

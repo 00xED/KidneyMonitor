@@ -113,6 +113,13 @@
                     android:id="@+id/tv_ValueStatus"
                     android:layout_column="4"
                     android:onClick="OnClick" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView7"
+                    android:layout_column="5"
+                    android:src="@drawable/chevron_down" />
             </TableRow>
 
             <TableRow

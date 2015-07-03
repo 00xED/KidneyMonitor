@@ -114,6 +114,8 @@ public class LogActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params) {
 
                 text = readLog();
+            if(text.length()>20000)
+                text = text.delete(0, text.length()-20000);
             return null;
         }
 

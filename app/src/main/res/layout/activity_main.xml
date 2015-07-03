@@ -319,8 +319,7 @@
             android:id="@+id/bt_Pause"
             android:onClick="OnClick"
             android:layout_below="@+id/tableLayout"
-            android:layout_centerInParent="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"/>
+            android:layout_centerVertical="true" />
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -337,7 +336,7 @@
 
             <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="fill_parent">
 
                 <Button
                     android:layout_width="150dp"
@@ -347,8 +346,7 @@
                     android:drawableStart="@drawable/ic_refresh"
                     android:id="@+id/bt_State"
                     android:layout_column="0"
-                    android:onClick="OnClick"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Button" />
+                    android:onClick="OnClick" />
 
                 <Space
                     android:layout_width="5dp"
@@ -357,14 +355,13 @@
 
                 <Button
                     android:layout_width="150dp"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/button_notification"
                     android:drawableLeft="@drawable/ic_post"
                     android:drawableStart="@drawable/ic_post"
                     android:id="@+id/bt_Notification"
                     android:layout_column="2"
-                    android:textStyle="normal"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Button" />
+                    android:textStyle="normal" />
 
             </TableRow>
 
@@ -391,8 +388,7 @@
                     android:drawableStart="@drawable/ic_list"
                     android:id="@+id/bt_Log"
                     android:onClick="OnClick"
-                    android:layout_column="0"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Button" />
+                    android:layout_column="0"/>
 
                 <Space
                     android:layout_width="2dp"
@@ -408,8 +404,7 @@
                     android:drawableStart="@drawable/ic_settings"
                     android:id="@+id/bt_Settings"
                     android:layout_column="2"
-                    android:onClick="OnClick"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Button" />
+                    android:onClick="OnClick" />
 
             </TableRow>
         </TableLayout>

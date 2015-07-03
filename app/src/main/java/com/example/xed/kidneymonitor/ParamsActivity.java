@@ -176,7 +176,7 @@ public class ParamsActivity extends ActionBarActivity {
                             else
                             {
                                 tvDPress1.setTextColor(tvDPress1Min.getCurrentTextColor());
-                                pbDPress1.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+                                pbDPress1.getProgressDrawable().setColorFilter(null);
 
                             }
                             pbDPress1.setMax(Math.round(ConnectionService.DPRESS1MAX-ConnectionService.DPRESS1MIN));
@@ -197,10 +197,9 @@ public class ParamsActivity extends ActionBarActivity {
                                 tvDPress2.setTextColor(Color.RED);
                                 pbDPress2.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
                             }
-                            else
-                            {
+                            else {
                                 tvDPress2.setTextColor(tvDPress1Min.getCurrentTextColor());
-                                pbDPress2.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+                                pbDPress2.getProgressDrawable().setColorFilter(null);
 
                             }
                             pbDPress2.setMax(Math.round(ConnectionService.DPRESS2MAX-ConnectionService.DPRESS2MIN));
@@ -221,10 +220,9 @@ public class ParamsActivity extends ActionBarActivity {
                                 tvDPress3.setTextColor(Color.RED);
                                 pbDPress3.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
                             }
-                            else
-                            {
+                            else {
                                 tvDPress3.setTextColor(tvDPress1Min.getCurrentTextColor());
-                                pbDPress3.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+                                pbDPress3.getProgressDrawable().setColorFilter(null);
 
                             }
                             pbDPress3.setMax(Math.round(ConnectionService.DPRESS3MAX-ConnectionService.DPRESS3MIN));
@@ -248,7 +246,7 @@ public class ParamsActivity extends ActionBarActivity {
                             else
                             {
                                 tvDTemp.setTextColor(tvDPress1Min.getCurrentTextColor());
-                                pbDTemp.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+                                pbDTemp.getProgressDrawable().setColorFilter(null);
 
                             }
                             pbDTemp.setMax(Math.round(ConnectionService.DTEMP1MAX-ConnectionService.DTEMP1MIN));
@@ -272,7 +270,7 @@ public class ParamsActivity extends ActionBarActivity {
                             else
                             {
                                 tvDCond.setTextColor(tvDPress1Min.getCurrentTextColor());
-                                pbDCond.setProgressDrawable(pbDPumpFlow1.getProgressDrawable());
+                                pbDCond.getProgressDrawable().setColorFilter(null);
 
                             }
                             pbDCond.setMax(Math.round(ConnectionService.DCOND1MAX-ConnectionService.DCOND1MIN));

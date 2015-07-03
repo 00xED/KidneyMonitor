@@ -41,7 +41,7 @@ public class LogActivity extends ActionBarActivity {
 
         mTvLog = (TextView) findViewById(R.id.tv_Log);
         mCbAutoscroll = (CheckBox) findViewById(R.id.cb_Autoscroll);
-
+        mCbAutoscroll.setChecked(true);
         handler.post(timedTask);
     }
 
@@ -59,7 +59,7 @@ public class LogActivity extends ActionBarActivity {
 
             final ScrollView scrollview = ((ScrollView) findViewById(R.id.scrollView));
             if (mCbAutoscroll.isChecked()) scrollview.fullScroll(ScrollView.FOCUS_DOWN);
-            handler.postDelayed(timedTask, 2000);//refresh after one second
+            handler.postDelayed(timedTask, 1000);//refresh after one second
         }
     };
 
@@ -97,7 +97,6 @@ public class LogActivity extends ActionBarActivity {
                 }
                 break;
             }
-
         }
     }
 

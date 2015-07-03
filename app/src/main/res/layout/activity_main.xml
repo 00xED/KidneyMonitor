@@ -311,103 +311,81 @@
         </TableLayout>
 
         <Button
-            android:layout_width="305dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/button_start"
             android:drawableLeft="@drawable/ic_pause"
             android:drawableStart="@drawable/ic_pause"
             android:id="@+id/bt_Pause"
             android:onClick="OnClick"
-            android:layout_below="@+id/tableLayout"
-            android:layout_centerVertical="true" />
+            android:layout_below="@+id/tableLayout" />
 
-        <TableLayout
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-
+            android:text="@string/button_change_state"
+            android:drawableLeft="@drawable/ic_refresh"
+            android:drawableStart="@drawable/ic_refresh"
+            android:id="@+id/bt_State"
+            android:onClick="OnClick"
             android:layout_below="@+id/bt_Pause"
-            android:id="@+id/tableLayout2"
-            android:layout_alignParentTop="false"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/bt_Pause"
-            android:layout_alignStart="@+id/bt_Pause"
-            android:layout_alignRight="@+id/bt_Pause"
-            android:layout_alignEnd="@+id/bt_Pause">
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button" />
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent">
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="2dp"
+            android:layout_column="1" />
 
-                <Button
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_change_state"
-                    android:drawableLeft="@drawable/ic_refresh"
-                    android:drawableStart="@drawable/ic_refresh"
-                    android:id="@+id/bt_State"
-                    android:layout_column="0"
-                    android:onClick="OnClick" />
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_notification"
+            android:drawableLeft="@drawable/ic_post"
+            android:drawableStart="@drawable/ic_post"
+            android:id="@+id/bt_Notification"
 
-                <Space
-                    android:layout_width="5dp"
-                    android:layout_height="2dp"
-                    android:layout_column="1" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+            android:layout_above="@+id/bt_Settings"
+            android:layout_toRightOf="@+id/bt_State"
+            android:layout_toEndOf="@+id/bt_State" />
 
-                <Button
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_notification"
-                    android:drawableLeft="@drawable/ic_post"
-                    android:drawableStart="@drawable/ic_post"
-                    android:id="@+id/bt_Notification"
-                    android:layout_column="2"
-                    android:textStyle="normal" />
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_column="0"
+            android:id="@+id/space5" />
 
-            </TableRow>
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_log"
+            android:drawableLeft="@drawable/ic_list"
+            android:drawableStart="@drawable/ic_list"
+            android:id="@+id/bt_Log"
+            android:onClick="OnClick"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+            android:layout_below="@+id/bt_State"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent">
+        <Space
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:layout_column="1" />
 
-                <Space
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:layout_column="0" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_log"
-                    android:drawableLeft="@drawable/ic_list"
-                    android:drawableStart="@drawable/ic_list"
-                    android:id="@+id/bt_Log"
-                    android:onClick="OnClick"
-                    android:layout_column="0"/>
-
-                <Space
-                    android:layout_width="2dp"
-                    android:layout_height="2dp"
-                    android:layout_column="1" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="@string/button_settings"
-                    android:drawableLeft="@drawable/ic_settings"
-                    android:drawableStart="@drawable/ic_settings"
-                    android:id="@+id/bt_Settings"
-                    android:layout_column="2"
-                    android:onClick="OnClick" />
-
-            </TableRow>
-        </TableLayout>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_settings"
+            android:drawableLeft="@drawable/ic_settings"
+            android:drawableStart="@drawable/ic_settings"
+            android:id="@+id/bt_Settings"
+            android:onClick="OnClick"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+            android:layout_below="@+id/bt_State"
+            android:layout_alignLeft="@+id/bt_Notification"
+            android:layout_alignStart="@+id/bt_Notification" />
 
         <TextView
             android:layout_width="wrap_content"

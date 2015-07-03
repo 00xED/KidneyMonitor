@@ -841,6 +841,18 @@ public class ConnectionService extends Service {
 
             }
 
+            /*if(mChatService.getState()==1 && STATUS.equals("-1"))//if waiting for connection - try to connect to saved device
+            {
+                SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences;
+                String address = sPref.getString(PrefActivity.SAVED_ADDRESS, "00:00:00:00:00:00");
+                if(!"00:00:00:00:00:00".equals(address)){
+                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+                    mChatService.connect(device, true);//securely connect to chosen device
+                    //lw.appendLog(logTag, "Connecting to " + PrefActivity.CHOSEN_NAME+'@'+PrefActivity.CHOSEN_ADDRESS, true);
+                }
+            }*/
+
             intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DUFVOLUME1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);
             sendBroadcast(intentParams);

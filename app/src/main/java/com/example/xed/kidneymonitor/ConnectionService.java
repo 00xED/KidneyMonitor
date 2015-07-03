@@ -103,6 +103,8 @@ public class ConnectionService extends Service {
     public String DCUR3       = "0.0";
     public String DCUR4       = "0.0";
 
+    public long LASTCONNECTED_MILLIS = -1;
+
     //Random value for notifications IDs
     private static  int NOTIFY_ID = 238;
 
@@ -296,6 +298,7 @@ public class ConnectionService extends Service {
             float full_data_float = ByteBuffer.wrap(databytes).getFloat();
 
             LASTCONNECTED = "0";
+            LASTCONNECTED_MILLIS = System.currentTimeMillis();
 
             switch (com1){
 
@@ -828,6 +831,15 @@ public class ConnectionService extends Service {
             intentValues.putExtra(MainActivity.PARAM_ARG, LASTCONNECTED);
             sendBroadcast(intentValues);
             LASTCONNECTED="-1";//Set default state to fix value on main screen
+            if((System.currentTimeMillis()-LASTCONNECTED_MILLIS)>10*1000)//if last command was received more than 30 seconds ago - reset all values
+            {
+                STATE = "-1";
+                STATUS = "-1";
+                PARAMS = "-1";
+                FUNCT = "-1";
+                BATT = "-1";
+
+            }
 
             intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DUFVOLUME1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);

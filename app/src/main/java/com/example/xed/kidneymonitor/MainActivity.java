@@ -427,9 +427,30 @@ public class MainActivity extends ActionBarActivity {
 
             case R.id.bt_Pause:// pause current procedure
             {
-                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
-                sendBroadcast(intent);
+                final Context context = MainActivity.this;
+                AlertDialog.Builder ad = new AlertDialog.Builder(context);
+                ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());  // заголовок
+                ad.setMessage(getResources().getText(R.string.stop_confirmation).toString()); // сообщение
+                ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                        sendBroadcast(intent);
+                    }
+                });
+                ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+
+                    }
+                });
+                ad.setCancelable(true);
+                ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    public void onCancel(DialogInterface dialog) {
+
+                    }
+                });
+                ad.show();
+
                 break;
             }
 

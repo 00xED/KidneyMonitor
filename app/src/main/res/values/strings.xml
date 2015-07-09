@@ -89,6 +89,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="stop_confirmation">Stop procedure?</string>
+
     <string name="starting_filling">Starting to fill...</string>
 
     <string name="title_pause_procedure">Stop procedure</string>

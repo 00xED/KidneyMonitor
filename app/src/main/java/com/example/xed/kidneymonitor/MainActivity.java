@@ -191,6 +191,7 @@ public class MainActivity extends ActionBarActivity {
                     case TASK_SET_STATUS:
                     {
                         selectedProcedure=Integer.parseInt(arg);
+
                         switch (arg) {
                             case "0":
                             {
@@ -237,6 +238,9 @@ public class MainActivity extends ActionBarActivity {
                                 tvStatus.
                                         setText(getResources().getText(R.string.value_status_ready).toString());
                                 ivStatus.setImageResource(R.drawable.ic_ready);
+                                btPause.
+                                        setText(getResources().getText(R.string.title_continue_procedure).toString());
+                                btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow, 0, 0, 0);
                                 break;
                             }
 
@@ -427,15 +431,76 @@ public class MainActivity extends ActionBarActivity {
 
             case R.id.bt_Pause:// pause current procedure
             {
+                if(ConnectionService.STATUS.equals("-1"))
+                    break;
                 final Context context = MainActivity.this;
                 AlertDialog.Builder ad = new AlertDialog.Builder(context);
-                ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());  // заголовок
-                ad.setMessage(getResources().getText(R.string.stop_confirmation).toString()); // сообщение
+                if(!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY))
+                {
+                    ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
+                    ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
+                }
+                else
+                {
+                    ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
+                    ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
+                }
+
                 ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
-                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
-                        sendBroadcast(intent);
+                        if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY))
+                        {
+
+                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                            sendBroadcast(intent);
+                        }
+                        else
+                        {
+                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                            switch (ConnectionService.PREV_STATUS)
+                            {
+                                case ConnectionService.STATUS_DIALYSIS:
+                                {
+                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
+                                    sendBroadcast(intent);
+                                    break;
+                                }
+                                case ConnectionService.STATUS_DISINFECTION:
+                                {
+                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
+                                    sendBroadcast(intent);
+                                    break;
+                                }
+                                case ConnectionService.STATUS_FILLING:
+                                {
+                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
+                                    sendBroadcast(intent);
+                                    break;
+                                }
+                                case ConnectionService.STATUS_FLUSH:
+                                {
+                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
+                                    sendBroadcast(intent);
+                                    break;
+                                }
+                                case ConnectionService.STATUS_SHUTDOWN:
+                                {
+                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
+                                    sendBroadcast(intent);
+                                    break;
+                                }
+
+                                default:
+                                    break;
+                            }
+
+                        }
                     }
                 });
                 ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
@@ -527,7 +592,7 @@ public class MainActivity extends ActionBarActivity {
         int defaultSelection = selectedProcedure;
         if(selectedProcedure == 4)//if state=ready
             defaultSelection = -1;
-        if(selectedProcedure == 5)//if state=flusg
+        if(selectedProcedure == 5)//if state=flush
             defaultSelection = 4;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -548,8 +613,8 @@ public class MainActivity extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         // user clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
-                        int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
-                        switch (selectedPosition){
+                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        switch (selectedPosition) {
                             case 0://If user chooses "Filling" show confirmation to check if patient is connected
                             {
                                 final Dialog instructionDialog = new Dialog(MainActivity.this);
@@ -589,7 +654,7 @@ public class MainActivity extends ActionBarActivity {
                                 break;
                             }
 
-                            case 1:{
+                            case 1: {
                                 final Dialog instructionDialog = new Dialog(MainActivity.this);
                                 instructionDialog.setContentView(R.layout.shutdowndialog);
                                 instructionDialog.setTitle(getResources().getText(R.string.value_status_dialysis).toString());
@@ -628,7 +693,7 @@ public class MainActivity extends ActionBarActivity {
                                 break;
                             }
 
-                            case 2:{
+                            case 2: {
                                 final Dialog instructionDialog = new Dialog(MainActivity.this);
                                 instructionDialog.setContentView(R.layout.shutdowndialog);
                                 instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
@@ -667,7 +732,7 @@ public class MainActivity extends ActionBarActivity {
                                 break;
                             }
 
-                            case 3:{
+                            case 3: {
                                 final Dialog instructionDialog = new Dialog(MainActivity.this);
                                 instructionDialog.setContentView(R.layout.shutdowndialog);
                                 instructionDialog.setTitle(getResources().getText(R.string.value_status_disinfection).toString());
@@ -706,7 +771,7 @@ public class MainActivity extends ActionBarActivity {
                                 break;
                             }
 
-                            case 4:{
+                            case 4: {
                                 final Dialog instructionDialog = new Dialog(MainActivity.this);
                                 instructionDialog.setContentView(R.layout.shutdowndialog);
                                 instructionDialog.setTitle(getResources().getText(R.string.value_status_flush).toString());

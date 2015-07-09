@@ -39,6 +39,14 @@ public class ConnectionService extends Service {
 
     public static boolean isServiceRunning=false;
 
+    public final static String STATUS_FILLING = "0";
+    public final static String STATUS_DIALYSIS = "1";
+    public final static String STATUS_SHUTDOWN = "2";
+    public final static String STATUS_DISINFECTION = "3";
+    public final static String STATUS_READY = "4";
+    public final static String STATUS_FLUSH = "5";
+    public final static String STATUS_UNKNOWN = "-1";
+
     /**
      * Values for handler of BluetoothChatService messages
      */
@@ -80,7 +88,8 @@ public class ConnectionService extends Service {
      * Default values for values
      */
     public String STATE = "-1";
-    public String STATUS = "-1";
+    public static String STATUS = "-1";
+    public static String PREV_STATUS = "-2";
     public String PARAMS = "-1";
     public String FUNCT = "-1";
     public String PAUSE = "-1";
@@ -338,6 +347,8 @@ public class ConnectionService extends Service {
                         }
                         case bSTATUS_READY: {
                             lw.appendLog(logTag, "setting STATUS to READY", true);
+                            if(!STATUS.equals(STATUS_READY) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not READY and not UNKNOWN
+                                PREV_STATUS = STATUS;
 
                             STATUS = "4";
                             break;
@@ -893,13 +904,14 @@ public class ConnectionService extends Service {
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR4);
             sendBroadcast(intentParams);
 
-            if(!STATE.equals("-1")){
+            if(!STATE.equals("-1") && STATUS.equals(STATUS_DIALYSIS)){
                 SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
                 long remaining_time = sPref.getLong(PrefActivity.TIME_REMAINING, 12 * 60 * 60 * 1000);
                 long tick = sPref.getLong(PrefActivity.LAST_TICK, System.currentTimeMillis());
                 if(STATE.equals("1"))
                     tick = System.currentTimeMillis();
+
                 ed.putLong(PrefActivity.TIME_REMAINING, remaining_time - (System.currentTimeMillis() - tick));
                 ed.putLong(PrefActivity.LAST_TICK, System.currentTimeMillis());
                 ed.commit();

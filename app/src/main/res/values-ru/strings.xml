@@ -132,5 +132,6 @@
     <string name="value_status_flush">Слив</string>
     <string name="title_test_mode">Тестовый режим</string>
     <string name="stop_confirmation">Остановить процедуру?</string>
+    <string name="resume_confirmation">Возобновить процедуру?</string>
 
 </resources>

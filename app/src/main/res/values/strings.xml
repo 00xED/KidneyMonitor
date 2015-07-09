@@ -82,6 +82,8 @@
     <string name="title_vibration">Vibration</string>
     <string name="title_sound">Sound</string>
 
+    <string name="title_test_mode">Test mode</string>
+
     <string name="title_filling_confirmation">Confirmation</string>
     <string name="filling_confirmation">Is patient connected?</string>
     <string name="yes">Yes</string>

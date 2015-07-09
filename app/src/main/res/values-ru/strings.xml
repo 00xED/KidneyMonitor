@@ -130,5 +130,6 @@
 и со встроенными картинками!\n
 Подтверждение осуществляется с помощью кнопок "OK" и "Отмена".</string>
     <string name="value_status_flush">Слив</string>
+    <string name="title_test_mode">Тестовый режим</string>
 
 </resources>

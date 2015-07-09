@@ -36,6 +36,7 @@ public class PrefActivity extends ActionBarActivity {
     public static final String IS_FOREGROUND = "FOREGROUND_SERVICE";
     public static final String VIBRATION = "VIBRATION";
     public static final String SOUND = "SOUND";
+    public static final String TESTMODE = "TESTMODE";
     public static final String TIME_REMAINING = "TIME_REMAINING";
     public static final String LAST_TICK = "LAST_TICK";
 
@@ -48,7 +49,7 @@ public class PrefActivity extends ActionBarActivity {
     private Button btStopService;
 
     private TextView tvCurrentDeviceName, tvCurrentDeviceAddress;
-    private CheckBox cbForegroundService, cbVibrate, cbSound;
+    private CheckBox cbForegroundService, cbVibrate, cbSound, cbTestMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,12 @@ public class PrefActivity extends ActionBarActivity {
                 cbSound.setChecked(true);
             else
                 cbSound.setChecked(false);
+
+            cbTestMode = (CheckBox)findViewById(R.id.cb_TestMode);
+            if(sPref.getBoolean(TESTMODE, false))
+                cbTestMode.setChecked(true);
+            else
+                cbTestMode.setChecked(false);
 
         btStopService = (Button) findViewById(R.id.bt_StopService);
         if(ConnectionService.isServiceRunning)
@@ -213,6 +220,18 @@ public class PrefActivity extends ActionBarActivity {
                     ed.putBoolean(SOUND, true);
                 else
                     ed.putBoolean(SOUND, false);
+                ed.commit();
+                break;
+            }
+
+            case R.id.cb_TestMode:
+            {
+                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+                Editor ed = sPref.edit(); //Setting for preference editing
+                if(cbTestMode.isChecked())
+                    ed.putBoolean(TESTMODE, true);
+                else
+                    ed.putBoolean(TESTMODE, false);
                 ed.commit();
                 break;
             }

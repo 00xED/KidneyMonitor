@@ -183,4 +183,25 @@
         android:layout_toEndOf="@+id/cb_Vibtation"
         android:onClick="OnClick" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/title_test_mode"
+        android:id="@+id/textView26"
+        android:layout_below="@+id/cb_Vibtation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_test_mode"
+        android:id="@+id/cb_TestMode"
+        android:onClick="OnClick"
+        android:layout_below="@+id/textView26"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
 </RelativeLayout>

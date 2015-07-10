@@ -414,79 +414,112 @@ public class MainActivity extends ActionBarActivity {
 
             case R.id.bt_Pause:// pause current procedure
             {
-                if (ConnectionService.STATUS.equals("-1"))
-                    break;
-                final Context context = MainActivity.this;
-                AlertDialog.Builder ad = new AlertDialog.Builder(context);
-                if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
-                    ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
-                    ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
-                } else {
-                    ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
-                    ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
-                }
-
-                ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int arg1) {
-                        if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
-
-                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
-                            sendBroadcast(intent);
-                        } else {
-                            Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                            switch (ConnectionService.PREV_STATUS) {
-                                case ConnectionService.STATUS_DIALYSIS: {
-                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
-                                    sendBroadcast(intent);
-                                    break;
-                                }
-                                case ConnectionService.STATUS_DISINFECTION: {
-                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
-                                    sendBroadcast(intent);
-                                    break;
-                                }
-                                case ConnectionService.STATUS_FILLING: {
-                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
-                                    sendBroadcast(intent);
-                                    break;
-                                }
-                                case ConnectionService.STATUS_FLUSH: {
-                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
-                                    sendBroadcast(intent);
-                                    break;
-                                }
-                                case ConnectionService.STATUS_SHUTDOWN: {
-                                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                    intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
-                                    sendBroadcast(intent);
-                                    break;
-                                }
-
-                                default:
-                                    break;
+                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                if (sPref.getBoolean(PrefActivity.TESTMODE, false))
+                {
+                    final Context context = MainActivity.this;
+                    AlertDialog.Builder ad = new AlertDialog.Builder(context);
+                    if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
+                        ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
+                        ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
+                    } else {
+                        ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
+                        ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
+                    }
+                    ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
+                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                                sendBroadcast(intent);
                             }
+                });
+                    ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
 
                         }
-                    }
-                });
-                ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int arg1) {
+                    });
+                    ad.setCancelable(true);
+                    ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        public void onCancel(DialogInterface dialog) {
 
+                        }
+                    });
+                    ad.show();
+                }
+                else {
+                    if (ConnectionService.STATUS.equals("-1"))
+                        break;
+                    final Context context = MainActivity.this;
+                    AlertDialog.Builder ad = new AlertDialog.Builder(context);
+                    if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
+                        ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
+                        ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
+                    } else {
+                        ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
+                        ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
                     }
-                });
-                ad.setCancelable(true);
-                ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
 
-                    }
-                });
-                ad.show();
+                    ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
+                            if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
 
+                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                                sendBroadcast(intent);
+                            } else {
+                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                                switch (ConnectionService.PREV_STATUS) {
+                                    case ConnectionService.STATUS_DIALYSIS: {
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
+                                        sendBroadcast(intent);
+                                        break;
+                                    }
+                                    case ConnectionService.STATUS_DISINFECTION: {
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
+                                        sendBroadcast(intent);
+                                        break;
+                                    }
+                                    case ConnectionService.STATUS_FILLING: {
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
+                                        sendBroadcast(intent);
+                                        break;
+                                    }
+                                    case ConnectionService.STATUS_FLUSH: {
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
+                                        sendBroadcast(intent);
+                                        break;
+                                    }
+                                    case ConnectionService.STATUS_SHUTDOWN: {
+                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
+                                        sendBroadcast(intent);
+                                        break;
+                                    }
+
+                                    default:
+                                        break;
+                                }
+
+                            }
+                        }
+                    });
+                    ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
+
+                        }
+                    });
+                    ad.setCancelable(true);
+                    ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        public void onCancel(DialogInterface dialog) {
+
+                        }
+                    });
+                    ad.show();
+                }
                 break;
             }
 

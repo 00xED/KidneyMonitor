@@ -385,6 +385,29 @@ public class MainActivity extends ActionBarActivity {
         unregisterReceiver(broadcastReceiver);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // User chose not to enable Bluetooth.
+        if (requestCode == REQUEST_ENABLE_BT && resultCode == MainActivity.RESULT_CANCELED) {
+            finish();
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
+        // fire an intent to display a dialog asking the user to grant permission to enable it.
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+    }
+
+
     public void OnClick(View v) {
         switch (v.getId()) {
 
@@ -600,8 +623,8 @@ public class MainActivity extends ActionBarActivity {
      * Creates dialog, where user chooses what procedure to run
      */
     public void alertSingleChooseStatus() {
-        int variant = 0;
-        String procedures[] = {""};
+        int variant;
+        String procedures[];
         int defaultSelection = 0;
 
         switch (ConnectionService.STATUS) {

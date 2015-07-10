@@ -56,7 +56,7 @@
     <string name="title_service_start">Старт</string>
     <string name="title_service_stop">Стоп</string>
     <string name="title_set_defaults">Сбросить настройки</string>
-    <string name="title_status_select">Выбрать статус</string>
+    <string name="title_status_select">Выбрать процедуру</string>
     <string name="value_sorbtime_hours">ч.</string>
     <string name="title_click_to_open">Нажмите, чтобы открыть</string>
     <string name="title_foreground_service">Фоновый сервис</string>

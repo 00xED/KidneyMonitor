@@ -69,7 +69,7 @@
     <string name="title_log_autoscroll">Autoscroll</string>
 
     <string name="title_foreground_service">Foreground service</string>
-    <string name="title_status_select">Select status</string>
+    <string name="title_status_select">Select procedure</string>
     <string name="title_cancel">Cancel</string>
     <string name="last_connected">Last connected: </string>
     <string name="last_connected_unknown">Last connected: unknown</string>

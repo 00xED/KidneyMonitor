@@ -322,31 +322,39 @@ public class ConnectionService extends Service {
                     lw.appendLog(logTag, "got command STATUS and " + currentArg);
                     switch (currentArg) {
                         case bSTATUS_FILLING: {
-                            lw.appendLog(logTag, "setting STATUS to FILLING", true);
+                            lw.appendLog(logTag, "setting STATUS to FILLING, previous is "+PREV_STATUS, true);
+                            if(!STATUS.equals(STATUS_FILLING) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not FILLING and not UNKNOWN
+                                PREV_STATUS = STATUS;
 
                             STATUS = "0";
                             break;
                         }
                         case bSTATUS_DIALYSIS: {
-                            lw.appendLog(logTag, "setting STATUS to DIALYSIS", true);
+                            lw.appendLog(logTag, "setting STATUS to DIALYSIS, previous is "+PREV_STATUS, true);
+                            if(!STATUS.equals(STATUS_DIALYSIS) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not DIALYSIS and not UNKNOWN
+                                PREV_STATUS = STATUS;
 
                             STATUS = "1";
                             break;
                         }
                         case bSTATUS_SHUTDOWN: {
-                            lw.appendLog(logTag, "setting STATUS to SHUTDOWN", true);
+                            lw.appendLog(logTag, "setting STATUS to SHUTDOWN, previous is "+PREV_STATUS, true);
+                            if(!STATUS.equals(STATUS_SHUTDOWN) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not SHUTDOWN and not UNKNOWN
+                                PREV_STATUS = STATUS;
 
                             STATUS = "2";
                             break;
                         }
                         case bSTATUS_DISINFECTION: {
-                            lw.appendLog(logTag, "setting STATUS to DISINFECTION", true);
+                            lw.appendLog(logTag, "setting STATUS to DISINFECTION, previous is "+PREV_STATUS, true);
+                            if(!STATUS.equals(STATUS_DISINFECTION) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not DISINFECTION and not UNKNOWN
+                                PREV_STATUS = STATUS;
 
                             STATUS = "3";
                             break;
                         }
                         case bSTATUS_READY: {
-                            lw.appendLog(logTag, "setting STATUS to READY", true);
+                            lw.appendLog(logTag, "setting STATUS to READY, previous is "+PREV_STATUS, true);
                             if(!STATUS.equals(STATUS_READY) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not READY and not UNKNOWN
                                 PREV_STATUS = STATUS;
 
@@ -354,13 +362,15 @@ public class ConnectionService extends Service {
                             break;
                         }
                         case bSTATUS_FLUSH: {
-                            lw.appendLog(logTag, "setting STATUS to FLUSH", true);
+                            lw.appendLog(logTag, "setting STATUS to FLUSH, previous is "+PREV_STATUS, true);
+                            if(!STATUS.equals(STATUS_FLUSH) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not FLUSH and not UNKNOWN
+                                PREV_STATUS = STATUS;
 
                             STATUS = "5";
                             break;
                         }
                         default: {
-                            lw.appendLog(logTag, "setting STATUS to UNKNOWN", true);
+                            lw.appendLog(logTag, "setting STATUS to UNKNOWN, previous is "+PREV_STATUS, true);
 
                             STATUS = "-1";
                             break;

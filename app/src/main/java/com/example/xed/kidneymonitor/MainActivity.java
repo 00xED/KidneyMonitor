@@ -58,17 +58,12 @@ public class MainActivity extends ActionBarActivity {
     private static final String logTag = "MainActivity";
     LogWriter lw = new LogWriter();
 
-    /**
-     * Parameters for loading preferences
-     */
-    private static final String SAVED_ADDRESS = "SAVED_ADDRESS";
-    private static final String APP_PREFERENCES = "KIDNEYMON_SETTINGS";
     private SharedPreferences sPref;
 
     public BluetoothAdapter mBluetoothAdapter = null;
 
     /**
-     * TextViews for main screen
+     * Views of main screen
      */
     private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected, tvCaptionStatus, tvCaptionProcedureParams;
     private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt, ivSorbtime;
@@ -114,12 +109,11 @@ public class MainActivity extends ActionBarActivity {
 
         trStatusRow = (TableRow) findViewById(R.id.tr_StatusRow);
 
-
         /**
          * Load preferences; If saved device address is default - open preferences to find device
          */
-        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-        if (!sPref.contains(SAVED_ADDRESS)) { //If address is default start PrefActivity
+        sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+        if (!sPref.contains(PrefActivity.SAVED_ADDRESS)) { //If address is default start PrefActivity
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
             Toast.makeText(this,
@@ -128,7 +122,6 @@ public class MainActivity extends ActionBarActivity {
         } else Toast.makeText(this,
                 getResources().getText(R.string.title_prefs_loaded).toString(),
                 Toast.LENGTH_SHORT).show();
-
 
         /**
          * Initialising Bluetooth adapter; If there's none - show toast and exit
@@ -168,12 +161,14 @@ public class MainActivity extends ActionBarActivity {
                                     ivState.setImageResource(R.drawable.ic_on);
                                     break;
                                 }
+
                                 case "1": {
                                     tvState.
                                             setText(getResources().getText(R.string.value_state_off).toString());
                                     ivState.setImageResource(R.drawable.ic_off);
                                     break;
                                 }
+
                                 default: {
                                     tvState.
                                             setText(getResources().getText(R.string.value_state_unknown).toString());
@@ -183,6 +178,7 @@ public class MainActivity extends ActionBarActivity {
                             }
                             break;
                         }
+
                         case TASK_SET_STATUS: {
                             switch (arg) {
                                 case "0": {
@@ -194,6 +190,7 @@ public class MainActivity extends ActionBarActivity {
                                     btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                     break;
                                 }
+
                                 case "1": {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_dialysis).toString());
@@ -203,6 +200,7 @@ public class MainActivity extends ActionBarActivity {
                                     btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                     break;
                                 }
+
                                 case "2": {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_shutdown).toString());
@@ -212,6 +210,7 @@ public class MainActivity extends ActionBarActivity {
                                     btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                     break;
                                 }
+
                                 case "3": {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_disinfection).toString());
@@ -221,6 +220,7 @@ public class MainActivity extends ActionBarActivity {
                                     btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                     break;
                                 }
+
                                 case "4": {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_ready).toString());
@@ -241,6 +241,7 @@ public class MainActivity extends ActionBarActivity {
                                     btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                     break;
                                 }
+
                                 default: {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_unknown).toString());
@@ -258,12 +259,14 @@ public class MainActivity extends ActionBarActivity {
                                     ivParams.setImageResource(R.drawable.ic_check_circle);
                                     break;
                                 }
+
                                 case "1": {
                                     tvParams.
                                             setText(getResources().getText(R.string.value_procedure_params_danger).toString());
                                     ivParams.setImageResource(R.drawable.ic_cross);
                                     break;
                                 }
+
                                 default: {
                                     tvParams.
                                             setText(getResources().getText(R.string.value_procedure_params_unknown).toString());
@@ -281,12 +284,14 @@ public class MainActivity extends ActionBarActivity {
                                     ivFunct.setImageResource(R.drawable.ic_check_circle);
                                     break;
                                 }
+
                                 case "1": {
                                     tvFunct.
                                             setText(getResources().getText(R.string.value_device_functioning_fault).toString());
                                     ivFunct.setImageResource(R.drawable.ic_cross);
                                     break;
                                 }
+
                                 default: {
                                     tvFunct.
                                             setText(getResources().getText(R.string.value_device_functioning_unknown).toString());
@@ -344,6 +349,7 @@ public class MainActivity extends ActionBarActivity {
                             }
                             break;
                         }
+
                         case TASK_SET_LASTCONNECTED: {
                             if (!arg.equals("-1")) {
                                 Calendar c = Calendar.getInstance();
@@ -374,8 +380,6 @@ public class MainActivity extends ActionBarActivity {
     public void onStart() {
         super.onStart();
         lw.appendLog(logTag, "+++ ON START +++");
-
-
     }
 
     @Override
@@ -398,15 +402,13 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
         // fire an intent to display a dialog asking the user to grant permission to enable it.
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
     }
-
 
     public void OnClick(View v) {
         switch (v.getId()) {
@@ -427,7 +429,7 @@ public class MainActivity extends ActionBarActivity {
 
             case R.id.bt_State://Start log activity
             {
-                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
                 if (sPref.getBoolean(PrefActivity.TESTMODE, false))
                     alertSingleChooseStatusTest();
                 else
@@ -437,117 +439,20 @@ public class MainActivity extends ActionBarActivity {
 
             case R.id.bt_Pause:// pause current procedure
             {
-                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
                 if (sPref.getBoolean(PrefActivity.TESTMODE, false))
-                {
-                    final Context context = MainActivity.this;
-                    AlertDialog.Builder ad = new AlertDialog.Builder(context);
-                    if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
-                        ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
-                        ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
-                    } else {
-                        ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
-                        ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
-                    }
-                    ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
-                                sendBroadcast(intent);
-                            }
-                });
-                    ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-
-                        }
-                    });
-                    ad.setCancelable(true);
-                    ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        public void onCancel(DialogInterface dialog) {
-
-                        }
-                    });
-                    ad.show();
-                }
+                    PauseConfirmationTest();
                 else {
                     if (ConnectionService.STATUS.equals("-1"))
-                        break;
-                    final Context context = MainActivity.this;
-                    AlertDialog.Builder ad = new AlertDialog.Builder(context);
-                    if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
-                        ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
-                        ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
-                    } else {
-                        ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
-                        ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
-                    }
-
-                    ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-                            if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
-
-                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
-                                sendBroadcast(intent);
-                            } else {
-                                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                                switch (ConnectionService.PREV_STATUS) {
-                                    case ConnectionService.STATUS_DIALYSIS: {
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
-                                        sendBroadcast(intent);
-                                        break;
-                                    }
-                                    case ConnectionService.STATUS_DISINFECTION: {
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
-                                        sendBroadcast(intent);
-                                        break;
-                                    }
-                                    case ConnectionService.STATUS_FILLING: {
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
-                                        sendBroadcast(intent);
-                                        break;
-                                    }
-                                    case ConnectionService.STATUS_FLUSH: {
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
-                                        sendBroadcast(intent);
-                                        break;
-                                    }
-                                    case ConnectionService.STATUS_SHUTDOWN: {
-                                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
-                                        sendBroadcast(intent);
-                                        break;
-                                    }
-
-                                    default:
-                                        break;
-                                }
-
-                            }
-                        }
-                    });
-                    ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-
-                        }
-                    });
-                    ad.setCancelable(true);
-                    ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        public void onCancel(DialogInterface dialog) {
-
-                        }
-                    });
-                    ad.show();
+                            break;
+                    else
+                        PauseConfirmation();
                 }
                 break;
             }
 
             case R.id.tv_CaptionStatus: {
-                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
                 if (sPref.getBoolean(PrefActivity.TESTMODE, false))
                     alertSingleChooseStatusTest();
                 else
@@ -556,7 +461,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
             case R.id.iv_Status: {
-                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
                 if (sPref.getBoolean(PrefActivity.TESTMODE, false))
                     alertSingleChooseStatusTest();
                 else
@@ -565,7 +470,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
             case R.id.tv_ValueStatus: {
-                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
                 if (sPref.getBoolean(PrefActivity.TESTMODE, false))
                     alertSingleChooseStatusTest();
                 else
@@ -574,7 +479,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
             case R.id.tr_StatusRow: {
-                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Load preferences
+                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
                 if (sPref.getBoolean(PrefActivity.TESTMODE, false))
                     alertSingleChooseStatusTest();
                 else
@@ -607,7 +512,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
             case R.id.iv_TimerReset: {
-                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
                 ed.remove(PrefActivity.TIME_REMAINING);
                 ed.remove(PrefActivity.LAST_TICK);
@@ -617,6 +522,110 @@ public class MainActivity extends ActionBarActivity {
             default:
                 break;
         }
+    }
+
+    void PauseConfirmationTest(){
+        final Context context = MainActivity.this;
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
+            ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
+            ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
+        } else {
+            ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
+            ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
+        }
+        ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                sendBroadcast(intent);
+            }
+        });
+        ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        ad.show();
+    }
+
+    void PauseConfirmation(){
+        final Context context = MainActivity.this;
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
+            ad.setTitle(getResources().getText(R.string.stop_confirmation).toString());
+            ad.setMessage(getResources().getText(R.string.stop_confirmation).toString());
+        } else {
+            ad.setTitle(getResources().getText(R.string.resume_confirmation).toString());
+            ad.setMessage(getResources().getText(R.string.resume_confirmation).toString());
+        }
+
+        ad.setPositiveButton(getResources().getText(R.string.yes).toString(), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                if (!ConnectionService.STATUS.equals(ConnectionService.STATUS_READY)) {
+
+                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                    intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_PAUSE);
+                    sendBroadcast(intent);
+                } else {
+                    Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
+                    switch (ConnectionService.PREV_STATUS) {
+                        case ConnectionService.STATUS_DIALYSIS: {
+                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
+                            sendBroadcast(intent);
+                            break;
+                        }
+                        case ConnectionService.STATUS_DISINFECTION: {
+                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
+                            sendBroadcast(intent);
+                            break;
+                        }
+                        case ConnectionService.STATUS_FILLING: {
+                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
+                            sendBroadcast(intent);
+                            break;
+                        }
+                        case ConnectionService.STATUS_FLUSH: {
+                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
+                            sendBroadcast(intent);
+                            break;
+                        }
+                        case ConnectionService.STATUS_SHUTDOWN: {
+                            intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
+                            intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
+                            sendBroadcast(intent);
+                            break;
+                        }
+
+                        default:
+                            break;
+                    }
+
+                }
+            }
+        });
+        ad.setNegativeButton(getResources().getText(R.string.no).toString(), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        ad.show();
     }
 
     /**

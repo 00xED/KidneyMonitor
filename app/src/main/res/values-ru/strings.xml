@@ -133,5 +133,7 @@
     <string name="title_test_mode">Тестовый режим</string>
     <string name="stop_confirmation">Остановить процедуру?</string>
     <string name="resume_confirmation">Возобновить процедуру?</string>
+    <string name="ok">OK</string>
+    <string name="notif_restart">Необходим перезапуск приложения, чтобы изменения вступили в силу</string>
 
 </resources>

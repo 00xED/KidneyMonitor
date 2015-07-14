@@ -135,6 +135,8 @@
     </string>
 
     <string name="title_settings_ok">Device settings are OK</string>
+    <string name="ok">OK</string>
+    <string name="notif_restart">Restart needed to take effect</string>
 
     <string name="mlm">\ ml/min.</string>
     <string name="l">\ l</string>

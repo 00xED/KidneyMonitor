@@ -1,5 +1,7 @@
 package com.example.xed.kidneymonitor;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -8,7 +10,7 @@ import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class PrefActivity extends ActionBarActivity {
     public static final String TESTMODE = "TESTMODE";
     public static final String TIME_REMAINING = "TIME_REMAINING";
     public static final String LAST_TICK = "LAST_TICK";
+    public static final String AUTOCONNECT = "AUTOCONNECT";
 
     public static String CHOSEN_ADDRESS = "00:00:00:00:00:00";
     public static String CHOSEN_NAME = "NONE";
@@ -49,7 +52,7 @@ public class PrefActivity extends ActionBarActivity {
     private Button btStopService;
 
     private TextView tvCurrentDeviceName, tvCurrentDeviceAddress;
-    private CheckBox cbForegroundService, cbVibrate, cbSound, cbTestMode;
+    private Switch swForegroundService, swVibrate, swSound, swTestMode, swAutoconnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,29 +76,36 @@ public class PrefActivity extends ActionBarActivity {
         /**
          * Setting checkboxes states
          */
-            cbForegroundService = (CheckBox)findViewById(R.id.cb_ForegroundService);
+        swForegroundService = (Switch)findViewById(R.id.sw_ForegroundService);
             if(sPref.getBoolean(IS_FOREGROUND, false))
-                cbForegroundService.setChecked(true);
+                swForegroundService.setChecked(true);
             else
-                cbForegroundService.setChecked(false);
+                swForegroundService.setChecked(false);
 
-            cbVibrate = (CheckBox)findViewById(R.id.cb_Vibtation);
+
+            swVibrate = (Switch)findViewById(R.id.sw_Vibration);
             if(sPref.getBoolean(VIBRATION, false))
-                cbVibrate.setChecked(true);
+                swVibrate.setChecked(true);
             else
-                cbVibrate.setChecked(false);
+                swVibrate.setChecked(false);
 
-            cbSound = (CheckBox)findViewById(R.id.cb_Sound);
+            swSound = (Switch)findViewById(R.id.sw_Sound);
             if(sPref.getBoolean(SOUND, false))
-                cbSound.setChecked(true);
+                swSound.setChecked(true);
             else
-                cbSound.setChecked(false);
+                swSound.setChecked(false);
 
-            cbTestMode = (CheckBox)findViewById(R.id.cb_TestMode);
+            swTestMode = (Switch)findViewById(R.id.sw_TestMode);
             if(sPref.getBoolean(TESTMODE, false))
-                cbTestMode.setChecked(true);
+                swTestMode.setChecked(true);
             else
-                cbTestMode.setChecked(false);
+                swTestMode.setChecked(false);
+
+            swAutoconnect = (Switch)findViewById(R.id.sw_Autoconnect);
+            if(sPref.getBoolean(AUTOCONNECT, false))
+                swAutoconnect.setChecked(true);
+            else
+                swAutoconnect.setChecked(false);
 
         btStopService = (Button) findViewById(R.id.bt_StopService);
         if(ConnectionService.isServiceRunning)
@@ -184,27 +194,44 @@ public class PrefActivity extends ActionBarActivity {
                 } else {
                     lw.appendLog(logTag, "Debug log file NOT deleted");
                 }
+
+                Intent intent = getIntent();
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
             }
 
-            case R.id.cb_ForegroundService://Save setting for foreground service
+            case R.id.sw_ForegroundService://Save setting for foreground service
             {
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 Editor ed = sPref.edit(); //Setting for preference editing
-                if(cbForegroundService.isChecked())
+                if(swForegroundService.isChecked())
                     ed.putBoolean(IS_FOREGROUND, true);
                 else
                     ed.putBoolean(IS_FOREGROUND, false);
                 ed.commit();
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(PrefActivity.this);
+                builder.setMessage(getResources().getText(R.string.notif_restart))
+                        .setCancelable(false)
+                        .setNegativeButton(getResources().getText(R.string.ok),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
                 break;
             }
 
-            case R.id.cb_Vibtation://Save setting for vibration on notification
+            case R.id.sw_Vibration://Save setting for vibration on notification
             {
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 Editor ed = sPref.edit(); //Setting for preference editing
-                if(cbVibrate.isChecked())
+                if(swVibrate.isChecked())
                     ed.putBoolean(VIBRATION, true);
                 else
                     ed.putBoolean(VIBRATION, false);
@@ -212,11 +239,11 @@ public class PrefActivity extends ActionBarActivity {
                 break;
             }
 
-            case R.id.cb_Sound://Save setting for sound on notification
+            case R.id.sw_Sound://Save setting for sound on notification
             {
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 Editor ed = sPref.edit(); //Setting for preference editing
-                if(cbSound.isChecked())
+                if(swSound.isChecked())
                     ed.putBoolean(SOUND, true);
                 else
                     ed.putBoolean(SOUND, false);
@@ -224,14 +251,26 @@ public class PrefActivity extends ActionBarActivity {
                 break;
             }
 
-            case R.id.cb_TestMode:
+            case R.id.sw_TestMode:
             {
                 sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                 Editor ed = sPref.edit(); //Setting for preference editing
-                if(cbTestMode.isChecked())
+                if(swTestMode.isChecked())
                     ed.putBoolean(TESTMODE, true);
                 else
                     ed.putBoolean(TESTMODE, false);
+                ed.commit();
+                break;
+            }
+
+            case R.id.sw_Autoconnect:
+            {
+                sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+                Editor ed = sPref.edit(); //Setting for preference editing
+                if(swAutoconnect.isChecked())
+                    ed.putBoolean(AUTOCONNECT, true);
+                else
+                    ed.putBoolean(AUTOCONNECT, false);
                 ed.commit();
                 break;
             }

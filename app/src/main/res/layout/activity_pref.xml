@@ -1,207 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.xed.kidneymonitor.PrefActivity">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/caption_current_device"
-        android:id="@+id/tv_CaptionCurrentDevice"
-        android:layout_below="@+id/space"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/scrollView3"
+        android:layout_margin="5dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/value_current_device_default_address"
-        android:id="@+id/tv_ValueCurrentDeviceAddress"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/tv_ValueCurrentDeviceName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/value_current_device_none"
-        android:id="@+id/tv_ValueCurrentDeviceName"
-        android:layout_gravity="center_vertical"
-        android:layout_below="@+id/tv_CaptionCurrentDevice"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/LinearLayout1">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_scan"
-        android:id="@+id/bt_Scan"
-        android:onClick="OnClick"
-        android:layout_alignTop="@+id/space2"
-        android:layout_toRightOf="@+id/space2"
-        android:layout_alignBottom="@+id/space2"
-        android:layout_marginLeft="30dp" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/button_settings"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/caption_current_device"
+                        android:id="@+id/tv_CaptionCurrentDevice" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/abc_btn_check_to_on_mtrl_015" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/value_current_device_none"
+                        android:id="@+id/tv_ValueCurrentDeviceName"
+                        android:layout_gravity="center_vertical" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/space" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/value_current_device_default_address"
+                        android:id="@+id/tv_ValueCurrentDeviceAddress" />
+                </LinearLayout>
 
-    <Space
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/tv_ValueCurrentDeviceAddress"
-        android:layout_alignTop="@+id/tv_CaptionCurrentDevice"
-        android:layout_toRightOf="@+id/tv_ValueCurrentDeviceAddress"
-        android:layout_toEndOf="@+id/tv_ValueCurrentDeviceAddress"
-        android:id="@+id/space2" />
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/button_scan"
+                    android:id="@+id/bt_Scan"
+                    android:onClick="OnClick"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"/>
+            </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@+id/tv_ValueCurrentDeviceAddress"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/space3" />
+            <Space
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:id="@+id/space2"
+                android:layout_below="@+id/LinearLayout1" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_set_defaults"
-        android:id="@+id/bt_SetDefaults"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="OnClick" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/space2">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_service_stop"
-        android:id="@+id/bt_StopService"
-        android:onClick="OnClick"
-        android:layout_alignTop="@+id/cb_ForegroundService"
-        android:layout_toRightOf="@+id/space2"
-        android:layout_marginLeft="30dp"
-        android:layout_alignRight="@+id/bt_Scan"
-        android:layout_alignEnd="@+id/bt_Scan" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/title_service_options"
+                    android:id="@+id/textView40" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_foreground_service"
-        android:id="@+id/cb_ForegroundService"
-        android:onClick="OnClick"
-        android:layout_below="@+id/space3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+                <Switch
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="@string/title_foreground_service"
+                    android:id="@+id/sw_ForegroundService"
+                    android:checked="false"
+                    android:onClick="OnClick" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:id="@+id/space4"
-        android:layout_below="@+id/bt_StopService"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/title_choose_device"
-        android:id="@+id/textView"
-        android:layout_above="@+id/tv_CaptionCurrentDevice"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+                <Switch
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_connect_auto"
+                    android:id="@+id/sw_Autoconnect"
+                    android:checked="false"
+                    android:onClick="OnClick" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/title_service_options"
-        android:id="@+id/textView3"
-        android:layout_above="@+id/cb_ForegroundService"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/title_notification_options"
-        android:id="@+id/textView4"
-        android:layout_alignTop="@+id/space4"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3" />
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_service_stop"
+                    android:id="@+id/bt_StopService"
+                    android:onClick="OnClick" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_vibration"
-        android:id="@+id/cb_Vibtation"
-        android:layout_below="@+id/space4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="OnClick" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_sound"
-        android:id="@+id/cb_Sound"
-        android:layout_below="@+id/space4"
-        android:layout_toRightOf="@+id/cb_Vibtation"
-        android:layout_toEndOf="@+id/cb_Vibtation"
-        android:onClick="OnClick" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/title_notification_options"
+                    android:id="@+id/textView45" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/title_test_mode"
-        android:id="@+id/textView26"
-        android:layout_below="@+id/cb_Vibtation"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+                <Switch
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_sound"
+                    android:id="@+id/sw_Sound"
+                    android:checked="false"
+                    android:onClick="OnClick" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_test_mode"
-        android:id="@+id/cb_TestMode"
-        android:onClick="OnClick"
-        android:layout_below="@+id/textView26"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp" />
+
+                <Switch
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_vibration"
+                    android:id="@+id/sw_Vibration"
+                    android:checked="false"
+                    android:onClick="OnClick" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/title_test_mode"
+                    android:id="@+id/textView46" />
+
+                <Switch
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_test_mode"
+                    android:id="@+id/sw_TestMode"
+                    android:checked="false"
+                    android:onClick="OnClick" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_set_defaults"
+                    android:id="@+id/bt_SetDefaults"
+                    android:onClick="OnClick" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

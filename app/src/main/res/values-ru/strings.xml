@@ -135,5 +135,15 @@
     <string name="resume_confirmation">Возобновить процедуру?</string>
     <string name="ok">OK</string>
     <string name="notif_restart">Необходим перезапуск приложения, чтобы изменения вступили в силу</string>
+    <string name="dialysis_conductivity">ДП\u00A0</string>
+    <string name="dialysis_temperature">ДТ\u00A0</string>
+    <string name="dialysis_pump_1">ДН1\u00A0</string>
+    <string name="dialysis_pump_2">ДН2\u00A0</string>
+    <string name="dialysis_pressure_1">ДДД1\u00A0</string>
+    <string name="dialysis_pressure_2">ДДД2\u00A0</string>
+    <string name="peristaltic_pressure">ДДП\u00A0</string>
+    <string name="peristaltic_pump">ПН\u00A0</string>
+    <string name="ultrafiltrate">УФ\u00A0</string>
+    <string name="units">\ единиц</string>
 
 </resources>

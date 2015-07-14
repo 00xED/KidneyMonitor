@@ -14,10 +14,10 @@
 
         <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
+            android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <TableLayout
@@ -48,8 +48,8 @@
                         android:indeterminate="false" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="2" />
 
                     <TextView
@@ -90,8 +90,8 @@
                         android:indeterminate="false" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="2" />
 
                     <TextView
@@ -132,8 +132,8 @@
                         android:indeterminate="false" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="2" />
 
                     <TextView
@@ -174,8 +174,8 @@
                         android:indeterminate="false" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="2" />
 
                     <TextView
@@ -248,8 +248,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -313,8 +313,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -378,8 +378,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -443,8 +443,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -528,8 +528,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -595,8 +595,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -662,8 +662,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -728,8 +728,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView
@@ -794,8 +794,8 @@
                         android:layout_column="3" />
 
                     <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_column="4" />
 
                     <TextView

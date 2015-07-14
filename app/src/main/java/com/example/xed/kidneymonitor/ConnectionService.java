@@ -38,6 +38,7 @@ import java.nio.ByteBuffer;
 public class ConnectionService extends Service {
 
     public static boolean isServiceRunning = false;
+    SharedPreferences sPref;
 
     public final static String STATUS_FILLING = "0";
     public final static String STATUS_DIALYSIS = "1";
@@ -119,8 +120,6 @@ public class ConnectionService extends Service {
 
     // Handler that sends messages to MainActivity every one second
     Handler RefreshHandler = new Handler();
-    // Handler that sends heartbeat messages
-    Handler HeartbeatHandler = new Handler();
 
     private StringBuffer mOutStringBuffer;
     private BluetoothChatService mChatService = null;
@@ -241,7 +240,7 @@ public class ConnectionService extends Service {
                     switch (msg.arg1) {
 
                         case BluetoothChatService.STATE_CONNECTED: {
-                            lw.appendLog(logTag, "Connected to: " + mConnectedDeviceName, true);
+                            lw.appendLog(logTag, "CONNECT: " + mConnectedDeviceName, true);
                             sendStringMessage("CONNECT \r\n");
                             break;
                         }
@@ -264,7 +263,7 @@ public class ConnectionService extends Service {
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    lw.appendLog(logTag, "WRITING:  " + BytestoHexString(writeBuf));
+                    lw.appendLog(logTag, "WRITING:  " + BytestoHexString(writeBuf), true);
                     break;
 
                 case MESSAGE_READ:
@@ -297,7 +296,8 @@ public class ConnectionService extends Service {
     }
 
     /**
-     * Does parsing and executing of received commands
+     *Does parsing and executing of received commands
+     * @param inp packet as byte array
      */
     void parseInBytes(byte[] inp) {
         int end = arrayIndexOf(inp, CM_SYNC_E);//index of last byte
@@ -337,7 +337,8 @@ public class ConnectionService extends Service {
                                 if (!STATUS.equals(STATUS_FILLING) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not FILLING and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
-                                STATUS = "0";
+                                STATUS = STATUS_FILLING;
+                                sendMessageBytes(bHEARTBEAT);
                                 break;
                             }
 
@@ -346,7 +347,7 @@ public class ConnectionService extends Service {
                                 if (!STATUS.equals(STATUS_DIALYSIS) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not DIALYSIS and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
-                                STATUS = "1";
+                                STATUS = STATUS_DIALYSIS;
                                 break;
                             }
 
@@ -355,7 +356,7 @@ public class ConnectionService extends Service {
                                 if (!STATUS.equals(STATUS_SHUTDOWN) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not SHUTDOWN and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
-                                STATUS = "2";
+                                STATUS = STATUS_SHUTDOWN;
                                 break;
                             }
 
@@ -364,7 +365,7 @@ public class ConnectionService extends Service {
                                 if (!STATUS.equals(STATUS_DISINFECTION) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not DISINFECTION and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
-                                STATUS = "3";
+                                STATUS = STATUS_DISINFECTION;
                                 break;
                             }
 
@@ -373,7 +374,7 @@ public class ConnectionService extends Service {
                                 if (!STATUS.equals(STATUS_READY) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not READY and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
-                                STATUS = "4";
+                                STATUS = STATUS_READY;
                                 break;
                             }
 
@@ -382,14 +383,14 @@ public class ConnectionService extends Service {
                                 if (!STATUS.equals(STATUS_FLUSH) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not FLUSH and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
-                                STATUS = "5";
+                                STATUS = STATUS_FLUSH;
                                 break;
                             }
 
                             default: {
                                 lw.appendLog(logTag, "setting STATUS to UNKNOWN, previous is " + PREV_STATUS, true);
 
-                                STATUS = "-1";
+                                STATUS = STATUS_UNKNOWN;
                                 break;
                             }
                         }
@@ -550,114 +551,72 @@ public class ConnectionService extends Service {
                     }
 
                     case PE_PRESS1: {//receiving error
-                        sendNotification("ERROR PE_PRESS1");
-                        lw.appendLog(logTag, "ERROR PE_PRESS1", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_PRESS1");
                         break;
                     }
 
                     case PE_PRESS2: {//receiving error
-                        sendNotification("ERROR PE_PRESS2");
-                        lw.appendLog(logTag, "ERROR PE_PRESS2", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_PRESS2");
                         break;
                     }
 
                     case PE_PRESS3: {//receiving error
-                        sendNotification("ERROR PE_PRESS3");
-                        lw.appendLog(logTag, "ERROR PE_PRESS3", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_PRESS3");
                         break;
                     }
 
                     case PE_TEMP: {//receiving error
-                        sendNotification("ERROR PE_TEMP");
-                        lw.appendLog(logTag, "ERROR PE_TEMP", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_TEMP");
                         break;
                     }
 
                     case PE_ELECTRO: {//receiving error
-                        sendNotification("ERROR PE_ELECTRO");
-                        lw.appendLog(logTag, "ERROR PE_ELECTRO", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_ELECTRO");
                         break;
                     }
 
                     case PE_EDS1: {//receiving error
-                        sendNotification("ERROR PE_EDS1");
-                        lw.appendLog(logTag, "ERROR PE_EDS1", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_EDS1");
                         break;
                     }
 
                     case PE_EDS2: {//receiving error
-                        sendNotification("ERROR PE_EDS2");
-                        lw.appendLog(logTag, "ERROR PE_EDS2", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_EDS2");
                         break;
                     }
 
                     case PE_EDS3: {//receiving error
-                        sendNotification("ERROR PE_EDS3");
-                        lw.appendLog(logTag, "ERROR PE_EDS3", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_EDS3");
                         break;
                     }
 
                     case PE_EDS4: {//receiving error
-                        sendNotification("ERROR PE_EDS4");
-                        lw.appendLog(logTag, "ERROR PE_EDS4", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_EDS4");
                         break;
                     }
 
                     case PE_BATT: {//receiving error
-                        sendNotification("ERROR PE_BATT");
-                        lw.appendLog(logTag, "ERROR PE_BATT", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_BATT");
                         break;
                     }
 
                     case PE_PUMP1: {//receiving error
-                        sendNotification("ERROR PE_PUMP1");
-                        lw.appendLog(logTag, "ERROR PE_PUMP1", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_PUMP1");
                         break;
                     }
 
                     case PE_PUMP2: {//receiving error
-                        sendNotification("ERROR PE_PUMP2");
-                        lw.appendLog(logTag, "ERROR PE_PUMP2", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_PUMP2");
                         break;
                     }
 
                     case PE_PUMP3: {//receiving error
-                        sendNotification("ERROR PE_PUMP3");
-                        lw.appendLog(logTag, "ERROR PE_PUMP3", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_PUMP3");
                         break;
                     }
 
                     case PE_ERROR: {//receiving error
-                        sendNotification("ERROR PE_ERROR");
-                        lw.appendLog(logTag, "ERROR PE_ERROR", true);
-                        FUNCT = "1";
-                        PARAMS = "1";
+                        processError("ERROR PE_ERROR");
                         break;
                     }
 
@@ -717,13 +676,20 @@ public class ConnectionService extends Service {
                 }
 
 
-                if (!STATUS.equals("2"))//If status is not SHUTDOWN, then STATE is ON
+                if (!STATUS.equals(STATUS_SHUTDOWN))//If status is not SHUTDOWN, then STATE is ON
                     STATE = "0";
                 else {
                     STATE = "1";//Otherwise, STATE is OFF
                     lw.appendLog(logTag, "setting STATE to OFF", true);
                 }
             }
+    }
+
+    void processError(String msg){
+        sendNotification(msg);
+        lw.appendLog(logTag, msg, true);
+        FUNCT = "1";
+        PARAMS = "1";
     }
 
     /**
@@ -796,7 +762,6 @@ public class ConnectionService extends Service {
                 }
 
                 case TASK_DO_PAIRING: {
-                    SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences;
                     String address = sPref.getString(PrefActivity.SAVED_ADDRESS, "00:00:00:00:00:00");
                     if (!"00:00:00:00:00:00".equals(address)) {
                         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -903,16 +868,18 @@ public class ConnectionService extends Service {
             if ((System.currentTimeMillis() - LASTCONNECTED_MILLIS) > 10 * 1000)//if last command was received more than 30 seconds ago - reset all values
             {
                 STATE = "-1";
-                STATUS = "-1";
+                STATUS = STATUS_UNKNOWN;
                 PARAMS = "-1";
                 FUNCT = "-1";
                 BATT = "-1";
 
             }
 
-            /*if(mChatService.getState()==1 && STATUS.equals("-1"))//if waiting for connection - try to connect to saved device
+
+            if(mChatService.getState()==BluetoothChatService.STATE_LISTEN &&
+                    STATUS.equals(STATUS_UNKNOWN) &&
+                    sPref.getBoolean(PrefActivity.AUTOCONNECT, false))//if waiting for connection - try to connect to saved device
             {
-                SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences;
                 String address = sPref.getString(PrefActivity.SAVED_ADDRESS, "00:00:00:00:00:00");
                 if(!"00:00:00:00:00:00".equals(address)){
                     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -920,7 +887,7 @@ public class ConnectionService extends Service {
                     mChatService.connect(device, true);//securely connect to chosen device
                     //lw.appendLog(logTag, "Connecting to " + PrefActivity.CHOSEN_NAME+'@'+PrefActivity.CHOSEN_ADDRESS, true);
                 }
-            }*/
+            }
 
             intentParams.putExtra(ParamsActivity.PARAM_TASK, ParamsActivity.TASK_SET_DUFVOLUME1);
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DUFVOLUME1);
@@ -962,8 +929,7 @@ public class ConnectionService extends Service {
             intentParams.putExtra(ParamsActivity.PARAM_ARG, DCUR4);
             sendBroadcast(intentParams);
 
-            if (!STATE.equals("-1") && STATUS.equals(STATUS_DIALYSIS)) {
-                SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+            if (!STATE.equals(STATUS_UNKNOWN) && STATUS.equals(STATUS_DIALYSIS)) {
                 SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
                 long remaining_time = sPref.getLong(PrefActivity.TIME_REMAINING, 12 * 60 * 60 * 1000);
                 long tick = sPref.getLong(PrefActivity.LAST_TICK, System.currentTimeMillis());
@@ -979,23 +945,12 @@ public class ConnectionService extends Service {
         }
     };
 
-    /**
-     * Send heartbeat every 3 seconds
-     */
-    Runnable HeartbeatTimedTask = new Runnable() {
-        @Override
-        public void run() {
-            if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED)
-                sendMessageBytes(bHEARTBEAT);
-            HeartbeatHandler.postDelayed(HeartbeatTimedTask, 3000);//refresh after one second
-        }
-    };
 
     public void onCreate() {
         super.onCreate();
         Log.d(logTag, "onCreate");
         lw.appendLog(logTag, "onCreate");
-
+        sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences;
         if (mChatService == null) setupChat();
         if (mChatService != null) {
             // Only if the state is STATE_NONE, do we know that we haven't started already
@@ -1005,7 +960,6 @@ public class ConnectionService extends Service {
             }
         }
         RefreshHandler.post(timedTask);
-        HeartbeatHandler.post(HeartbeatTimedTask);
 
         readSettingsFromFile();
 
@@ -1044,7 +998,6 @@ public class ConnectionService extends Service {
         lw.appendLog(logTag, "onStartCommand");
         isServiceRunning = true;
 
-        SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
         if (sPref.getBoolean(PrefActivity.IS_FOREGROUND, false))
             startInForeground();
 
@@ -1264,7 +1217,6 @@ public class ConnectionService extends Service {
 
         notification.flags = notification.flags | Notification.FLAG_SHOW_LIGHTS;
 
-        SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
         if (sPref.getBoolean(PrefActivity.VIBRATION, false))
             notification.vibrate = new long[]{1000, 1000, 1000};
 

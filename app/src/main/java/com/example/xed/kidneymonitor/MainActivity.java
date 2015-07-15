@@ -363,6 +363,18 @@ public class MainActivity extends ActionBarActivity {
                         default:
                             break;
                     }
+                if(ConnectionService.STATUS.equals(ConnectionService.STATUS_UNKNOWN)){
+                    btPause.setEnabled(false);
+                    btState.setEnabled(false);
+                    trStatusRow.setEnabled(false);
+                    ivStatus.setEnabled(false);
+                }
+                else{
+                    btPause.setEnabled(true);
+                    btState.setEnabled(true);
+                    trStatusRow.setEnabled(true);
+                    ivStatus.setEnabled(true);
+                }
             }
         };
 
@@ -373,7 +385,6 @@ public class MainActivity extends ActionBarActivity {
         //If service is not running - start it
         if (!ConnectionService.isServiceRunning && (mBluetoothAdapter != null))
             startService(new Intent(this, ConnectionService.class));
-
     }
 
     @Override

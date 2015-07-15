@@ -543,7 +543,7 @@ public class BluetoothChatService extends Activity {
                         bytes=0;
                         buffer = new byte[128];
                     }
-                    else SystemClock.sleep(100);
+                    else SystemClock.sleep(50);
                 } catch (IOException e) {
                     lw.appendLog("Error reading", e.getMessage());
                     //e.printStackTrace();

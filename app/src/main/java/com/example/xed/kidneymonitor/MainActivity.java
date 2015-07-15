@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * button for pausing and starting procedure, buton to choose current procedure
  */
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_ENABLE_BT = 1;
 
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
     public final static int TASK_SET_PAUSE = 7;
     public final static int TASK_SET_SETTINGSOK = 8;
 
-    public int selectedProcedure = -1;
+    public static int selectedProcedure = -1;
 
     /**
      * Settings for BroadcastReceiver
@@ -52,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
     public final static String PARAM_TASK = "SetValues";
     public final static String PARAM_ARG = "arg";
     public final static String BROADCAST_ACTION = "SetValues";
-    private BroadcastReceiver broadcastReceiver;
+    private static BroadcastReceiver broadcastReceiver;
 
     //Initialisation of LogWriter
     private static final String logTag = "MainActivity";

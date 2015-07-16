@@ -291,13 +291,16 @@ public class ConnectionService extends Service {
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    lw.appendLog(logTag, "WRITING:  " + BytestoHexString(writeBuf));
+                    lw.appendLog(logTag, "WRITING:  " + BytestoHexString(writeBuf), true);
                     break;
 
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-                    Log.i(logTag, "READING:  " + BytestoHexString(readBuf));
-                    parseInBytes(readBuf);
+                    //Log.i(logTag, "READING:  " + BytestoHexString(readBuf));
+                    if (msg.arg1 > 0){
+                        lw.appendLog(logTag, "READING:  " + BytestoHexString(readBuf), true);
+                        parseInBytes(readBuf);
+                    }
                     break;
 
                 case MESSAGE_DEVICE_NAME:

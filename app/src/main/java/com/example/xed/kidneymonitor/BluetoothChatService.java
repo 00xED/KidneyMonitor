@@ -488,8 +488,31 @@ public class BluetoothChatService extends Activity {
             mmOutStream = tmpOut;
         }
 
+        public void run() {
+            byte[] buffer = new byte[256];  // buffer store for the stream
+            int bytes; // bytes returned from read()
 
-      /* public void run() {
+            // Keep listening to the InputStream until an exception occurs
+            while (true) {
+                try {
+                    // Read from the InputStream
+                    bytes = mmInStream.read(buffer);
+                    while(arrayIndexOf(buffer, (byte)0x55)!=-1 && arrayIndexOf(buffer, (byte)0xAA)!=-1 &&
+                            arrayIndexOf(buffer, (byte)0x55)<arrayIndexOf(buffer, (byte)0xAA)){
+                        int start = arrayIndexOf(buffer, (byte)0x55);
+                        int end = arrayIndexOf(buffer, (byte)0xAA)+1;
+                        byte[] send = Arrays.copyOfRange(buffer, start, end);
+                        mHandler.obtainMessage(MESSAGE_READ, bytes, -1, send).sendToTarget();
+                        Arrays.fill(buffer, start, end+1, (byte)0x00);
+                    }
+                    buffer = new byte[256];
+                } catch (IOException e) {
+                    break;
+                }
+            }
+        }
+
+       /*public void run() {
             int bytes; // bytes returned from read()
             int availableBytes;
             // Keep listening to the InputStream until an exception occurs
@@ -517,9 +540,9 @@ public class BluetoothChatService extends Activity {
                     break;
                 }
             }
-        }*/
+        }
 
-        public void run() {
+        /*public void run() {
             int bytes = 0; // bytes returned from read()
             int availableBytes;
             byte[] buffer = new byte[128];
@@ -543,7 +566,7 @@ public class BluetoothChatService extends Activity {
                         bytes=0;
                         buffer = new byte[128];
                     }
-                    else SystemClock.sleep(50);
+                    else SystemClock.sleep(100);
                 } catch (IOException e) {
                     lw.appendLog("Error reading", e.getMessage());
                     //e.printStackTrace();
@@ -554,7 +577,7 @@ public class BluetoothChatService extends Activity {
                     break;
                 }
             }
-        }
+        }*/
 
         int arrayIndexOf(byte[] inp, byte what){
             for(int i=0;i<inp.length;i++)

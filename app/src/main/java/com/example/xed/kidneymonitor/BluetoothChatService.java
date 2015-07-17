@@ -493,9 +493,10 @@ public class BluetoothChatService extends Activity {
             int bytes; // bytes returned from read()
 
             // Keep listening to the InputStream until an exception occurs
-            while (true) {
+            while (!stopThread) {
                 try {
                     // Read from the InputStream
+                    if (mmInStream.available() > 0) {
                     bytes = mmInStream.read(buffer);
                     while(arrayIndexOf(buffer, (byte)0x55)!=-1 && arrayIndexOf(buffer, (byte)0xAA)!=-1 &&
                             arrayIndexOf(buffer, (byte)0x55)<arrayIndexOf(buffer, (byte)0xAA)){
@@ -505,7 +506,10 @@ public class BluetoothChatService extends Activity {
                         mHandler.obtainMessage(MESSAGE_READ, bytes, -1, send).sendToTarget();
                         Arrays.fill(buffer, start, end+1, (byte)0x00);
                     }
-                    buffer = new byte[256];
+                        Arrays.fill(buffer, 0, buffer.length, (byte)0x00);
+                    }
+                    else
+                        SystemClock.sleep(5);
                 } catch (IOException e) {
                     break;
                 }

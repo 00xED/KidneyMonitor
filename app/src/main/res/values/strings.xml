@@ -90,7 +90,7 @@
     <string name="no">No</string>
 
     <string name="stop_confirmation">Stop procedure?</string>
-    <string name="resume_confirmation">Resume procedure?</string>
+    <string name="resume_confirmation">Resume procedure\u00A0</string>
 
     <string name="starting_filling">Starting to fill...</string>
 

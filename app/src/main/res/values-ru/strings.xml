@@ -132,7 +132,7 @@
     <string name="value_status_flush">Слив</string>
     <string name="title_test_mode">Тестовый режим</string>
     <string name="stop_confirmation">Остановить процедуру?</string>
-    <string name="resume_confirmation">Возобновить процедуру?</string>
+    <string name="resume_confirmation">Возобновить процедуру\u00A0</string>
     <string name="ok">OK</string>
     <string name="notif_restart">Необходим перезапуск приложения, чтобы изменения вступили в силу</string>
     <string name="dialysis_conductivity">ДП\u00A0</string>

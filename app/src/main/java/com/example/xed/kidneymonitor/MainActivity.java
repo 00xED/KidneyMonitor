@@ -500,26 +500,22 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case R.id.tv_CaptionProcedureParams: {
-                Intent intent = new Intent(this, ParamsActivity.class);
-                startActivity(intent);
+                StartParamsActivity();
                 break;
             }
 
             case R.id.tv_ValueProcedureParams: {
-                Intent intent = new Intent(this, ParamsActivity.class);
-                startActivity(intent);
+                StartParamsActivity();
                 break;
             }
 
             case R.id.iv_Params: {
-                Intent intent = new Intent(this, ParamsActivity.class);
-                startActivity(intent);
+                StartParamsActivity();
                 break;
             }
 
             case R.id.tr_ParamsRow: {
-                Intent intent = new Intent(this, ParamsActivity.class);
-                startActivity(intent);
+                StartParamsActivity();
                 break;
             }
 
@@ -531,9 +527,38 @@ public class MainActivity extends AppCompatActivity {
                 ed.commit();
             }
 
+            case R.id.tr_StateRow:{
+                enableAutoconnect();
+                break;
+            }
+
+            case R.id.tv_CaptionState:{
+                enableAutoconnect();
+            }
+
+            case R.id.iv_State:{
+                enableAutoconnect();
+            }
+
+            case R.id.tv_ValueState:{
+                enableAutoconnect();
+            }
+
             default:
                 break;
         }
+    }
+
+    void StartParamsActivity(){
+        Intent intent = new Intent(this, ParamsActivity.class);
+        startActivity(intent);
+    }
+
+    void enableAutoconnect(){
+        sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
+        SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
+        ed.putBoolean(PrefActivity.AUTOCONNECT, true);
+        ed.commit();
     }
 
     void PauseConfirmationTest(){

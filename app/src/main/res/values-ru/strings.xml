@@ -44,7 +44,7 @@
     <string name="error_connect_failed">Соединение не удалос</string>
     <string name="error_connect_lost">Соединение потеряно</string>
     <string name="last_connected">Последнее поключение:</string>
-    <string name="last_connected_unknown">Последнее подключение: неизвестно</string>
+    <string name="last_connected_unknown">Попробовать подключиться?</string>
     <string name="title_activity_log">Журнал</string>
     <string name="title_cancel">Отмена</string>
     <string name="title_clear_log">Очистить</string>

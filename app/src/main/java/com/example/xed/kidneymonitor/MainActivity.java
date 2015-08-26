@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         tvSorbtime = (TextView) findViewById(R.id.tv_ValueSorbentTime);
         tvBatt = (TextView) findViewById(R.id.tv_ValueBatteryCharge);
         tvLastConnected = (TextView) findViewById(R.id.tv_LastConnected);
+        tvLastConnected.setPaintFlags(tvLastConnected.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tvCaptionStatus = (TextView) findViewById(R.id.tv_CaptionStatus);
         tvCaptionProcedureParams = (TextView) findViewById(R.id.tv_CaptionProcedureParams);
 
@@ -306,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
                             long remaining_time = sPref.getLong(PrefActivity.TIME_REMAINING, -1);
 
-                            if (remaining_time == -1)//If received value is default then set to unknown
+                            if (remaining_time == -1 || !ConnectionService.STATE.equals(ConnectionService.STATE_ON))//If received value is default then set to unknown
                             {
                                 tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
                                 ivSorbtime.setImageResource(R.drawable.ic_time_grey);
@@ -353,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
 
                         case TASK_SET_LASTCONNECTED: {
                             if (!arg.equals("-1")) {
+                                tvLastConnected.setPaintFlags( tvLastConnected.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
                                 Calendar c = Calendar.getInstance();
                                 SimpleDateFormat sdf = new SimpleDateFormat("dd:MM HH:mm");
                                 String strDate = sdf.format(c.getTime());
@@ -544,6 +547,14 @@ public class MainActivity extends AppCompatActivity {
                 enableAutoconnect();
             }
 
+            case R.id.iv_State2:{
+                enableAutoconnect();
+            }
+
+            case R.id.tv_LastConnected:{
+                enableAutoconnect();
+            }
+
             default:
                 break;
         }
@@ -559,6 +570,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
         ed.putBoolean(PrefActivity.AUTOCONNECT, true);
         ed.commit();
+
     }
 
     void PauseConfirmationTest(){

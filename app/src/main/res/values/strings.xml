@@ -72,7 +72,7 @@
     <string name="title_status_select">Select procedure</string>
     <string name="title_cancel">Cancel</string>
     <string name="last_connected">Last connected: </string>
-    <string name="last_connected_unknown">Last connected: unknown</string>
+    <string name="last_connected_unknown">Try to connect?</string>
 
     <string name="title_click_to_open">Click to open</string>
 

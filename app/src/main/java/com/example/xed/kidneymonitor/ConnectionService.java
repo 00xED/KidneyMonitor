@@ -1138,8 +1138,8 @@ public class ConnectionService extends Service {
             final BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 lw.appendLog(logTag, "Lost connection, restarting...");
-                //mChatService.stop();
-                //mChatService.start();
+                mChatService.stop();
+                mChatService.start();
             }
         }
     };

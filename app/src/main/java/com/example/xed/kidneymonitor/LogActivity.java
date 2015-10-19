@@ -130,7 +130,7 @@ public class LogActivity extends ActionBarActivity {
         public StringBuilder readLog() {
             SharedPreferences sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
             File file;
-            if(sPref.getBoolean(DEBUG, false)) {
+            if(sPref.getBoolean(PrefActivity.TESTMODE, false)) {
                 //Get the text file
                 file = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor_debug.log");
             }

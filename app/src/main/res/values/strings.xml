@@ -169,4 +169,20 @@
     <string name="dialysis_conductivity">DC\u00A0</string>
     <string name="units">\ units</string>
 
+    <string name="connected_to">Connected to: </string>
+    <string name="batt_set">Battery level is </string>
+    <string name="starus_set">Current procedure: </string>
+    <string name="params_set">Procedure parameters is: </string>
+    <string name="funct_set">Device functioning: </string>
+
+    <string name="error_press">Pressure abnormal at sensor #</string>
+    <string name="error_temp">Temperature is abnormal</string>
+    <string name="error_electro">Electrolyzer is abnormal</string>
+    <string name="error_eds">Conductivity abnormal at sensor #</string>
+    <string name="error_batt">Battery error</string>
+    <string name="error_pump">Pump abnormal at sensor #</string>
+    <string name="error_unknown">Unknown error occurred</string>
+
+    <string name="user_switched_to">User switched to: </string>
+
 </resources>

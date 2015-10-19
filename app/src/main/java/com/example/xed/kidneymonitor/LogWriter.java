@@ -38,7 +38,7 @@ public class LogWriter extends Application {
         Log.i(tag, msg);
         msg = tag + "->" + msg;
 
-        /*File logFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor_debug.log");
+        File logFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor_debug.log");
 
         if (!logFile.exists()) {
             try {
@@ -58,7 +58,7 @@ public class LogWriter extends Application {
         } catch (IOException e) {
             Log.i("LogWriter", e.toString());
             e.printStackTrace();
-        }*/
+        }
 
     }
 
@@ -75,7 +75,7 @@ public class LogWriter extends Application {
             Log.i(tag, msg);
         msg = tag + "->" + msg;
 
-        /*File verboseLogFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor_debug.log");
+        File verboseLogFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor_debug.log");
 
         if (!verboseLogFile.exists()) {
             try {
@@ -95,7 +95,7 @@ public class LogWriter extends Application {
         } catch (IOException e) {
             Log.i("LogWriter", e.toString());
             e.printStackTrace();
-        }*/
+        }
 
         File logFile = new File(Environment.getExternalStorageDirectory(), "kidneymonitor/kidneymonitor.log");
 

@@ -145,5 +145,18 @@
     <string name="peristaltic_pump">ПН\u00A0</string>
     <string name="ultrafiltrate">УФ\u00A0</string>
     <string name="units">\ единиц</string>
+    <string name="batt_set">Уровень батареи:</string>
+    <string name="connected_to">Подключен к: </string>
+    <string name="error_batt">Ошибка батареи</string>
+    <string name="error_eds">Проводимость вне нормы на датчике №</string>
+    <string name="error_electro">Электролизёр вне нормы</string>
+    <string name="error_press">Давление вне нормы на датчике №</string>
+    <string name="error_pump">Насос вне нормы на датчике №</string>
+    <string name="error_temp">Температура вне нормы</string>
+    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="funct_set">Устройство функционирует: </string>
+    <string name="params_set">Параметры процедуры: </string>
+    <string name="starus_set">Текущая процедура: </string>
+    <string name="user_switched_to">Пользователь переключился на:</string>
 
 </resources>

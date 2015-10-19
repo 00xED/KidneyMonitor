@@ -265,7 +265,7 @@ public class ConnectionService extends Service {
                     switch (msg.arg1) {
 
                         case BluetoothChatService.STATE_CONNECTED: {
-                            lw.appendLog(logTag, "CONNECT: " + mConnectedDeviceName, true);
+                            lw.appendLog(logTag, getResources().getText(R.string.connected_to).toString() + mConnectedDeviceName, true);
                             sendStringMessage("CONNECT \r\n");
                             ConnectTryCount = 0;
                             break;
@@ -289,14 +289,14 @@ public class ConnectionService extends Service {
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    lw.appendLog(logTag, "WRITING:  " + BytestoHexString(writeBuf), true);
+                    lw.appendLog(logTag, "WRITING:  " + BytestoHexString(writeBuf));
                     break;
 
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     //Log.i(logTag, "READING:  " + BytestoHexString(readBuf));
                     if (msg.arg1 > 0){
-                        lw.appendLog(logTag, "READING:  " + BytestoHexString(readBuf), true);
+                        lw.appendLog(logTag, "READING:  " + BytestoHexString(readBuf));
                         parseInBytes(readBuf);
                     }
                     break;
@@ -352,7 +352,7 @@ public class ConnectionService extends Service {
                 switch (com1) {//executing first command
 
                     case bBATT: {//setting battery percentage
-                        lw.appendLog(logTag, "setting BATT to " + full_data_int, true);
+                        lw.appendLog(logTag, getResources().getText(R.string.batt_set).toString() + full_data_int + "%", true);
                         lw.appendLog(logTag, "setting battery to " + full_data_int + "%");
                         BATT = String.valueOf(full_data_int);
                         break;
@@ -363,7 +363,9 @@ public class ConnectionService extends Service {
                         sendMessageBytes(bHEARTBEAT);
                         switch (currentArg) {
                             case bSTATUS_FILLING: {
-                                lw.appendLog(logTag, "setting STATUS to FILLING, previous is " + PREV_STATUS, true);
+                                lw.appendLog(logTag, "setting STATUS to FILLING, previous is " + PREV_STATUS);
+                                lw.appendLog(logTag, getResources().getText(R.string.starus_set).toString() +
+                                                     getResources().getText(R.string.value_status_filling).toString(), true);
                                 if (!STATUS.equals(STATUS_FILLING) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not FILLING and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
@@ -372,7 +374,10 @@ public class ConnectionService extends Service {
                             }
 
                             case bSTATUS_DIALYSIS: {
-                                lw.appendLog(logTag, "setting STATUS to DIALYSIS, previous is " + PREV_STATUS, true);
+                                lw.appendLog(logTag, "setting STATUS to DIALYSIS, previous is " + PREV_STATUS);
+
+                                lw.appendLog(logTag, getResources().getText(R.string.starus_set).toString() +
+                                        getResources().getText(R.string.value_status_dialysis).toString(), true);
                                 if (!STATUS.equals(STATUS_DIALYSIS) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not DIALYSIS and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
@@ -381,7 +386,9 @@ public class ConnectionService extends Service {
                             }
 
                             case bSTATUS_SHUTDOWN: {
-                                lw.appendLog(logTag, "setting STATUS to SHUTDOWN, previous is " + PREV_STATUS, true);
+                                lw.appendLog(logTag, "setting STATUS to SHUTDOWN, previous is " + PREV_STATUS);
+                                lw.appendLog(logTag, getResources().getText(R.string.starus_set).toString() +
+                                        getResources().getText(R.string.value_status_shutdown).toString(), true);
                                 if (!STATUS.equals(STATUS_SHUTDOWN) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not SHUTDOWN and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
@@ -390,7 +397,9 @@ public class ConnectionService extends Service {
                             }
 
                             case bSTATUS_DISINFECTION: {
-                                lw.appendLog(logTag, "setting STATUS to DISINFECTION, previous is " + PREV_STATUS, true);
+                                lw.appendLog(logTag, "setting STATUS to DISINFECTION, previous is " + PREV_STATUS);
+                                lw.appendLog(logTag, getResources().getText(R.string.starus_set).toString() +
+                                        getResources().getText(R.string.value_status_disinfection).toString(), true);
                                 if (!STATUS.equals(STATUS_DISINFECTION) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not DISINFECTION and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
@@ -399,7 +408,9 @@ public class ConnectionService extends Service {
                             }
 
                             case bSTATUS_READY: {
-                                lw.appendLog(logTag, "setting STATUS to READY, previous is " + PREV_STATUS, true);
+                                lw.appendLog(logTag, "setting STATUS to READY, previous is " + PREV_STATUS);
+                                lw.appendLog(logTag, getResources().getText(R.string.starus_set).toString() +
+                                        getResources().getText(R.string.value_status_ready).toString(), true);
                                 if (!STATUS.equals(STATUS_READY) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not READY and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
@@ -408,7 +419,9 @@ public class ConnectionService extends Service {
                             }
 
                             case bSTATUS_FLUSH: {
-                                lw.appendLog(logTag, "setting STATUS to FLUSH, previous is " + PREV_STATUS, true);
+                                lw.appendLog(logTag, "setting STATUS to FLUSH, previous is " + PREV_STATUS);
+                                lw.appendLog(logTag, getResources().getText(R.string.starus_set).toString() +
+                                        getResources().getText(R.string.value_status_flush).toString(), true);
                                 if (!STATUS.equals(STATUS_FLUSH) && !STATUS.equals(STATUS_UNKNOWN))//if previous status is not FLUSH and not UNKNOWN
                                     PREV_STATUS = STATUS;
 
@@ -418,7 +431,8 @@ public class ConnectionService extends Service {
 
                             default: {
                                 lw.appendLog(logTag, "setting STATUS to UNKNOWN, previous is " + PREV_STATUS, true);
-
+                                lw.appendLog(logTag, getResources().getText(R.string.starus_set).toString() +
+                                        getResources().getText(R.string.value_status_unknown).toString(), true);
                                 STATUS = STATUS_UNKNOWN;
                                 break;
                             }
@@ -430,19 +444,22 @@ public class ConnectionService extends Service {
                         lw.appendLog(logTag, "got command PARAMS and " + currentArg);
                         switch (currentArg) {
                             case bPARAMS_NORM: {
-                                lw.appendLog(logTag, "setting PARAMS to NORMAL", true);
+                                lw.appendLog(logTag, getResources().getText(R.string.params_set).toString() +
+                                        getResources().getText(R.string.value_procedure_params_normal).toString(), true);
                                 PARAMS = PARAMS_NORMAL;
                                 break;
                             }
 
                             case bPARAMS_DANGER: {
-                                lw.appendLog(logTag, "setting PARAMS to DANGER", true);
+                                lw.appendLog(logTag, getResources().getText(R.string.params_set).toString() +
+                                        getResources().getText(R.string.value_procedure_params_danger).toString(), true);
                                 PARAMS = PARAMS_DANGER;
                                 break;
                             }
 
                             default: {
-                                lw.appendLog(logTag, "setting PARAMS to UNKNOWN", true);
+                                lw.appendLog(logTag, getResources().getText(R.string.params_set).toString() +
+                                        getResources().getText(R.string.value_procedure_params_unknown).toString(), true);
                                 PARAMS = PARAMS_UNKNOWN;
                                 break;
                             }
@@ -460,19 +477,22 @@ public class ConnectionService extends Service {
                         lw.appendLog(logTag, "got command FUNCT and " + currentArg);
                         switch (currentArg) {
                             case bFUNCT_CORRECT: {
-                                lw.appendLog(logTag, "setting FUNCT to CORRECT", true);
+                                lw.appendLog(logTag, getResources().getText(R.string.funct_set).toString() +
+                                        getResources().getText(R.string.value_device_functioning_correct).toString(), true);
                                 FUNCT = FUNCT_CORRECT;
                                 break;
                             }
 
                             case bFUNCT_FAULT: {
-                                lw.appendLog(logTag, "setting FUNCT to FAULT", true);
+                                lw.appendLog(logTag, getResources().getText(R.string.funct_set).toString() +
+                                        getResources().getText(R.string.value_device_functioning_fault).toString(), true);
                                 FUNCT = FUNCT_FAULT;
                                 break;
                             }
 
                             default: {
-                                lw.appendLog(logTag, "setting FUNCT to UNKNOWN", true);
+                                lw.appendLog(logTag, getResources().getText(R.string.funct_set).toString() +
+                                        getResources().getText(R.string.value_device_functioning_unknown).toString(), true);
                                 FUNCT = FUNCT_UNKNOWN;
                                 break;
                             }
@@ -483,76 +503,76 @@ public class ConnectionService extends Service {
                     case bDPRESS1: {//setting first pressure value
                         fDPRESS1 = full_data_float * 51.715f;
                         DPRESS1 = String.valueOf(fDPRESS1);//converting to mmHg and string
-                        lw.appendLog(logTag, "setting DPRESS1 to " + DPRESS1, true);
+                        lw.appendLog(logTag, "setting DPRESS1 to " + DPRESS1);
                         break;
                     }
 
                     case bDPRESS2: {//setting second pressure value
                         fDPRESS2 = full_data_float * 51.715f;
                         DPRESS2 = String.valueOf(fDPRESS2);//converting to mmHg and string
-                        lw.appendLog(logTag, "setting DPRESS2 to " + DPRESS2, true);
+                        lw.appendLog(logTag, "setting DPRESS2 to " + DPRESS2);
                         break;
                     }
 
                     case bDPRESS3: {//setting third pressure value
                         fDPRESS3 = full_data_float * 51.715f;
                         DPRESS3 = String.valueOf(fDPRESS3);//converting to mmHg and string
-                        lw.appendLog(logTag, "setting DPRESS3 to " + DPRESS3, true);
+                        lw.appendLog(logTag, "setting DPRESS3 to " + DPRESS3);
                         break;
                     }
 
                     case bDTEMP1: {//setting temperature value
                         fDTEMP1 = full_data_int / 10.0f;//converting to Celsius degrees and string
                         DTEMP1 = String.valueOf(fDTEMP1);
-                        lw.appendLog(logTag, "setting DTEMP1 to " + DTEMP1, true);
+                        lw.appendLog(logTag, "setting DTEMP1 to " + DTEMP1);
                         break;
                     }
 
                     case bDCOND1: {////setting conductivity value
                         iDCOND1 = full_data_int;
                         DCOND1 = String.valueOf(iDCOND1);
-                        lw.appendLog(logTag, "setting DCOND1 to " + DCOND1, true);
+                        lw.appendLog(logTag, "setting DCOND1 to " + DCOND1);
                         break;
                     }
 
                     case bDCUR1: {//setting first electric current value
                         fDCUR1 = full_data_float * 1000;
                         DCUR1 = String.valueOf(fDCUR1);
-                        lw.appendLog(logTag, "setting DCUR1 to " + DCUR1, true);
+                        lw.appendLog(logTag, "setting DCUR1 to " + DCUR1);
                         break;
                     }
 
                     case bDCUR2: {//setting second electric current value
                         fDCUR2 = full_data_float * 1000;
                         DCUR2 = String.valueOf(fDCUR2);
-                        lw.appendLog(logTag, "setting DCUR2 to " + DCUR2, true);
+                        lw.appendLog(logTag, "setting DCUR2 to " + DCUR2);
                         break;
                     }
 
                     case bDCUR3: {//setting third electric current value
                         fDCUR3 = full_data_float * 1000;
                         DCUR3 = String.valueOf(fDCUR3);
-                        lw.appendLog(logTag, "setting DCUR3 to " + DCUR3, true);
+                        lw.appendLog(logTag, "setting DCUR3 to " + DCUR3);
                         break;
                     }
 
                     case bDCUR4: {//setting fourth electric current value
                         fDCUR4 = full_data_float * 1000;
                         DCUR4 = String.valueOf(fDCUR4);
-                        lw.appendLog(logTag, "setting DCUR4 to " + DCUR4, true);
+                        lw.appendLog(logTag, "setting DCUR4 to " + DCUR4);
                         break;
                     }
 
                     case bSENDDPUMPS: {//sending pumps flows
                         switch (com2){
                             case (byte)0x01:{
-                                lw.appendLog(logTag, "send FPUMP1FLOW", true);
+                                lw.appendLog(logTag, "send FPUMP1FLOW");
                                 sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x01, intTo4byte(FPUMP1FLOW));//first filling pump
                                 break;
                             }
 
                             case (byte)0x02:{
-                                lw.appendLog(logTag, "send DPUMP1FLOW", true);
+                                lw.appendLog(logTag, "send DPUMP1FLOW");
                                 sendMessageBytes((byte) (bSENDDPUMPS + (byte) 0x01), (byte) 0x02, intTo4byte(DPUMP1FLOW));//first dialysis pump
                                 break;
                             }
@@ -608,37 +628,37 @@ public class ConnectionService extends Service {
                     case bSENDDPRESS: {//sending values for pressures ranges
                         switch (com2){
                             case (byte)0x01:{
-                                lw.appendLog(logTag, "send DPRESS1MIN", true);
+                                lw.appendLog(logTag, "send DPRESS1MIN");
                                 sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x01, floatTo4byte(DPRESS1MIN));//first min value
                                 break;
                             }
 
                             case (byte)0x02:{
-                                lw.appendLog(logTag, "send DPRESS1MAX", true);
+                                lw.appendLog(logTag, "send DPRESS1MAX");
                                 sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x02, floatTo4byte(DPRESS1MAX));//first max value
                                 break;
                             }
 
                             case (byte)0x11:{
-                                lw.appendLog(logTag, "send DPRESS2MIN", true);
+                                lw.appendLog(logTag, "send DPRESS2MIN");
                                 sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x11, floatTo4byte(DPRESS2MIN));//second min value
                                 break;
                             }
 
                             case (byte)0x12:{
-                                lw.appendLog(logTag, "send DPRESS2MAX", true);
+                                lw.appendLog(logTag, "send DPRESS2MAX");
                                 sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x12, floatTo4byte(DPRESS2MAX));//second max value
                                 break;
                             }
 
                             case (byte)0x21:{
-                                lw.appendLog(logTag, "send DPRESS3MIN", true);
+                                lw.appendLog(logTag, "send DPRESS3MIN");
                                 sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x21, floatTo4byte(DPRESS3MIN));//third min value
                                 break;
                             }
 
                             case (byte)0x22:{
-                                lw.appendLog(logTag, "send DPRESS3MAX", true);
+                                lw.appendLog(logTag, "send DPRESS3MAX");
                                 sendMessageBytes((byte) (bSENDDPRESS + (byte) 0x01), (byte) 0x22, floatTo4byte(DPRESS3MAX));//third max value
                                 break;
                             }
@@ -652,13 +672,13 @@ public class ConnectionService extends Service {
                     case bSENDDTEMP: {//sending values for temperature range
                         switch (com2){
                             case (byte)0x01:{
-                                lw.appendLog(logTag, "send DTEMP1MIN ", true);
+                                lw.appendLog(logTag, "send DTEMP1MIN ");
                                 sendMessageBytes((byte) (bSENDDTEMP + (byte) 0x01), (byte) 0x01, floatTo4byte(DTEMP1MIN));//min temp
                                 break;
                             }
 
                             case (byte)0x02:{
-                                lw.appendLog(logTag, "send DTEMP1MAX ", true);
+                                lw.appendLog(logTag, "send DTEMP1MAX ");
                                 sendMessageBytes((byte) (bSENDDTEMP + (byte) 0x01), (byte) 0x02, floatTo4byte(DTEMP1MAX));//max temp
                                 break;
                             }
@@ -672,13 +692,13 @@ public class ConnectionService extends Service {
                     case bSENDDCOND: {//sending values for conductivity range
                         switch (com2){
                             case (byte)0x01:{
-                                lw.appendLog(logTag, "send DCOND1MIN ", true);
+                                lw.appendLog(logTag, "send DCOND1MIN ");
                                 sendMessageBytes((byte) (bSENDDCOND + (byte) 0x01), (byte) 0x01, floatTo4byte(DCOND1MIN));
                                 break;
                             }
 
                             case (byte)0x02:{
-                                lw.appendLog(logTag, "send DCOND1MAX ", true);
+                                lw.appendLog(logTag, "send DCOND1MAX ");
                                 sendMessageBytes((byte) (bSENDDCOND + (byte) 0x01), (byte) 0x02, floatTo4byte(DCOND1MAX));
                                 break;
                             }
@@ -691,72 +711,72 @@ public class ConnectionService extends Service {
                     }
 
                     case PE_PRESS1: {//receiving error
-                        processError("ERROR PE_PRESS1");
+                        processError(getResources().getText(R.string.error_press).toString() + "1");
                         break;
                     }
 
                     case PE_PRESS2: {//receiving error
-                        processError("ERROR PE_PRESS2");
+                        processError(getResources().getText(R.string.error_press).toString() + "2");
                         break;
                     }
 
                     case PE_PRESS3: {//receiving error
-                        processError("ERROR PE_PRESS3");
+                        processError(getResources().getText(R.string.error_press).toString() + "3");
                         break;
                     }
 
                     case PE_TEMP: {//receiving error
-                        processError("ERROR PE_TEMP");
+                        processError(getResources().getText(R.string.error_temp).toString());
                         break;
                     }
 
                     case PE_ELECTRO: {//receiving error
-                        processError("ERROR PE_ELECTRO");
+                        processError(getResources().getText(R.string.error_electro).toString());
                         break;
                     }
 
                     case PE_EDS1: {//receiving error
-                        processError("ERROR PE_EDS1");
+                        processError(getResources().getText(R.string.error_eds).toString() + "1");
                         break;
                     }
 
                     case PE_EDS2: {//receiving error
-                        processError("ERROR PE_EDS2");
+                        processError(getResources().getText(R.string.error_eds).toString() + "2");
                         break;
                     }
 
                     case PE_EDS3: {//receiving error
-                        processError("ERROR PE_EDS3");
+                        processError(getResources().getText(R.string.error_eds).toString() + "3");
                         break;
                     }
 
                     case PE_EDS4: {//receiving error
-                        processError("ERROR PE_EDS4");
+                        processError(getResources().getText(R.string.error_eds).toString() + "4");
                         break;
                     }
 
                     case PE_BATT: {//receiving error
-                        processError("ERROR PE_BATT");
+                        processError(getResources().getText(R.string.error_batt).toString());
                         break;
                     }
 
                     case PE_PUMP1: {//receiving error
-                        processError("ERROR PE_PUMP1");
+                        processError(getResources().getText(R.string.error_eds).toString() + "1");
                         break;
                     }
 
                     case PE_PUMP2: {//receiving error
-                        processError("ERROR PE_PUMP2");
+                        processError(getResources().getText(R.string.error_eds).toString() + "2");
                         break;
                     }
 
                     case PE_PUMP3: {//receiving error
-                        processError("ERROR PE_PUMP3");
+                        processError(getResources().getText(R.string.error_eds).toString() + "3");
                         break;
                     }
 
                     case PE_ERROR: {//receiving error
-                        processError("ERROR PE_ERROR");
+                        processError(getResources().getText(R.string.error_unknown).toString());
                         break;
                     }
 
@@ -819,7 +839,7 @@ public class ConnectionService extends Service {
                     STATE = STATE_ON;
                 else {
                     STATE = STATE_OFF;//Otherwise, STATE is OFF
-                    lw.appendLog(logTag, "setting STATE to OFF", true);
+                    lw.appendLog(logTag, getResources().getText(R.string.value_status_shutdown).toString(), true);
                 }
             }
     }
@@ -860,31 +880,36 @@ public class ConnectionService extends Service {
                     switch (arg) {
                         case TASK_ARG_DIALYSIS: {
                             sendMessageBytes(bSTATUS, new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, bDIALYSIS});
-                            lw.appendLog(logTag, "User switching to DIALYSIS", true);
+                            lw.appendLog(logTag, getResources().getText(R.string.user_switched_to).toString() +
+                                                 getResources().getText(R.string.value_status_dialysis).toString(), true);
                             break;
                         }
 
                         case TASK_ARG_FILLING: {
                             sendMessageBytes(bSTATUS, new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, bFILLING});
-                            lw.appendLog(logTag, "User switching to FILLING", true);
+                            lw.appendLog(logTag, getResources().getText(R.string.user_switched_to).toString() +
+                                    getResources().getText(R.string.value_status_filling).toString(), true);
                             break;
                         }
 
                         case TASK_ARG_SHUTDOWN: {
                             sendMessageBytes(bSTATUS, new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, bSHUTDOWN});
-                            lw.appendLog(logTag, "User switching to SHUTDOWN", true);
+                            lw.appendLog(logTag, getResources().getText(R.string.user_switched_to).toString() +
+                                    getResources().getText(R.string.value_status_shutdown).toString(), true);
                             break;
                         }
 
                         case TASK_ARG_DISINFECTION: {
                             sendMessageBytes(bSTATUS, new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, bDISINFECTION});
-                            lw.appendLog(logTag, "User switching to DISINFECTION", true);
+                            lw.appendLog(logTag, getResources().getText(R.string.user_switched_to).toString() +
+                                    getResources().getText(R.string.value_status_disinfection).toString(), true);
                             break;
                         }
 
                         case TASK_ARG_FLUSH: {
                             sendMessageBytes(bSTATUS, new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, bFLUSH});
-                            lw.appendLog(logTag, "User switching to FLUSH", true);
+                            lw.appendLog(logTag, getResources().getText(R.string.user_switched_to).toString() +
+                                    getResources().getText(R.string.value_status_flush).toString(), true);
                             break;
                         }
 
@@ -896,7 +921,8 @@ public class ConnectionService extends Service {
 
                 case TASK_SET_PAUSE: {
                     sendMessageBytes(bSTATUS, new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, bPAUSE});
-                    lw.appendLog(logTag, "User set PAUSE", true);
+                    lw.appendLog(logTag, getResources().getText(R.string.user_switched_to).toString() +
+                            getResources().getText(R.string.title_pause_procedure).toString(), true);
                     break;
                 }
 
@@ -906,7 +932,7 @@ public class ConnectionService extends Service {
                         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
                         mChatService.connect(device, true);//securely connect to chosen device
-                        lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_NAME + '@' + PrefActivity.CHOSEN_ADDRESS, true);
+                        lw.appendLog(logTag, "Pairing with " + PrefActivity.CHOSEN_NAME + '@' + PrefActivity.CHOSEN_ADDRESS);
                     }
                     break;
                 }
@@ -1004,7 +1030,7 @@ public class ConnectionService extends Service {
             sendBroadcast(intentValues);
 
             LASTCONNECTED = "-1";//Set default state to fix value on main screen
-            if ((System.currentTimeMillis() - LASTCONNECTED_MILLIS) > 10000)//if last command was received more than 30 seconds ago - reset all values
+            if ((System.currentTimeMillis() - LASTCONNECTED_MILLIS) > 10000)//if last command was received more than 10 seconds ago - reset all values
             {
                 STATE = STATE_UNKNOWN;
                 STATUS = STATUS_UNKNOWN;
@@ -1342,7 +1368,7 @@ public class ConnectionService extends Service {
      * @param currentArg String to show
      */
     void sendNotification(String currentArg) {
-        lw.appendLog(logTag, "NOTIF:" + currentArg, true);
+        lw.appendLog(logTag, "NOTIF:" + currentArg);
 
         Context context = ConnectionService.this;
         Bitmap icon = BitmapFactory.decodeResource(context.getResources(),

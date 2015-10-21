@@ -8,14 +8,36 @@
     android:id="@+id/sample_main_layout"
     tools:ignore="ContentDescription">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/main_bg"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/space_top"
+        android:layout_alignLeft="@+id/space_top"
+        android:layout_alignStart="@+id/space_top"
+        android:layout_alignBottom="@+id/space_bottom"
+        android:layout_alignRight="@+id/space_top"
+        android:layout_alignEnd="@+id/space_top" />
+
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:id="@+id/space_top"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignLeft="@+id/relativeLayout"
+        android:layout_alignStart="@+id/relativeLayout"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:layout_alignEnd="@+id/relativeLayout" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="false"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
-
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout">
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -257,13 +279,13 @@
 
                 <Space
                     android:layout_width="5dp"
-                    android:layout_height="5dp"
+                    android:layout_height="2dp"
                     android:layout_column="2" />
 
                 <ImageView
                     android:id="@+id/iv_SorbentTime"
                     android:layout_column="3"
-                    android:src="@drawable/ic_time_grey" />
+                    android:src="@drawable/ic_time_green" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -280,7 +302,6 @@
                     android:id="@+id/iv_TimerReset"
                     android:layout_column="5"
                     android:src="@drawable/clock_reset"
-                    android:layout_marginTop="10dp"
                     android:onClick="OnClick" />
             </TableRow>
 
@@ -325,41 +346,37 @@
 
         <Button
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="@string/button_start"
-            android:drawableLeft="@drawable/ic_pause"
-            android:drawableStart="@drawable/ic_pause"
+            android:layout_height="36dp"
             android:id="@+id/bt_Pause"
             android:onClick="OnClick"
-            android:layout_below="@+id/tableLayout" />
+            android:layout_below="@+id/tableLayout"
+            android:background="@drawable/ic_paused_disabled" />
 
         <Button
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/button_change_state"
-            android:drawableLeft="@drawable/ic_refresh"
-            android:drawableStart="@drawable/ic_refresh"
+            android:layout_height="36dp"
             android:id="@+id/bt_State"
             android:onClick="OnClick"
             android:layout_below="@+id/bt_Pause"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+            android:background="@drawable/ic_bt_state" />
 
         <Space
             android:layout_width="5dp"
-            android:layout_height="2dp" />
+            android:layout_height="2dp"
+            android:id="@+id/space" />
 
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="@string/button_notification"
-            android:drawableLeft="@drawable/ic_post"
-            android:drawableStart="@drawable/ic_post"
             android:id="@+id/bt_Notification"
 
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
             android:layout_above="@+id/bt_Settings"
             android:layout_toRightOf="@+id/bt_State"
-            android:layout_toEndOf="@+id/bt_State" />
+            android:layout_toEndOf="@+id/bt_State"
+            android:background="@drawable/ic_bt_notif"
+            android:layout_below="@+id/bt_Pause" />
 
         <Space
             android:layout_width="5dp"
@@ -369,41 +386,48 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="@string/button_log"
-            android:drawableLeft="@drawable/ic_list"
-            android:drawableStart="@drawable/ic_list"
             android:id="@+id/bt_Log"
             android:onClick="OnClick"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
-            android:layout_below="@+id/bt_State"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:background="@drawable/ic_bt_log"
+            android:layout_alignBottom="@+id/bt_Settings"
+            android:layout_alignTop="@+id/bt_Settings" />
 
         <Button
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/button_settings"
-            android:drawableLeft="@drawable/ic_settings"
-            android:drawableStart="@drawable/ic_settings"
+            android:layout_height="40dp"
             android:id="@+id/bt_Settings"
             android:onClick="OnClick"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
             android:layout_below="@+id/bt_State"
             android:layout_alignLeft="@+id/bt_Notification"
-            android:layout_alignStart="@+id/bt_Notification" />
+            android:layout_alignStart="@+id/bt_Notification"
+            android:background="@drawable/ic_bt_pref" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/last_connected_unknown"
-            android:id="@+id/tv_LastConnected"
-            android:layout_alignWithParentIfMissing="false"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true" />
     </RelativeLayout>
+
+    <Space
+        android:layout_width="50dp"
+        android:layout_height="12dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignLeft="@+id/relativeLayout"
+        android:layout_alignStart="@+id/relativeLayout"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:layout_alignEnd="@+id/relativeLayout"
+        android:id="@+id/space_bottom" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:text="@string/last_connected_unknown"
+        android:id="@+id/tv_LastConnected"
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
 
 </RelativeLayout>

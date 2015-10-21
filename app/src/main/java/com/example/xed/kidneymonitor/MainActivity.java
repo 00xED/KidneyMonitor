@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected, tvCaptionStatus, tvCaptionProcedureParams;
     private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt, ivSorbtime;
-    private Button btPause, btState;
+    private Button btPause, btState, btLog, btNotif;
     private TableRow trStatusRow;
 
     @Override
@@ -87,19 +88,30 @@ public class MainActivity extends AppCompatActivity {
         lw.appendLog(logTag, "Start@" + strDate);
         lw.appendLog(logTag, "+++ ON CREATE +++");
 
+        Typeface tfPlayBold = Typeface.createFromAsset(getAssets(), "fonts/Play-Bold.ttf");
+
         /**
          * Initialising TextViews for main screen
          */
         tvState = (TextView) findViewById(R.id.tv_ValueState);
+        tvState.setTypeface(tfPlayBold);
         tvStatus = (TextView) findViewById(R.id.tv_ValueStatus);
+        tvStatus.setTypeface(tfPlayBold);
         tvFunct = (TextView) findViewById(R.id.tv_ValueDeviceFunctioning);
+        tvFunct.setTypeface(tfPlayBold);
         tvParams = (TextView) findViewById(R.id.tv_ValueProcedureParams);
+        tvParams.setTypeface(tfPlayBold);
         tvSorbtime = (TextView) findViewById(R.id.tv_ValueSorbentTime);
+        tvSorbtime.setTypeface(tfPlayBold);
         tvBatt = (TextView) findViewById(R.id.tv_ValueBatteryCharge);
+        tvBatt.setTypeface(tfPlayBold);
         tvLastConnected = (TextView) findViewById(R.id.tv_LastConnected);
         tvLastConnected.setPaintFlags(tvLastConnected.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tvLastConnected.setTypeface(tfPlayBold);
         tvCaptionStatus = (TextView) findViewById(R.id.tv_CaptionStatus);
+        tvCaptionStatus.setTypeface(tfPlayBold);
         tvCaptionProcedureParams = (TextView) findViewById(R.id.tv_CaptionProcedureParams);
+        tvCaptionProcedureParams.setTypeface(tfPlayBold);
 
         ivBatt = (ImageView) findViewById(R.id.iv_Battery);
         ivFunct = (ImageView) findViewById(R.id.iv_Functioning);
@@ -108,7 +120,13 @@ public class MainActivity extends AppCompatActivity {
         ivParams = (ImageView) findViewById(R.id.iv_Params);
         ivSorbtime = (ImageView) findViewById(R.id.iv_SorbentTime);
         btPause = (Button) findViewById(R.id.bt_Pause);
+        btPause.setTypeface(tfPlayBold);
         btState = (Button) findViewById(R.id.bt_State);
+        btState.setTypeface(tfPlayBold);
+        btLog = (Button) findViewById(R.id.bt_Log);
+        btLog.setTypeface(tfPlayBold);
+        btNotif = (Button) findViewById(R.id.bt_Notification);
+        btNotif.setTypeface(tfPlayBold);
 
         trStatusRow = (TableRow) findViewById(R.id.tr_StatusRow);
 
@@ -188,9 +206,9 @@ public class MainActivity extends AppCompatActivity {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_filling).toString());
                                     ivStatus.setImageResource(R.drawable.ic_filling);
-                                    btPause.
-                                            setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                    btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    //btPause.setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                    //btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                                     break;
                                 }
 
@@ -198,9 +216,9 @@ public class MainActivity extends AppCompatActivity {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_dialysis).toString());
                                     ivStatus.setImageResource(R.drawable.ic_dialysis);
-                                    btPause.
-                                            setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                    btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    //btPause.setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                    //btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                                     break;
                                 }
 
@@ -211,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                                     btPause.
                                             setText(getResources().getText(R.string.title_pause_procedure).toString());
                                     btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                                     break;
                                 }
 
@@ -221,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
                                     btPause.
                                             setText(getResources().getText(R.string.title_pause_procedure).toString());
                                     btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                                     break;
                                 }
 
@@ -228,9 +248,9 @@ public class MainActivity extends AppCompatActivity {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_ready).toString());
                                     ivStatus.setImageResource(R.drawable.ic_ready);
-                                    btPause.
-                                            setText(getResources().getText(R.string.title_continue_procedure).toString());
-                                    btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow, 0, 0, 0);
+                                    //btPause.setText(getResources().getText(R.string.title_continue_procedure).toString());
+                                    //btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow, 0, 0, 0);
+                                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_play_enabled));
                                     break;
                                 }
 
@@ -239,9 +259,9 @@ public class MainActivity extends AppCompatActivity {
                                             setText(getResources().getText(R.string.value_status_flush).toString());
 
                                     ivStatus.setImageResource(R.drawable.ic_flush);
-                                    btPause.
-                                            setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                    btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    //btPause.setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                    //btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                                     break;
                                 }
 
@@ -336,19 +356,13 @@ public class MainActivity extends AppCompatActivity {
                             } else {//Otherwise set value and image
                                 tvBatt.setText(arg + "%");
                                 int batts = Integer.parseInt(arg);
-                                if (batts >= 95)
+                                if (batts >= 75)
                                     ivBatt.setImageResource(R.drawable.ic_battery_full);
-                                else if (batts >= 90)
-                                    ivBatt.setImageResource(R.drawable.ic_battery_90);
-                                else if (batts >= 80)
-                                    ivBatt.setImageResource(R.drawable.ic_battery_80);
-                                else if (batts >= 60)
-                                    ivBatt.setImageResource(R.drawable.ic_battery_60);
                                 else if (batts >= 50)
+                                    ivBatt.setImageResource(R.drawable.ic_battery_75);
+                                else if (batts >= 25)
                                     ivBatt.setImageResource(R.drawable.ic_battery_50);
-                                else if (batts >= 30)
-                                    ivBatt.setImageResource(R.drawable.ic_battery_30);
-                                else ivBatt.setImageResource(R.drawable.ic_battery_20);
+                                else ivBatt.setImageResource(R.drawable.ic_battery_25);
                             }
                             break;
                         }
@@ -369,12 +383,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 if(ConnectionService.STATUS.equals(ConnectionService.STATUS_UNKNOWN)){
                     btPause.setEnabled(false);
+                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_disabled));
                     btState.setEnabled(false);
                     trStatusRow.setEnabled(false);
                     ivStatus.setEnabled(false);
                 }
                 else{
                     btPause.setEnabled(true);
+                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                     btState.setEnabled(true);
                     trStatusRow.setEnabled(true);
                     ivStatus.setEnabled(true);

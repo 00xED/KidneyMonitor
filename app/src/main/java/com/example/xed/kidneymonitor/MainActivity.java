@@ -1,5 +1,6 @@
 package com.example.xed.kidneymonitor;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -30,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  * button for pausing and starting procedure, buton to choose current procedure
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     public static final int REQUEST_ENABLE_BT = 1;
 
@@ -68,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Views of main screen
      */
-    private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected, tvCaptionStatus, tvCaptionProcedureParams;
+    private TextView tvState, tvStatus, tvFunct, tvParams, tvSorbtime, tvBatt, tvLastConnected,
+                     tvCaptionStatus, tvCaptionProcedureParams, tvCaptionState,
+                     tvCaptionDeviceFunctioning, tvCaptionSorbentTime, tvCaptionBatteryCharge;
     private ImageView ivState, ivStatus, ivFunct, ivParams, ivBatt, ivSorbtime;
     private Button btPause, btState, btLog, btNotif;
     private TableRow trStatusRow;
@@ -112,6 +115,14 @@ public class MainActivity extends AppCompatActivity {
         tvCaptionStatus.setTypeface(tfPlayBold);
         tvCaptionProcedureParams = (TextView) findViewById(R.id.tv_CaptionProcedureParams);
         tvCaptionProcedureParams.setTypeface(tfPlayBold);
+        tvCaptionState = (TextView) findViewById(R.id.tv_CaptionState);
+        tvCaptionState.setTypeface(tfPlayBold);
+        tvCaptionDeviceFunctioning = (TextView) findViewById(R.id.tv_CaptionDeviceFunctioning);
+        tvCaptionDeviceFunctioning.setTypeface(tfPlayBold);
+        tvCaptionSorbentTime = (TextView) findViewById(R.id.tv_CaptionSorbentTime);
+        tvCaptionSorbentTime.setTypeface(tfPlayBold);
+        tvCaptionBatteryCharge = (TextView) findViewById(R.id.tv_CaptionBatteryCharge);
+        tvCaptionBatteryCharge.setTypeface(tfPlayBold);
 
         ivBatt = (ImageView) findViewById(R.id.iv_Battery);
         ivFunct = (ImageView) findViewById(R.id.iv_Functioning);
@@ -226,9 +237,8 @@ public class MainActivity extends AppCompatActivity {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_shutdown).toString());
                                     ivStatus.setImageResource(R.drawable.ic_shutdown);
-                                    btPause.
-                                            setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                    btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    //btPause.setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                    //btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                     btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                                     break;
                                 }
@@ -237,9 +247,8 @@ public class MainActivity extends AppCompatActivity {
                                     tvStatus.
                                             setText(getResources().getText(R.string.value_status_disinfection).toString());
                                     ivStatus.setImageResource(R.drawable.ic_disinfection);
-                                    btPause.
-                                            setText(getResources().getText(R.string.title_pause_procedure).toString());
-                                    btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+                                    //btPause.setText(getResources().getText(R.string.title_pause_procedure).toString());
+                                    //btPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
                                     btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                                     break;
                                 }
@@ -331,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
                             if (remaining_time == -1 || !ConnectionService.STATE.equals(ConnectionService.STATE_ON))//If received value is default then set to unknown
                             {
                                 tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
-                                ivSorbtime.setImageResource(R.drawable.ic_time_grey);
+                                ivSorbtime.setImageResource(R.drawable.ic_time_green);
                             } else    //Convert received time in seconds to hours and minutes
                             {
                                 int hours = (int) TimeUnit.MILLISECONDS.toHours(remaining_time);
@@ -390,7 +399,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     btPause.setEnabled(true);
-                    btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
+                    if(ConnectionService.STATUS.equals(ConnectionService.STATUS_READY))
+                        btPause.setBackground(getResources().getDrawable(R.drawable.ic_play_enabled));
+                    else
+                        btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                     btState.setEnabled(true);
                     trStatusRow.setEnabled(true);
                     ivStatus.setEnabled(true);

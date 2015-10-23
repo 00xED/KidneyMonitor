@@ -13,8 +13,6 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -340,7 +338,7 @@ public class MainActivity extends Activity {
                             if (remaining_time == -1 || !ConnectionService.STATE.equals(ConnectionService.STATE_ON))//If received value is default then set to unknown
                             {
                                 tvSorbtime.setText(getResources().getText(R.string.value_time_sorbent_unknown).toString());
-                                ivSorbtime.setImageResource(R.drawable.ic_time_green);
+                                ivSorbtime.setImageResource(R.drawable.ic_time_grey);
                             } else    //Convert received time in seconds to hours and minutes
                             {
                                 int hours = (int) TimeUnit.MILLISECONDS.toHours(remaining_time);
@@ -394,6 +392,7 @@ public class MainActivity extends Activity {
                     btPause.setEnabled(false);
                     btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_disabled));
                     btState.setEnabled(false);
+                    btState.setBackground(getResources().getDrawable(R.drawable.ic_bt_state_disabled));
                     trStatusRow.setEnabled(false);
                     ivStatus.setEnabled(false);
                 }
@@ -404,6 +403,7 @@ public class MainActivity extends Activity {
                     else
                         btPause.setBackground(getResources().getDrawable(R.drawable.ic_paused_enabled));
                     btState.setEnabled(true);
+                    btState.setBackground(getResources().getDrawable(R.drawable.ic_bt_state));
                     trStatusRow.setEnabled(true);
                     ivStatus.setEnabled(true);
                 }
@@ -472,11 +472,8 @@ public class MainActivity extends Activity {
 
             case R.id.bt_State://Start log activity
             {
-                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                if (sPref.getBoolean(PrefActivity.TESTMODE, false))
-                    alertSingleChooseStatusTest();
-                else
-                    alertSingleChooseStatus();
+                Intent intent = new Intent(this, ProceduresActivity.class);
+                startActivity(intent);
                 break;
             }
 
@@ -494,59 +491,14 @@ public class MainActivity extends Activity {
                 break;
             }
 
-            case R.id.tv_CaptionStatus: {
-                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                if (sPref.getBoolean(PrefActivity.TESTMODE, false))
-                    alertSingleChooseStatusTest();
-                else
-                    alertSingleChooseStatus();
-                break;
-            }
-
-            case R.id.iv_Status: {
-                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                if (sPref.getBoolean(PrefActivity.TESTMODE, false))
-                    alertSingleChooseStatusTest();
-                else
-                    alertSingleChooseStatus();
-                break;
-            }
-
-            case R.id.tv_ValueStatus: {
-                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                if (sPref.getBoolean(PrefActivity.TESTMODE, false))
-                    alertSingleChooseStatusTest();
-                else
-                    alertSingleChooseStatus();
-                break;
-            }
-
             case R.id.tr_StatusRow: {
-                sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Load preferences
-                if (sPref.getBoolean(PrefActivity.TESTMODE, false))
-                    alertSingleChooseStatusTest();
-                else
-                    alertSingleChooseStatus();
+                Intent intent = new Intent(this, ProceduresActivity.class);
+                startActivity(intent);
                 break;
             }
 
-            case R.id.tv_CaptionProcedureParams: {
-                StartParamsActivity();
-                break;
-            }
-
-            case R.id.tv_ValueProcedureParams: {
-                StartParamsActivity();
-                break;
-            }
-
-            case R.id.iv_Params: {
-                StartParamsActivity();
-                break;
-            }
-
-            case R.id.tr_ParamsRow: {
-                StartParamsActivity();
+            case R.id.tr_ParamsRow: {        Intent intent = new Intent(this, ParamsActivity.class);
+                startActivity(intent);
                 break;
             }
 
@@ -563,22 +515,6 @@ public class MainActivity extends Activity {
                 break;
             }
 
-            case R.id.tv_CaptionState:{
-                enableAutoconnect();
-            }
-
-            case R.id.iv_State:{
-                enableAutoconnect();
-            }
-
-            case R.id.tv_ValueState:{
-                enableAutoconnect();
-            }
-
-            case R.id.iv_State2:{
-                enableAutoconnect();
-            }
-
             case R.id.tv_LastConnected:{
                 enableAutoconnect();
             }
@@ -588,17 +524,12 @@ public class MainActivity extends Activity {
         }
     }
 
-    void StartParamsActivity(){
-        Intent intent = new Intent(this, ParamsActivity.class);
-        startActivity(intent);
-    }
 
     void enableAutoconnect(){
         sPref = getSharedPreferences(PrefActivity.APP_PREFERENCES, MODE_PRIVATE); //Loading preferences
         SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
         ed.putBoolean(PrefActivity.AUTOCONNECT, true);
         ed.commit();
-
     }
 
     void PauseConfirmationTest(){
@@ -711,335 +642,4 @@ public class MainActivity extends Activity {
         });
         ad.show();
     }
-
-    /**
-     * Creates dialog, where user chooses what procedure to run
-     */
-    public void alertSingleChooseStatus() {
-        int variant;
-        String procedures[];
-        int defaultSelection = 0;
-
-        switch (ConnectionService.STATUS) {
-            case ConnectionService.STATUS_DIALYSIS: {
-                variant = 1;
-                procedures = new String[]{getResources().getText(R.string.value_status_flush).toString()};
-                break;
-            }
-
-            case ConnectionService.STATUS_FILLING: {
-                variant = 2;
-                procedures = new String[]{getResources().getText(R.string.value_status_dialysis).toString()};
-                break;
-            }
-
-            case ConnectionService.STATUS_SHUTDOWN: {
-                variant = 3;
-                procedures = new String[]{getResources().getText(R.string.value_status_shutdown).toString()};
-                break;
-            }
-
-            case ConnectionService.STATUS_DISINFECTION://////////////
-            {
-                variant = 4;
-                procedures = new String[]{getResources().getText(R.string.value_status_shutdown).toString()};
-                break;
-            }
-
-            case ConnectionService.STATUS_FLUSH:////////////
-            {
-                variant = 5;
-                procedures = new String[]{getResources().getText(R.string.value_status_shutdown).toString()};
-                break;
-            }
-
-            case ConnectionService.STATUS_READY: {
-                switch (ConnectionService.PREV_STATUS) {
-                    case ConnectionService.STATUS_DIALYSIS: {
-                        variant = 1;
-                        procedures = new String[]{getResources().getText(R.string.value_status_flush).toString()};
-                        break;
-                    }
-
-                    case ConnectionService.STATUS_FILLING: {
-                        variant = 2;
-                        lw.appendLog(logTag, "now READY, can FILL", true);
-                        procedures = new String[]{getResources().getText(R.string.value_status_dialysis).toString()};
-                        break;
-                    }
-
-                    case ConnectionService.STATUS_SHUTDOWN: {
-                        variant = 3;
-                        procedures = new String[]{getResources().getText(R.string.value_status_shutdown).toString()};
-                        break;
-                    }
-
-                    case ConnectionService.STATUS_DISINFECTION: {
-                        variant = 4;
-                        procedures = new String[]{getResources().getText(R.string.value_status_shutdown).toString()};
-                        break;
-                    }
-
-                    case ConnectionService.STATUS_FLUSH: {
-                        variant = 5;
-                        procedures = new String[]{getResources().getText(R.string.value_status_shutdown).toString()};
-                        break;
-                    }
-
-                    default: {
-                        variant = 6;
-                        defaultSelection = -1;
-                        procedures = new String[]{getResources().getText(R.string.value_status_filling).toString(),
-                                getResources().getText(R.string.value_status_dialysis).toString(),
-                                getResources().getText(R.string.value_status_shutdown).toString(),
-                                getResources().getText(R.string.value_status_disinfection).toString(),
-                                getResources().getText(R.string.value_status_flush).toString()};
-                        break;
-                    }
-                }
-                break;
-            }
-
-            default: {
-                variant = 6;
-                defaultSelection = -1;
-                procedures = new String[]{getResources().getText(R.string.value_status_filling).toString(),
-                        getResources().getText(R.string.value_status_dialysis).toString(),
-                        getResources().getText(R.string.value_status_shutdown).toString(),
-                        getResources().getText(R.string.value_status_disinfection).toString(),
-                        getResources().getText(R.string.value_status_flush).toString()};
-                break;
-            }
-        }
-
-        AlertDialog.Builder statusdialog = new AlertDialog.Builder(MainActivity.this);
-
-        statusdialog.setTitle(getResources().getText(R.string.title_status_select).toString());// Set the dialog title
-
-        statusdialog.setSingleChoiceItems(procedures, defaultSelection, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-            }
-        });
-
-        final int finalvariant = variant;
-
-        statusdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {// Set the action buttons
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                // user clicked OK, so save the mSelectedItems results somewhere
-                // or return them to the component that opened the dialog
-                int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                switch (finalvariant) {
-                    case 1://current or previous procedure is DIALYSIS - can only change to FLUSH
-                    {
-                        showInstructionDialog(4);
-                        break;
-                    }
-
-                    case 2://current or previous procedure is FILLING - can only change to DIALYSIS
-                    {
-                        showInstructionDialog(1);
-
-                        break;
-                    }
-
-                    case 3://current or previous procedure is SHUTDOWN - can only change to SHUTDOWN
-                    {
-                        showInstructionDialog(2);
-                        break;
-                    }
-
-                    case 4://current or previous procedure is DISINFECTION - can only change to SHUTDOWN
-                    {
-                        showInstructionDialog(2);
-                        break;
-                    }
-
-                    case 5://current or previous procedure is FLUSH - can only change to SHUTDOWN
-                    {
-                        showInstructionDialog(2);
-                        break;
-                    }
-
-                    case 6: {//all other cases - can change to any procedure
-                        if (selectedPosition >= 0 && selectedPosition <= 4)
-                            showInstructionDialog(selectedPosition);
-                        else
-                            break;
-                        break;
-                    }
-
-                    default: {
-                        if (selectedPosition >= 0 && selectedPosition <= 4)
-                            showInstructionDialog(selectedPosition);
-                        else
-                            break;
-                        break;
-                    }
-                }
-            }
-        });
-        statusdialog.show();
-    }
-
-    public void alertSingleChooseStatusTest() {
-        int defaultSelection = selectedProcedure;
-        if (selectedProcedure == 4)//if state=ready
-            defaultSelection = -1;
-        if (selectedProcedure == 5)//if state=flush
-            defaultSelection = 4;
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        // Set the dialog title
-        builder.setTitle(getResources().getText(R.string.title_status_select).toString())
-
-                // specify the list array, the items to be selected by default (null for none),
-                // and the listener through which to receive call backs when items are selected
-                // again, R.array.choices were set in the resources res/values/strings.xml
-                .setSingleChoiceItems(R.array.status_selection, defaultSelection, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                })
-                        // Set the action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // user clicked OK, so save the mSelectedItems results somewhere
-                        // or return them to the component that opened the dialog
-                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        if (selectedPosition >= 0 && selectedPosition <= 4)
-                            showInstructionDialog(selectedPosition);
-                    }
-                })
-                .show();
-    }
-
-
-    public void showInstructionDialog(int variant) {
-        final Dialog instructionDialog = new Dialog(MainActivity.this);
-        instructionDialog.setContentView(R.layout.shutdowndialog);
-        // set the custom dialog components - text, image and button
-        TextView text = (TextView) instructionDialog.findViewById(R.id.text);
-        ImageView image = (ImageView) instructionDialog.findViewById(R.id.image);
-        Button dialogButtonOK = (Button) instructionDialog.findViewById(R.id.dialogButtonOK);
-
-        switch (variant) {
-            case 0://filling
-            {
-                instructionDialog.setTitle(getResources().getText(R.string.value_status_filling).toString());
-                text.setText(getResources().getText(R.string.instruction_filling).toString());
-                image.setImageResource(R.drawable.instruct_filling);
-                // if button is clicked, close the custom dialog
-                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
-                        sendBroadcast(intent);
-
-                        instructionDialog.dismiss();
-                    }
-                });
-                break;
-            }
-
-            case 1://dialysis
-            {
-                instructionDialog.setTitle(getResources().getText(R.string.value_status_dialysis).toString());
-                text.setText(getResources().getText(R.string.instruction_dialysis).toString());
-                image.setImageResource(R.drawable.instruct_dialysis);
-                // if button is clicked, close the custom dialog
-                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
-                        sendBroadcast(intent);
-
-                        instructionDialog.dismiss();
-                    }
-                });
-                break;
-            }
-
-            case 2://shutdown
-            {
-                instructionDialog.setTitle(getResources().getText(R.string.value_status_shutdown).toString());
-                text.setText(getResources().getText(R.string.instruction_shutdown).toString());
-                image.setImageResource(R.drawable.instruct_shutdown);
-                // if button is clicked, close the custom dialog
-                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
-                        sendBroadcast(intent);
-
-                        instructionDialog.dismiss();
-                    }
-                });
-                break;
-            }
-
-            case 3://disinfection
-            {
-                instructionDialog.setTitle(getResources().getText(R.string.value_status_disinfection).toString());
-                text.setText(getResources().getText(R.string.instruction_disinfection).toString());
-                image.setImageResource(R.drawable.instruct_disinfection);
-                // if button is clicked, close the custom dialog
-                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);
-                        sendBroadcast(intent);
-
-                        instructionDialog.dismiss();
-                    }
-                });
-                break;
-            }
-
-            case 4://flush
-            {
-                instructionDialog.setTitle(getResources().getText(R.string.value_status_flush).toString());
-                text.setText(getResources().getText(R.string.instruction_flush).toString());
-                image.setImageResource(R.drawable.instruct_flush);
-                // if button is clicked, close the custom dialog
-                dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
-                        intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
-                        intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
-                        sendBroadcast(intent);
-
-                        instructionDialog.dismiss();
-                    }
-                });
-                break;
-            }
-
-            default:
-                break;
-        }
-
-        Button dialogButtonCancel = (Button) instructionDialog.findViewById(R.id.dialogButtonCancel);
-        // if button is clicked, close the custom dialog
-        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                instructionDialog.dismiss();
-            }
-        });
-
-        instructionDialog.show();
-    }
-
 }

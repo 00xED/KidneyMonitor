@@ -1372,7 +1372,7 @@ public class ConnectionService extends Service {
 
         Context context = ConnectionService.this;
         Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
-                R.mipmap.ic_launcher);
+                R.drawable.ic_cross);
 
         //start MainActivity on click
         Intent notificationIntent = new Intent(context, MainActivity.class);
@@ -1384,7 +1384,7 @@ public class ConnectionService extends Service {
                 .setContentIntent(contentIntent)
                 .setContentTitle(getResources().getText(R.string.app_name))
                 .setContentText(currentArg)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_cross)
                 .setLargeIcon(icon)
                 .setAutoCancel(true)
                 .setLights(Color.WHITE, 0, 1)

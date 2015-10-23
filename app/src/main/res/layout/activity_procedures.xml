@@ -1,0 +1,294 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/sample_main_layout"
+    tools:ignore="ContentDescription"
+    android:background="@color/background_floating_material_light"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView8"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_alignBottom="@+id/outer_space_bottom"
+        android:layout_alignLeft="@+id/relativeLayout"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:src="@drawable/bg_procedures"
+        android:scaleType="centerCrop" />
+
+    <Space
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:id="@+id/outer_space_bottom"
+        android:layout_alignParentBottom="false"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignLeft="@+id/relativeLayout"
+        android:layout_alignRight="@+id/relativeLayout" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="false">
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tableLayout"
+            android:layout_marginBottom="30dp"
+            android:layout_centerInParent="true">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="45dp"
+                    android:layout_column="0" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="OnClick"
+                android:id="@+id/tr_menu_filling">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_column="2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_menu_filling"
+                    android:src="@drawable/menu_item_filling" />
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_menu_filling"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="false" />
+
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_column="0" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="OnClick"
+                android:id="@+id/tr_menu_dialisys">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_column="2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_menu_dialisys"
+                    android:src="@drawable/menu_item_dialisys" />
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_menu_dialisys"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="false" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_column="0" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="OnClick"
+                android:id="@+id/tr_menu_flush">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_column="2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_menu_flush"
+                    android:src="@drawable/menu_item_flush" />
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_menu_flush"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="false" />
+
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_column="0" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="OnClick"
+                android:id="@+id/tr_menu_shutdown">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_column="2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_menu_shutdown"
+                    android:src="@drawable/menu_item_shutdown" />
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_menu_shutdown"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="false" />
+
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_column="0" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="OnClick"
+                android:id="@+id/tr_menu_disinfection">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_column="2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_menu_disinfection"
+                    android:src="@drawable/menu_item_disinfection" />
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_menu_disinfection"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="false" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="35dp"
+                    android:layout_column="0" />
+            </TableRow>
+
+        </TableLayout>
+
+        <Space
+            android:layout_width="150dp"
+            android:layout_height="32dp"
+            android:id="@+id/space_bottom"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/tableLayout"
+            android:layout_alignLeft="@+id/tableLayout"
+            android:layout_alignRight="@+id/tableLayout" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ib_cancel"
+            android:src="@drawable/ic_bt_cancel"
+            android:background="#ffffff"
+            android:layout_alignLeft="@+id/space_bottom"
+            android:layout_alignTop="@+id/space_bottom"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="35dp"
+            android:onClick="OnClick" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ib_ok"
+            android:src="@drawable/ic_bt_ok"
+            android:background="#ffffff"
+            android:layout_alignRight="@+id/space_bottom"
+            android:layout_alignTop="@+id/space_bottom"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="35dp"
+            android:onClick="OnClick" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

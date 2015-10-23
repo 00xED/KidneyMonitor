@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.xed.kidneymonitor.InstructionActivity">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_Background"
+            android:layout_alignTop="@+id/relativeLayout"
+            android:layout_alignBottom="@+id/outer_space_bottom"
+            android:layout_alignLeft="@+id/relativeLayout"
+            android:layout_alignRight="@+id/relativeLayout"
+            android:src="@drawable/bg_procedures"
+            android:scaleType="centerCrop" />
+
+        <Space
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:id="@+id/outer_space_bottom"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_alignLeft="@+id/relativeLayout"
+            android:layout_alignRight="@+id/relativeLayout" />
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:id="@+id/relativeLayout"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="false">
+
+            <Space
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:id="@+id/space_top"
+                android:layout_alignParentBottom="false"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true" />
+
+            <ScrollView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView5"
+                android:layout_below="@+id/space_top"
+                android:layout_centerInParent="true"
+                android:layout_above="@+id/space_bottom">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_InstructionImage"
+                        android:src="@drawable/instruct_dialysis"
+                        android:layout_gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="многооооооооооооооооооооооооооооооооооооооо\nстрок\nтекста\nааа\nмнооооооогооо\nтееекстааа\nвообщеее\nи\nдаже\nтут\nтекс\nыыы"
+                        android:id="@+id/tv_InstructionText"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+            </ScrollView>
+
+            <Space
+                android:layout_width="150dp"
+                android:layout_height="32dp"
+                android:id="@+id/space_bottom"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_alignLeft="@+id/scrollView5"
+                android:layout_alignRight="@+id/scrollView5" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ib_inst_cancel"
+                android:src="@drawable/ic_bt_cancel"
+                android:background="#ffffff"
+                android:layout_alignLeft="@+id/space_bottom"
+                android:layout_alignTop="@+id/space_bottom"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:onClick="OnClick" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ib_inst_ok"
+                android:src="@drawable/ic_bt_ok"
+                android:background="#ffffff"
+                android:layout_alignRight="@+id/space_bottom"
+                android:layout_alignTop="@+id/space_bottom"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:onClick="OnClick" />
+
+        </RelativeLayout>
+
+
+</RelativeLayout>
+

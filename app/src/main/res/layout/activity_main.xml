@@ -1,7 +1,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin" tools:context=".MainActivity"
     android:id="@+id/sample_main_layout"
@@ -282,7 +282,7 @@
                 <ImageView
                     android:id="@+id/iv_SorbentTime"
                     android:layout_column="3"
-                    android:src="@drawable/ic_time_green" />
+                    android:src="@drawable/ic_time_grey" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -356,13 +356,16 @@
             android:onClick="OnClick"
             android:layout_below="@+id/bt_Pause"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
-            android:background="@drawable/ic_bt_state" />
+            android:background="@drawable/ic_bt_state"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="true"
+            android:layout_alignLeft="@+id/bt_Pause"
+            android:layout_alignRight="@+id/bt_Log" />
 
         <Button
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:id="@+id/bt_Notification"
-
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
             android:layout_above="@+id/bt_Settings"
             android:layout_toRightOf="@+id/bt_State"
@@ -380,7 +383,8 @@
             android:layout_alignParentStart="true"
             android:background="@drawable/ic_bt_log"
             android:layout_alignBottom="@+id/bt_Settings"
-            android:layout_alignTop="@+id/bt_Settings" />
+            android:layout_alignTop="@+id/bt_Settings"
+            android:layout_alignLeft="@+id/bt_Pause" />
 
         <Button
             android:layout_width="150dp"

@@ -93,7 +93,7 @@ public class InstructionActivity extends Activity {
     {
         switch (selectedProcedure){
             case(ConnectionService.STATUS_FILLING):{
-                if(stage>instructionsStrings.length){
+                if(stage==instructionsStrings.length){
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                     intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FILLING);
@@ -108,7 +108,7 @@ public class InstructionActivity extends Activity {
             }
 
             case(ConnectionService.STATUS_DIALYSIS):{
-                if(stage>instructionsStrings.length){
+                if(stage==instructionsStrings.length){
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                     intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DIALYSIS);
@@ -123,7 +123,7 @@ public class InstructionActivity extends Activity {
             }
 
             case(ConnectionService.STATUS_FLUSH):{
-                if(stage>instructionsStrings.length){
+                if(stage==instructionsStrings.length){
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                     intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_FLUSH);
@@ -138,7 +138,7 @@ public class InstructionActivity extends Activity {
             }
 
             case(ConnectionService.STATUS_SHUTDOWN):{
-                if(stage>instructionsStrings.length){
+                if(stage==instructionsStrings.length){
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                     intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_SHUTDOWN);
@@ -153,7 +153,7 @@ public class InstructionActivity extends Activity {
             }
 
             case(ConnectionService.STATUS_DISINFECTION):{
-                if(stage>instructionsStrings.length){
+                if(stage==instructionsStrings.length){
                     Intent intent = new Intent(ConnectionService.BROADCAST_ACTION);
                     intent.putExtra(ConnectionService.PARAM_TASK, ConnectionService.TASK_SET_STATUS);
                     intent.putExtra(ConnectionService.PARAM_ARG, ConnectionService.TASK_ARG_DISINFECTION);

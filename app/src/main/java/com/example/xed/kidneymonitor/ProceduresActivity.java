@@ -181,6 +181,7 @@ public class ProceduresActivity extends Activity {
                     parameters.putString("procedure", selectedProcedure); //Your id
                     intent.putExtras(parameters); //Put your id to your next Intent
                     startActivity(intent);
+                    ProceduresActivity.this.finish();
                 }
 
                 break;

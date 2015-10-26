@@ -1117,7 +1117,7 @@ public class ConnectionService extends Service {
                 SharedPreferences.Editor ed = sPref.edit(); //Setting for preference editing
                 ed.putBoolean(PrefActivity.AUTOCONNECT, false);
                 ed.apply();
-                sendNotification("FAILED TO AUTOCONNECT");
+                sendNotification(getResources().getString(R.string.autoconnect_failed));
                 ConnectTryCount=20;
             }
             AutoconnectHandler.postDelayed(AutoconnectTask, 5000);//refresh after one second

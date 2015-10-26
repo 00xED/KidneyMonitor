@@ -99,41 +99,6 @@
 
     <string name="title_debug">Debug</string>
 
-    <string name="instruction_shutdown">There we have an instruction, which appears\n
-                                        when user selects "Shutdown" option.\n
-                                        As you can see, we can make it in long strings\n
-                                        and built-in images!\n
-                                        Confirmation is provided by "OK" and "Cancel" buttons.
-    </string>
-
-    <string name="instruction_dialysis">There we have an instruction, which appears\n
-                                        when user selects "Dialysis" option.\n
-                                        As you can see, we can make it in long strings\n
-                                        and built-in images!\n
-                                        Confirmation is provided by "OK" and "Cancel" buttons.
-    </string>
-
-   <string name="instruction_disinfection">There we have an instruction, which appears\n
-                                        when user selects "Disinfection" option.\n
-                                        As you can see, we can make it in long strings\n
-                                        and built-in images!\n
-                                        Confirmation is provided by "OK" and "Cancel" buttons.
-    </string>
-
-    <string name="instruction_filling">There we have an instruction, which appears\n
-                                        when user selects "Filling" option.\n
-                                        As you can see, we can make it in long strings\n
-                                        and built-in images!\n
-                                        Confirmation is provided by "OK" and "Cancel" buttons.
-    </string>
-
-    <string name="instruction_flush">There we have an instruction, which appears\n
-                                     when user selects "Flush" option.\n
-                                     As you can see, we can make it in long strings\n
-                                     and built-in images!\n
-                                     Confirmation is provided by "OK" and "Cancel" buttons.
-    </string>
-
     <string name="title_settings_ok">Device settings are OK</string>
     <string name="ok">OK</string>
     <string name="notif_restart">Restart needed to take effect</string>
@@ -184,5 +149,6 @@
     <string name="error_unknown">Unknown error occurred</string>
 
     <string name="user_switched_to">User switched to: </string>
+    <string name="autoconnect_failed">Autoconnect failed</string>
 
 </resources>
